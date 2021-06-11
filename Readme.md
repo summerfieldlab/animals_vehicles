@@ -6,8 +6,8 @@ Participants are asked to learn what type of animals/vehicles are preferred by c
 ## Todo list
 
 ### Stimuli
+- update file load routines (flow load js...)
 - replace trees with animals/objects 
-- update file load routines 
 - add domain/feature selector to queryparams
 
 ### Trials
