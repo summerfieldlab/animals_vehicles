@@ -1,0 +1,92 @@
+<!-- 
+Shows instructions via html injection
+(c) Timo Flesch, 2016 [timo.flesch@gmail.com]
+Summerfield Lab, Experimental Psychology Department, University of Oxford
+ -->
+
+<head>
+	<style>
+
+		#prevButton{
+		  margin-right:          150px;
+		}
+
+
+		#nextButton {
+		  right:                 10%; 
+		}
+
+
+		div.bodyCap {
+
+		}
+
+
+		div.bodyText {
+
+		}
+
+
+		div.bodyImg {
+
+		}
+
+
+		#instr_img {
+		  border: 15px solid #FFF;
+		  padding: 5px;
+		  /*display: block;*/
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  bottom: 0;
+		  margin: auto;
+		  width: 200px;
+		  height: 200px;
+
+		}  
+		#instr_task {
+		  border: 15px solid #FFF;
+		  padding: auto;
+		  width:  150px;
+		  height: 150px;
+		}
+
+		#instr_txt {
+		  position: absolute;
+		  text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+<div class="screenBox">
+	<div class="bodyBox" style="overflow-y: hidden" >
+	<div class="bodyCap" style="text-align: center">
+		<!-- caption goes here -->
+	</div>
+	<div class="bodyText" style="text-align: center">
+		<!-- instruction text goes here -->
+		Hi! <br> Thanks for taking part in this experiment! <br> Please use the buttons below to navigate through the instructions.
+	
+	</div>
+	<div class="bodyImg">
+	    <!-- instruction img goes here -->
+	</div>
+	</div>
+	<button class="buttonBox"
+          type="button"
+          onClick="gotoPrevPage()"
+          id="prevButton"
+          disabled="true">
+         Previous Page
+  </button>
+	<button class="buttonBox"
+          type="button"
+          onClick="gotoNextPage()"
+          id="nextButton">
+         Next Page
+  </button>
+</div>
+</body>

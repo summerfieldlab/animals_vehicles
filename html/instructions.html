@@ -1,0 +1,61 @@
+
+
+
+
+<div class="screenBox">
+
+  <!-- TITLE -->
+  <div class="titleBox">
+    <span class="titleSpan"> INSTRUCTIONS </span>
+  </div>
+
+  <!-- BODY -->
+  <div class="bodyBox">
+    <h1 style="text-align: center">
+       Welcome
+    </h1>
+    <h2>BE PATIENT!</h2>
+    <p>
+      <b>The task will take a few seconds to load (around 5 MB)</b>. Unless you have a very bad connection, it should take less than one minute in total.
+    </p>
+    <h2>Description</h2>
+    <p>
+      Instructions will be provided once you go into full screen and click on the "start" button. At the beginning, you will be spending a few minutes learning about the details of this task. Then you can start with the actual task!
+    </p>
+    <h2>Full-screen requirement</h2>
+    <p>
+      We ask you to keep the window on fullscreen mode for the whole length of the experiment. This is because it is a psychological experiment and we need you to complete the experiment without distraction or doing other things at the same time. <b>If you leave the fullscreen mode the experiment will be cancelled</b>.
+    </p>
+    <h2>Duration and payment</h2>
+    <p>
+      During this task, you will need to give a fixed number of responses. You'll be doing two training blocks and one test block, each of which should take 10 minutes. The length of the experiment should take less than 30 minutes, but this depends on how quickly you respond. However, we ask you to try your best, rather than just giving quick but careless responses!<br>
+      Once you finish with the task, you will receive a code that you can paste in order for us to accept your HIT.
+    </p>
+    <h2>Get ready!</h2>
+    <p>
+
+      When you have read this, you can move forward with the instructions. Good luck!
+    </p>
+  </div>
+  
+  <!-- BUTTON -->
+  <button class="buttonBox"
+          type="button"
+          onClick="if(isFullscreen()) {goWebsite(html_taskinstr);changeInstructions(); startedinstructions=true;} "
+          id="startButton"
+          disabled>
+         Start
+  </button>
+  
+  <!-- FULLSCREEN -->
+  <button class="buttonBox fullscreenBox"
+          type="button"
+          onClick="
+            onFullscreen();
+            document.getElementById('startButton').disabled = false;
+            "
+          id="fullButton">
+         Go fullscreen
+  </button>
+  
+</div>
