@@ -58,11 +58,6 @@ function setExperiment() {
   parameters.shopURL          =         "orchards/"  // folder that contains images of shops (the contexts)   
   parameters.stimURL          =         "stims/"; // folder that contains image files of stimuli
   parameters.keyURL           =         "lib/png/"; // location of image files for key mapping
- 
-  //TODO randomly assign exemplar ids to training and test groups 
-  exemplar_ids = set_exemplar_ids(parameters.nb_unique);
-  parameters.exemplar_ids_train =       exemplar_ids[0];
-  parameters.exemplar_ids_test =        exemplar_ids[1];
 
 
   parameters.nb_branchiness   =         5; // how many levels?
@@ -70,7 +65,8 @@ function setExperiment() {
   parameters.nb_reps          =         2; // how many repetitions (of exemplars) within each block?
   parameters.nb_reps_test     =         1; // how many reps of each task within test ?
   parameters.nb_tasks_test    =         2; // how many tasks within test block? needs to be 2 to cover both tasks!!
-  parameters.nb_unique        =         5; // 5 unique exemplars (per phase) 
+  parameters.nb_unique        =         4; // 4 unique exemplars (per phase) 
+  parameters.nb_exemplars     =        10; // total number of unique exemplars per stim in dataset
   parameters.nb_trials_train  =         parameters.nb_branchiness*parameters.nb_leafiness*parameters.nb_unique*parameters.nb_reps; //200 trials per training task 
   parameters.nb_trials_test   =         parameters.nb_branchiness*parameters.nb_leafiness*parameters.nb_unique*parameters.nb_tasks_test; // 100 trials per training task 
   parameters.nb_blocks        =         2; // has to be at least 2 (both tasks
@@ -80,6 +76,9 @@ function setExperiment() {
   parameters.val_categories   =         [-1,-1,0,1,1];
   parameters.val_rewards      =         [-50,-25,0,25,50];
 
+  exemplar_ids = set_exemplar_ids();
+  parameters.exemplar_ids_train =       exemplar_ids[0];
+  parameters.exemplar_ids_test =        exemplar_ids[1];
 
   // VISUALS
   parameters.visuals              =        {};
@@ -158,14 +157,14 @@ function setExperiment() {
 }
 
 
-function set_exemplar_ids(n_unique) {
+function set_exemplar_ids() {
 
   // create array of incrementing integers
-  arr = Array.from(Array(n_unique), (_, i) => i+1);
+  arr = Array.from(Array(parameters.nb_exemplars), (_, i) => i+1);
   // shuffle
   arr = rnd_fisherYates(arr);
   // split into training and test indices
-  return [arr.slice(0,n_unique/2), arr.slice(n_unique/2)]
+  return [arr.slice(0,parameters.nb_unique), arr.slice(parameters.nb_unique,parameters.nb_unique*2)]
 }
 
 
