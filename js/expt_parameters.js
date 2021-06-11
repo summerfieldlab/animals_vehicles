@@ -153,6 +153,7 @@ function setExperiment() {
   coding.timestamp = NaN;
 
   // STIM -------------------
+  stim = {};
   stim.names = data_set_filenames();
 }
 
@@ -185,10 +186,10 @@ function data_set_filenames() {
 
      fileNames = [];
      for (var dd=0; dd<domains.length; dd++) {
-      for (var ii =1; ii<=params_exp.n_size;ii++) {
-        for (var jj=1; jj<= params_exp.n_speed; jj++){
-          for (var kk=1; kk<= params_exp.n_unique; kk++) {
-            fileNames.push([domaims[dd] + 'size' + ii.toString() + '_speed' + jj.toString() + '_' + kk.toString() + '.jpg'].join());
+      for (var ii =1; ii<=parameters.nb_branchiness;ii++) {
+        for (var jj=1; jj<= parameters.nb_leafiness; jj++){
+          for (var kk=1; kk<= parameters.nb_unique; kk++) {
+            fileNames.push([domains[dd] + 'size' + ii.toString() + '_speed' + jj.toString() + '_' + kk.toString() + '.jpg'].join());
           }
         }	 
       }

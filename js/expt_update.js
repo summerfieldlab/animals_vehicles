@@ -28,7 +28,7 @@ function updateStimuli() {
   board.stimuli.context.attr({stroke:"black","stroke-width":5});
   board.stimuli.context.attr({fill:"grey"});
   
- treeName = sdata.expt_domainIDX[coding.index].concat('size'.concat(sdata.expt_branchIDX[coding.index].toString()).concat('_speed').concat(sdata.expt_leafIDX[coding.index].toString()).concat('_'+sdata.expt_exemplarIDX[coding.index].concat('.jpg')));
+ treeName = sdata.expt_domainIDX[coding.index].concat('size'.concat(sdata.expt_branchIDX[coding.index].toString()).concat('_speed').concat(sdata.expt_leafIDX[coding.index].toString()).concat('_'+sdata.expt_exemplarIDX[coding.index].toString().concat('.jpg')));
   board.stimuli.tree = drawTree(treeName);
   hideStimuli();
   removeKeys();
