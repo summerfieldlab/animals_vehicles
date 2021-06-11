@@ -1,7 +1,6 @@
 /*
 Timo Flesch, 2016 [timo.flesch@gmail.com]
 */
-<!-- Update methods -->
 
 
 function updateCue () {
@@ -28,7 +27,8 @@ function updateStimuli() {
    board.stimuli.context = drawRect(board.paper.object,[board.paper.centre[0]-120,board.paper.centre[1]-120,240,240]);
   board.stimuli.context.attr({stroke:"black","stroke-width":5});
   board.stimuli.context.attr({fill:"grey"});
- treeName = 'B'.concat(sdata.expt_branchIDX[coding.index].toString()).concat('L').concat(sdata.expt_leafIDX[coding.index].toString()).concat('_'+sdata.expt_exemplarIDX[coding.index].concat('.png'));
+  
+ treeName = sdata.expt_domainIDX[coding.index].concat('size'.concat(sdata.expt_branchIDX[coding.index].toString()).concat('_speed').concat(sdata.expt_leafIDX[coding.index].toString()).concat('_'+sdata.expt_exemplarIDX[coding.index].concat('.jpg')));
   board.stimuli.tree = drawTree(treeName);
   hideStimuli();
   removeKeys();

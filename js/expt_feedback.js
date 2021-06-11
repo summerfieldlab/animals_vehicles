@@ -1,7 +1,9 @@
 /* **************************************************************************************
 
 retrieves user feedback from html form
-(c) Timo Flesch, 2016 [timo.flesch@gmail.com]
+original version: Timo Flesch, 2016
+updated version: Timo Flesch, 2021
+[timoflesch19@gmail.com]
 
 
 ************************************************************************************** */

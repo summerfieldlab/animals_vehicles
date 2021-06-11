@@ -1,7 +1,9 @@
 /* **************************************************************************************
 
 Creates experimental conditions.
-(c) Timo Flesch, 2016 [timo.flesch@gmail.com]
+original version: Timo Flesch, 2016
+updated version: Timo Flesch, 2021
+[timoflesch19@gmail.com]
 
 
 ************************************************************************************** */
@@ -16,6 +18,9 @@ function createSdata(){
 
 	// index from first to last trial within each block
 	sdata.expt_trial 	= repmat(colon(1,parameters.nb_trials_train),parameters.nb_blocks).concat(repmat(colon(1,parameters.nb_trials_test),parameters.nb_blocks_test));
+
+	// generate domain indices 
+	sdata.expt_domainIDX = gen_domVect();
 
 	// generate block indices
 	sdata.expt_block 	= gen_blockVect();
@@ -52,6 +57,20 @@ function createSdata(){
 	if (parameters.blockiness < 200 && shuffSwitch == 1) {
 		shrink_blocks();
 	}
+}
+
+
+function gen_domVect() {
+	/*
+	generates vector of domain indices (prefixes of an_ or ve_)
+	*/
+	
+	// training trials 
+	 idcs_train = repmat(parameters.domains[0].slice(0,2) + '_',parameters.nb_trials_train).concat(repmat(parameters.domains[1].slice(0,2) + '_',parameters.nb_trials_train))
+	// test trials
+	idcs_test =  repmat(parameters.domains[0].slice(0,2) + '_',parameters.nb_trials_test/2).concat(repmat(parameters.domains[1].slice(0,2) + '_',parameters.nb_trials_test/2))
+	
+	return idcs_train.concat(idcs_test);
 }
 
 
@@ -171,7 +190,7 @@ function gen_rewardVect() {
 	rewVect = [];
 	// 1. obtain reward and rew matrices 
 	condMatrices = loadTaskMatrix(parameters.val_rewAssignment);
-	// 2. loop through trials and assign rewegory  accordingly
+	// 2. loop through trials and assign category  accordingly
 	for(var ii = 0; ii< sdata.expt_contextIDX.length; ii++) {
     		if (sdata.expt_contextIDX[ii]==1) {
 			rewVect[ii] = condMatrices.rewMat_leaf[sdata.expt_leafIDX[ii]-1][sdata.expt_branchIDX[ii]-1];
@@ -204,7 +223,6 @@ function gen_exemplarVect() {
 		}
 	}
 
-
 	return repmat(exemplarVectTrain,parameters.nb_reps).concat(repmat(exemplarVectTest,parameters.nb_reps_test*parameters.nb_tasks_test));
 }
 
@@ -221,6 +239,7 @@ function shrink_blocks() {
 	 sdata.expt_catIDX	=       shrink_vect(sdata.expt_catIDX);
 	 sdata.expt_exemplarIDX =  shrink_vect(sdata.expt_exemplarIDX);
 	 sdata.expt_contextIDX	=   shrink_vect(sdata.expt_contextIDX);
+	 sdata.expt_domainIDX	=   shrink_vect(sdata.expt_domainIDX);
 	 sdata.expt_rewardIDX   =    shrink_vect(sdata.expt_rewardIDX);
 }
 
@@ -255,6 +274,7 @@ function shuffle_trials(){
 	 sdata.expt_catIDX	=       shuffle_vect(shuffIDX,sdata.expt_catIDX);
 	 sdata.expt_exemplarIDX =  shuffle_vect(shuffIDX,sdata.expt_exemplarIDX);
 	 sdata.expt_contextIDX	=   shuffle_vect(shuffIDX,sdata.expt_contextIDX);
+	 sdata.expt_domainIDX	=   shuffle_vect(shuffIDX,sdata.expt_domainIDX);
 	 sdata.expt_rewardIDX   =    shuffle_vect(shuffIDX,sdata.expt_rewardIDX);
 	 shuffSwitch = 1;
 }
@@ -269,7 +289,7 @@ function mk_shuffIDX() {
 
 	// training
 	switch(bin2num(parameters.task_id.slice(0,1) == 'blocked')){
-		case 1:
+		case 1: //shuffle within blocks
 			for(var i=1;i<=parameters.nb_blocks;i++){
 				var tmp = [];
 				tmp = shuffle(colon(startIDX,startIDX+parameters.nb_trials_train-1));
@@ -279,7 +299,7 @@ function mk_shuffIDX() {
 
 			break;
 
-		case 0:
+		case 0: // interleaved, hence shuffle everything
 			shuffIDX = shuffle(colon(0,parameters.nb_total_train-1));
 
 			break;

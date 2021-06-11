@@ -1,7 +1,9 @@
 /* **************************************************************************************
 
 Draws raphael objects
-(c) Timo Flesch, 2016 [timo.flesch@gmail.com]
+original version: Timo Flesch, 2016
+updated version: Timo Flesch, 2021
+[timoflesch19@gmail.com]
 
 
 ************************************************************************************** */
@@ -30,7 +32,7 @@ function drawTree(treeName) {
 	draws a nice tree
 */
 
-  return board.paper.object.image(parameters.treeURL.concat(treeName),board.paper.centre[0]-parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.stim[1]/2,parameters.visuals.size.stim[0],parameters.visuals.size.stim[1]).attr({"opacity": 0});
+  return board.paper.object.image(parameters.stimURL.concat(treeName),board.paper.centre[0]-parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.stim[1]/2,parameters.visuals.size.stim[0],parameters.visuals.size.stim[1]).attr({"opacity": 0});
 
 }
 
@@ -76,13 +78,13 @@ function drawGarden(gardenName,blurOrNot) {
 	draws orchard, either blurred or not blurred
 */
   if (blurOrNot) {
-	board.blurcue.object = board.paper.object.image(parameters.gardenURL.concat(gardenName),board.paper.centre[0]-parameters.visuals.size.garden[0]/2,board.paper.centre[1]-parameters.visuals.size.garden[1]/2,parameters.visuals.size.garden[0],parameters.visuals.size.garden[1]).attr({"opacity":0});
+	board.blurcue.object = board.paper.object.image(parameters.shopURL.concat(gardenName),board.paper.centre[0]-parameters.visuals.size.garden[0]/2,board.paper.centre[1]-parameters.visuals.size.garden[1]/2,parameters.visuals.size.garden[0],parameters.visuals.size.garden[1]).attr({"opacity":0});
 	board.blurcue.object.blur(parameters.visuals.blurlvl);
 	board.blurcue.context = drawRect(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.garden[0]/2,board.paper.centre[1]-parameters.visuals.size.garden[1]/2,parameters.visuals.size.garden[0],parameters.visuals.size.garden[1]]);
   	board.blurcue.context.attr({stroke:"black","stroke-width":2});
   }
   else {
-	board.cue.object = board.paper.object.image(parameters.gardenURL.concat(gardenName),board.paper.centre[0]-parameters.visuals.size.garden[0]/2,board.paper.centre[1]-parameters.visuals.size.garden[1]/2,parameters.visuals.size.garden[0],parameters.visuals.size.garden[1]).attr({"opacity":0});
+	board.cue.object = board.paper.object.image(parameters.shopURL.concat(gardenName),board.paper.centre[0]-parameters.visuals.size.garden[0]/2,board.paper.centre[1]-parameters.visuals.size.garden[1]/2,parameters.visuals.size.garden[0],parameters.visuals.size.garden[1]).attr({"opacity":0});
 	board.cue.context = drawRect(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.garden[0]/2,board.paper.centre[1]-parameters.visuals.size.garden[1]/2,parameters.visuals.size.garden[0],parameters.visuals.size.garden[1]]);
   	board.cue.context.attr({stroke:"black","stroke-width":2});
 
@@ -96,5 +98,5 @@ function drawTrunk() {
 	draws nothing but a trunk of a poor little dead tree :'( RIP, Tree!
 */
 
-	board.garden.tree = board.paper.object.image(parameters.treeURL.concat('trunk.png'),board.paper.centre[0]-75,board.paper.centre[1]+10,150,150).attr({'opacity':0});
+	board.garden.tree = board.paper.object.image(parameters.stimURL.concat('trunk.png'),board.paper.centre[0]-75,board.paper.centre[1]+10,150,150).attr({'opacity':0});
 }

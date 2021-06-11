@@ -63,20 +63,24 @@
 <script type="application/javascript" src="js/expt_feedback.js"   ></script>
 <script type="application/javascript" src="js/expt_instructions.js"></script>
 
+<script type="application/javascript" src="js/lib/random.js"></script>
+<script type="application/javascript" src="js/lib/math.js"></script>
+<script type="application/javascript" src="js/lib/draw.js"></script>
+
 <link href="lib/css/html_templates.css" rel="stylesheet" type="text/css" media="screen" />
 
 <!-- WEBSITE -->
 <script type="text/javascript">
   startedexperiment  = false;
   finishedexperiment = false;
-  participant_task = "trees_task";
+  participant_task = "shops_task";
   logStart(participant_task,participant_id);
 
   document.write('\
     <!DOCTYPE html>\
     <html>\
       <head>\
-        <title>Tree Task</title>\
+        <title>Shops Task</title>\
       </head>\
       <body>\
           <div id="webbodyDiv"></div>\
@@ -84,8 +88,8 @@
     </html>\
   ');
   $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange',finishExperiment_resize);
-  // startExperiment();
-//  goWebsite(html_instructions)
-  goWebsite(html_start); 
-//startExperiment();
+  
+  goWebsite(html_start);
+  // if debugging, comment out line above and uncomment line below 
+  //startExperiment();
 </script>

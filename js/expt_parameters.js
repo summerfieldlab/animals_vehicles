@@ -2,17 +2,26 @@
 /* **************************************************************************************
 
 Sets all the important parameters
-(c) Timo Flesch, 2016 [timo.flesch@gmail.com]
+original version: Timo Flesch, 2016
+updated version: Timo Flesch, 2021
+[timoflesch19@gmail.com]
 
-Based on earlier version of script by jdobalaguer@gmail.com
 ************************************************************************************** */
 
 // globals
+var FLAG_DBG = 1; //toggle debugging output
+// subject data
 var sdata;
+// experiment data 
 var edata;
+// self-explanatory 
 var parameters;
+// the raphael.js canvas
 var board;
+// trial and block indices 
 var coding;
+// stimulus container 
+var stim;
 
 function setExperiment() {
 
@@ -45,19 +54,23 @@ function setExperiment() {
   set_subjParams();  // obtains subject-specific params from URL (index.html?id=NUMS)
 
   parameters.keyStr           =         (parameters.keyassignment)? (['left: accept',' right: reject']) : (['right: accept',' left: reject']);
-  parameters.gardenURL        =         "orchards/"
-  parameters.treeURL          =         "trees/stims/";
-  parameters.keyURL           =         "lib/png/";
-  parameters.exemplar_ids_train =       "a,b,c,d".split(',');
-  parameters.exemplar_ids_test =        "e,f,g,h".split(',');
+  // urls 
+  parameters.shopURL          =         "orchards/"  // folder that contains images of shops (the contexts)   
+  parameters.stimURL          =         "stims/"; // folder that contains image files of stimuli
+  parameters.keyURL           =         "lib/png/"; // location of image files for key mapping
+ 
+  //TODO randomly assign exemplar ids to training and test groups 
+  exemplar_ids = set_exemplar_ids(parameters.nb_unique);
+  parameters.exemplar_ids_train =       exemplar_ids[0];
+  parameters.exemplar_ids_test =        exemplar_ids[1];
 
 
   parameters.nb_branchiness   =         5; // how many levels?
   parameters.nb_leafiness     =         5; // how many levels?
-  parameters.nb_reps          =         2; // how many repetitions within each block?
+  parameters.nb_reps          =         2; // how many repetitions (of exemplars) within each block?
   parameters.nb_reps_test     =         1; // how many reps of each task within test ?
   parameters.nb_tasks_test    =         2; // how many tasks within test block? needs to be 2 to cover both tasks!!
-  parameters.nb_unique        =         parameters.exemplar_ids_train.length; // 4 unique exemplars 
+  parameters.nb_unique        =         5; // 5 unique exemplars (per phase) 
   parameters.nb_trials_train  =         parameters.nb_branchiness*parameters.nb_leafiness*parameters.nb_unique*parameters.nb_reps; //200 trials per training task 
   parameters.nb_trials_test   =         parameters.nb_branchiness*parameters.nb_leafiness*parameters.nb_unique*parameters.nb_tasks_test; // 100 trials per training task 
   parameters.nb_blocks        =         2; // has to be at least 2 (both tasks
@@ -114,12 +127,8 @@ function setExperiment() {
   sdata.expt_rewardIDX    = []; // reward: neg & pos
   sdata.expt_catIDX       = []; // category: plant vs don't plant
   sdata.expt_contextIDX   = []; // task: north vs south
+  sdata.expt_domainIDX    = []; // domain: animals vs objects
   createSdata();
-
-  // vbxi
-  sdata.vbxi_category     = [];
-
-
 
   // resp
   sdata.resp_timestamp    = []; // time when button was pressed 
@@ -143,19 +152,67 @@ function setExperiment() {
   // other
   coding.answering = false;
   coding.timestamp = NaN;
+
+  // STIM -------------------
+  stim.names = data_set_filenames();
 }
 
 
+function set_exemplar_ids(n_unique) {
+
+  // create array of incrementing integers
+  arr = Array.from(Array(n_unique), (_, i) => i+1);
+  // shuffle
+  arr = rnd_fisherYates(arr);
+  // split into training and test indices
+  return [arr.slice(0,n_unique/2), arr.slice(n_unique/2)]
+}
+
+
+function data_set_filenames() {
+  /*
+     generates array of file names
+  */
+    if (parameters.domaincode==0)
+    {
+        domains = ['an_'];
+    } else if (parameters.domaincode==1)
+    {
+      domains = ['ve_'];
+    } else 
+    {
+      domains = ['an_','ve_'];
+    }
+
+     fileNames = [];
+     for (var dd=0; dd<domains.length; dd++) {
+      for (var ii =1; ii<=params_exp.n_size;ii++) {
+        for (var jj=1; jj<= params_exp.n_speed; jj++){
+          for (var kk=1; kk<= params_exp.n_unique; kk++) {
+            fileNames.push([domaims[dd] + 'size' + ii.toString() + '_speed' + jj.toString() + '_' + kk.toString() + '.jpg'].join());
+          }
+        }	 
+      }
+    }
+    //  fileNames = rnd_fisherYates(fileNames);
+     if (FLAG_DBG) {
+       console.log(fileNames.join(',\n'))
+     }
+  
+     return fileNames;
+  }
+  
+  
 
 function set_subjParams() {
   /*
     grabs params from url argument
     input structure:
     ?id=abcd
-    a = 1/2/3 = bAB,bBA,interl
-    b = 1:8   = cardinal: nn,ff,fn,nf, diagonal: nn,ff,fn,nf (f=flipped, n=normal)
-    c = 0/1/3   = flip key assign or not, random otherwise
-    d = 1,2,3   = blockiness: 2,20,200
+    a = 0/1/2   = domains. 0 =animals, 1 = vehicles, 2 = animals&vehicles
+    b = 1/2/3 = bAB,bBA,interl
+    c  = 1:8   = cardinal: nn,ff,fn,nf, diagonal: nn,ff,fn,nf (f=flipped, n=normal)
+    d = 1/2/3   = blockiness: 2,20,200
   */
   input = getQueryParams();
 
@@ -165,12 +222,33 @@ function set_subjParams() {
     parameters.val_rewAssignment = 	  1; // no flipped assignments, cardinal boundary
     parameters.keyassignment =            0; // l-no r-yes
     parameters.blockiness    =          200; // how many trials of one task per block?
+    parameters.domains       = ['animals','animals'] // domains for task A and task B
+    parameters.domaincode    = 0;
   }
 
   else {
     input.id = input.id.split('').map(Number);
-    // 1. curriculum
+    // 0. domain
     switch (input.id[0]) {
+      case 0:
+        parameters.domains = ['animals','animals'];
+        parameters.domaincode =0;
+        break;
+      case 1:
+        parameters.domains = ['vehicles', 'vehicles'];
+        parameters.domaincode = 1;
+        break;
+      case 2:
+        parameters.domains = ['animals','vehicles'];
+        parameters.domaincode = 2;
+        break;
+      default:
+        parameters.domains = ['animals','animals'];
+        parameters.domaincode = 0;
+    }
+    
+    // 1. curriculum
+    switch (input.id[1]) {
       case  1:
         parameters.task_id = 'blocked-A-B'.split('-');
         break;
@@ -186,33 +264,35 @@ function set_subjParams() {
     }
 
     // 2. reward & boundary 
-    parameters.val_rewAssignment   = input.id[1]; // second and third items
+    parameters.val_rewAssignment   = input.id[2]; // second and third items
 
     // 3. keys
-    parameters.keyassignment =    (input.id[2]==3) ? (randi(2,1)) : (input.id[2]); // 0: l-no r-yes, 1: l-yes r-no 
+    parameters.keyassignment =    randi(2,1); // 0: l-no r-yes, 1: l-yes r-no 
     
     // 4. blockiness (becomes irrelevant for interleaved design)
     switch (input.id[3]) {
-	case 1:
-		parameters.blockiness = 2;
-		break;
-	case 2:
-		parameters.blockiness = 20;
-		break;
-	case 3: 
-		parameters.blockiness = 200;
-		break;
-	default:
-		parameters.blockiness = 200;
-		break;
+      case 1:
+        parameters.blockiness = 2;
+        break;
+      case 2:
+        parameters.blockiness = 20;
+        break;
+      case 3: 
+        parameters.blockiness = 200;
+        break;
+      default:
+        parameters.blockiness = 200;
+        break;
     }
     // however, if interleaved, set back to 200
     if(input.id[0]==3){
 	    parameters.blockiness = 200;
     }
   }
-  console.log(parameters.task_id)
-  console.log(parameters.blockiness)
-  console.log(parameters.val_rewAssignment)
+  if (FLAG_DBG) {
+    console.log(parameters.task_id)
+    console.log(parameters.blockiness)
+    console.log(parameters.val_rewAssignment) 
+  }
 }
 

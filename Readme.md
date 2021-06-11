@@ -8,6 +8,8 @@ Participants are asked to learn what type of animals/vehicles are preferred by c
 ### Stimuli
 - update file load routines (flow load js...)
 - replace trees with animals/objects 
+    - actual images 
+    - file names etc in expt_parameters.js
 - add domain/feature selector to queryparams
 
 ### Trials

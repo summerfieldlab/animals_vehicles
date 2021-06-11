@@ -2,7 +2,9 @@
 /* **************************************************************************************
 
 Launches blocks and trials
-(c) Timo Flesch, 2016 [timo.flesch@gmail.com]
+original version: Timo Flesch, 2016
+updated version: Timo Flesch, 2021
+[timoflesch19@gmail.com]
 
 based on earlier version of script by jdobalaguer@gmail.com
 ************************************************************************************** */
