@@ -73,6 +73,7 @@ function setExperiment() {
   parameters.nb_blocks_test   =         1; // .. + test)
   parameters.nb_total_train   =         (parameters.nb_blocks)*parameters.nb_trials_train; // 400 training trials in total
   parameters.nb_total_test    =         parameters.nb_trials_test; // 200 training trials in total
+  parameters.nb_trialsTotal   =         parameters.nb_total_train + parameters.nb_total_test;
   parameters.val_categories   =         [-1,-1,0,1,1];
   parameters.val_rewards      =         [-50,-25,0,25,50];
 
@@ -84,9 +85,9 @@ function setExperiment() {
   parameters.visuals              =        {};
   // size
   parameters.visuals.size         =        {};
-  parameters.visuals.size.garden  =        [400,400]; // context
-  parameters.visuals.size.stim    =        [200,200]; // stimulus tree
-  parameters.visuals.size.fbt     =        [150,150]; // feedback tree
+  parameters.visuals.size.garden  =        [500,500]; // context
+  parameters.visuals.size.stim    =        [300,200]; // stimulus image
+  parameters.visuals.size.fbt     =        [150,100]; // feedback image
   parameters.visuals.size.keyIMG  =        [75,75];   // size of key image
 
   // colors
@@ -97,7 +98,7 @@ function setExperiment() {
   parameters.visuals.cols.fb_bg   =        "grey";  // feedback background
 
   // misc
-  parameters.visuals.blurlvl      =             5;  // how much blur?
+  parameters.visuals.blurlvl      =             3;  // how much blur?
 
 
   // TEXT

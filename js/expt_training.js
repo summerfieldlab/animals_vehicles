@@ -4,7 +4,7 @@ Timo Flesch, 2016 [timo.flesch@gmail.com]
 function startTraining() {
   if (!startedexperiment) { return; }
   // hide stuff
-  hideInstructions();
+  // hideInstructions();
   hideFeedback();
   hideDots();
   // launch training

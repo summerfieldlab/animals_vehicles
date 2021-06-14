@@ -3,7 +3,7 @@ Timo Flesch, 2016 [timo.flesch@gmail.com]
 */
 // <!-- Response methods -->
 function handleLeft()  {
-  if(parameters.keyassignment) {
+  if(sdata.expt_keyassignment[coding.index]) {
     handleResponse('Left', 1);
   }
   else {
@@ -13,7 +13,7 @@ function handleLeft()  {
 
 
 function handleRight() {
- if(parameters.keyassignment) {
+ if(sdata.expt_keyassignment[coding.index]) {
     handleResponse('Right', 0);
   }
   else {
@@ -30,7 +30,7 @@ function handleResponse(key,category) {
     stopCountdown();
     clearTimeout(board.countdown.stimTimeOut); // this is important, otherwise, stim might disappear during next trial..
     saveResponse(key,category);
-    hideStimuli();
+    // hideStimuli();
 
 
     // show choice:
@@ -71,7 +71,7 @@ function saveResponse(key,category) {
   sdata.expt_returnOPT[coding.index]          = (coding.trial) ? (sum(sdata.expt_rewardOPT.slice(coding.return,coding.index+1))) : (0);
 
   //debugging:
-  if (false) {
+  if (FLAG_DBG) {
     console.log("**********************")
     console.log('TRIAL ' +                        coding.trial);
     console.log('task '  + sdata.expt_contextIDX[coding.index]);

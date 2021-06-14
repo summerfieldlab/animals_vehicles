@@ -5,8 +5,10 @@ function runExperiment(){
   board = {};
 
   // BIND KEYS
-  jwerty.key('←',handleLeft);
-  jwerty.key('→',handleRight);
+  // jwerty.key('←',handleLeft);
+  // jwerty.key('→',handleRight);
+  jwerty.key('f',handleLeft);
+  jwerty.key('j',handleRight);
   jwerty.key('space',startBlock);
 
   // START
@@ -52,13 +54,8 @@ function addPaper() {
   // TEXT
   // instructions (text)
   board.instructions = {};
-  board.instructions.centre       = [board.paper.centre[0], board.paper.centre[1]+parameters.visuals.size.garden[0]*1.2/2];
-  board.instructions.text         = (parameters.keyassignment==1)? (['[LEFT]: accept',' [RIGHT]: reject']) : (['[LEFT]: reject',' [RIGHT]: accept']);
-  board.instructions.object       = drawText(board.paper.object,board.instructions.centre,board.instructions.text);
-  board.instructions.object.attr({"font-size": board.font_medsize});
-  board.instructions.object.attr({"text-anchor": "middle"});
+  board.instructions.keys         =  drawKeys(sdata.expt_keyassignment[coding.index]);
 
-  board.instructions.keys         =  drawKeys(parameters.keyassignment);
   hideKeys();
 
 
@@ -66,11 +63,8 @@ function addPaper() {
   //STIMULUS
 
   board.stimuli = {};
-  board.stimuli.context = drawRect(board.paper.object,[board.paper.centre[0]-120,board.paper.centre[1]-120,240,240]);
-  board.stimuli.context.attr({stroke:"black","stroke-width":5});
-  board.stimuli.context.attr({fill:"grey"});
 
-  board.stimuli.tree = drawTree("B5L4_a.png");
+  board.stimuli.tree = drawTree("an_size1_speed1_1.jpg");
   hideStimuli();
   board.garden.tree = board.stimuli.tree;
   hideGarden();
@@ -93,8 +87,9 @@ function addPaper() {
   board.leftfeedback.object.attr({"font-size": board.font_bigsize});
   board.leftfeedback.object.attr({"fill": board.leftfeedback.colour});
   // leftfeedback (rect) indicates selected option
-  board.leftfeedback.rect = drawRect(board.paper.object,[board.paper.centre[0]-90,board.paper.centre[1]-160,80,80])
-  board.leftfeedback.rect.attr({"stroke-width":4,fill:"grey"})
+  board.leftfeedback.rect = drawChoiceRect('left');
+  // board.leftfeedback.rect = drawRect(board.paper.object,[board.paper.centre[0]-90,board.paper.centre[1]-160,80,80])
+  // board.leftfeedback.rect.attr({"stroke-width":4,fill:"grey"})
   // rightfeedback (text)
   board.rightfeedback = {};
   board.rightfeedback.centre   = board.paper.centre;
@@ -104,8 +99,9 @@ function addPaper() {
   board.rightfeedback.object.attr({"font-size": board.font_bigsize});
   board.rightfeedback.object.attr({"fill": board.rightfeedback.colour});
   // rightfeedback (rect) indicates selected option
-  board.rightfeedback.rect = drawRect(board.paper.object,[board.paper.centre[0]+12,board.paper.centre[1]-200,80,80])
-  board.rightfeedback.rect.attr({"stroke-width":4,fill:"grey"});
+  board.rightfeedback.rect = drawChoiceRect('right');
+  // board.rightfeedback.rect = drawRect(board.paper.object,[board.paper.centre[0]+12,board.paper.centre[1]-200,80,80])
+  // board.rightfeedback.rect.attr({"stroke-width":4,fill:"grey"});
 
   hideFeedback();
 

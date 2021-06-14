@@ -1,11 +1,11 @@
 /*
 Timo Flesch, 2016 [timo.flesch@gmail.com]
 */
-<!-- Hide methods -->
+// <!-- Hide methods -->
 function hideTrial() {
   hideFixation(board.fixation);
   hideStimuli();
-  hideInstructions();
+  // hideInstructions();
   // hideClock();
 }
 
@@ -23,9 +23,10 @@ function hideBlurCue() {
 
 
 function hideStimuli() {
-  board.stimuli.context.attr({"opacity": 0});
-  board.stimuli.tree.attr({"opacity": 0});
-  hideBlurCue();
+  
+  board.stimuli.tree.image.attr({"opacity": 0});
+  board.stimuli.tree.frame.attr({"opacity": 0});
+  
   
 }
 

@@ -46,6 +46,11 @@ function createSdata(){
 	// generate vector with reward values, depending on task and feature level
 	sdata.expt_rewardIDX    = gen_rewardVect();
 
+	// generate vector of key mappings (1: left-accept, right-reject, 0: left-reject, right-accept)
+	sdata.expt_keyassignment = gen_keyAssignments();
+	// generate vector of key mapping descriptors ('left','right' vs 'right','left')
+	sdata.expt_keyStr       = gen_keyStrings();
+
 	// generate vector with "optimal" return up to each trial n (for performance assessment)
 	sdata.expt_returnOPT    = [];  //done on the fly
 	sdata.expt_rewardOPT    = [];
@@ -58,6 +63,32 @@ function createSdata(){
 		shrink_blocks();
 	}
 }
+
+
+function gen_keyAssignments() {
+	/*
+	generate vector of key mappings
+	0: left-reject, right-accept
+	1: left-accept, right-reject
+	*/
+	keyMappings = randi(2,parameters.nb_trialsTotal);
+	return keyMappings;
+}
+
+
+function gen_keyStrings() {
+	/*
+	 generate vector of key mapping descriptors
+	 ('left','right' vs 'right','left')
+ 	*/
+	keyStrings = [];
+	keyMappings = [['right: accept',' left: reject'],['left: accept',' right: reject']];
+	for (var ii = 0; ii < sdata.expt_keyassignment.length; ii++) {
+		keyStrings.push(keyMappings[sdata.expt_keyassignment[ii]]);
+	}
+	return keyStrings;
+}
+
 
 
 function gen_domVect() {

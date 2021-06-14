@@ -60,15 +60,9 @@ function showAccept() {
 /*
   shows that subject planted tree
 */
-  // show AcceptKey()
-  drawAcceptTree();
-  board.garden.tree.attr({"opacity":1});
   showChoiceRect(1);
   // if training, provide feedback
-  // i use a fairly redundant expression here.
-  // coding.tasks should be switched to 1 during test.
-  // if I call launchTestSession at the beginning during debugging, this
-  // condititon here ensures that I won't get feedback
+
   if (sdata.expt_sessIDX[coding.index] ==1 && coding.task == 0) {
     setTimeout(showFeedbackPos,parameters.feedback_timein);
   }
@@ -79,8 +73,6 @@ function showReject() {
 /*
   shows that subject did not plant tree
 */
-  // show RejectKey()
-  drawRejectTree();
   showChoiceRect(0);
   // if training, provide feedback (same holds as earlier)
   if (sdata.expt_sessIDX[coding.index] ==1 && coding.task == 0) {
@@ -127,8 +119,6 @@ function showStimuli() {
   showKeys();
   board.stimuli.tree.attr({"opacity": 1});
 
-  //TODO: need to get rid of this frame:
-  board.stimuli.context.attr({"opacity": 0});
 
 }
 
@@ -176,7 +166,7 @@ function showChoiceRect(acceptOrReject) {
   switch (acceptOrReject) {
     case 1:
       // square around chosen val
-      if (parameters.keyassignment) {
+      if (sdata.expt_keyassignment[coding.index]) {
         board.leftfeedback.rect.attr({"opacity": 1});
       }
       else {
@@ -185,7 +175,7 @@ function showChoiceRect(acceptOrReject) {
       break;
     case 0:
       // square around chosen val
-      if (parameters.keyassignment) {
+      if (sdata.expt_keyassignment[coding.index]) {
          board.rightfeedback.rect.attr({"opacity": 1});
       }
       else {
@@ -201,48 +191,39 @@ function showFeedbackPos() {
 /*
   displays positive feedback (subject decided to plant tree)
 */
+  hideStimuli();
   hideKeys();
-  updateFeedback();
+  showFixation(board.fixation);
+  // updateFeedback();
   board.leftfeedback.object.attr({"opacity": 1});
   board.rightfeedback.object.attr({"opacity": 1});
   // square around chosen val
-  if (parameters.keyassignment) {
+  if (sdata.expt_keyassignment[coding.index]) {
     board.leftfeedback.rect.attr({"opacity": 1});
   }
   else {
     board.rightfeedback.rect.attr({"opacity": 1});
   }
-  // visuals: let grow tree or die
-  if (sdata.resp_correct[coding.index]) {
-    // show tree in garden
-    showGarden('tree');
-   }
-   else {
-    // show trunk in garden
-    showGarden('trunk');
-  }
-
 }
 function showFeedbackNeg() {
  /*
   displays negative feedback (subject decided not to plant tree)
  */
+  hideStimuli();
   hideKeys();
-  updateFeedback();
+  showFixation(board.fixation);
+  // updateFeedback();
   board.leftfeedback.object.attr({"opacity": 1});
   board.rightfeedback.object.attr({"opacity": 1});
   // square around chosen val
-  if (parameters.keyassignment) {
+  if (sdata.expt_keyassignment[coding.index]) {
      board.rightfeedback.rect.attr({"opacity": 1});
   }
   else {
     board.leftfeedback.rect.attr({"opacity": 1});
   }
-  // visuals: just empty tree
-  showGarden('empty');
 
 }
-
 
 function showBlock() {
  /*

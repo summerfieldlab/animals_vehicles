@@ -1,10 +1,11 @@
 /*
 Timo Flesch, 2016 [timo.flesch@gmail.com]
 */
-<!-- Remove methods -->
+
 function removeStimuli() {
-  board.stimuli.context.remove();
-  board.stimuli.tree.remove();
+  
+  board.stimuli.tree.image.remove();
+  board.stimuli.tree.frame.remove();
 }
 function removeInstructions() {
   // board.instructions.object.remove();

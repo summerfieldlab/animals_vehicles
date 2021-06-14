@@ -88,16 +88,22 @@ function newTrial() {
   // step 1: remove old crap
   removeCue();
   removeBlurCue();
+  removeStimuli();    // remove old tree
+  removeKeys();       // remove keys
+  removeFeedback();   // remove feedback (rects and values)
 
   // step 2: update content
-  updateCue();
-  updateStimuli();
-  updateFeedback();
+  updateCue();       //draw new context rect
+  updateStimuli();   // draw new tree
+  updateKeys();      // draw new key assignmenth
+  updateFeedback();  // draw new feedback
 
   // step 3: hide new content
   hideCue();
-  hideFeedback();
+  hideStimuli();
+  hideKeys();
   hideGarden();
+  hideFeedback();
 
   // step 4: show context
   showCue();          // context
@@ -150,7 +156,7 @@ function launchTestSession() {
   coding.task++
   goWebsite(html_task);
   addPaper();
-  hideInstructions();
+  // hideInstructions();
   showTestBlockInstructions();
   saveExperiment();
 
