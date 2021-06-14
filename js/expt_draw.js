@@ -15,18 +15,18 @@ function drawKeys(keyAssign) {
 		switch (keyAssign) {
 			case 0:				
 				keyIMGs[0] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'left' +	 '_alpha_reject.png'],
-				board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0],
+				board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0]-parameters.visuals.width.keyIMGoffset-parameters.visuals.width.keyframe,
 				board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
 				keyIMGs[1] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'right' + '_alpha_accept.png'],
-				board.paper.centre[0]+parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,
+				board.paper.centre[0]+parameters.visuals.size.stim[0]/2+parameters.visuals.width.keyIMGoffset,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,
 				parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
 				break;
 			case 1:
 				keyIMGs[0] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'left' + '_alpha_accept.png'],
-				board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0],board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,
-				parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
+				board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0]-parameters.visuals.width.keyIMGoffset,
+				board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
 				keyIMGs[1] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'right' + '_alpha_reject.png'],
-				board.paper.centre[0]+parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,
+				board.paper.centre[0]+parameters.visuals.size.stim[0]/2+parameters.visuals.width.keyIMGoffset,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,
 				parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
 				break;
 		}
@@ -42,16 +42,16 @@ function drawKeys(keyAssign) {
 		*/
 	
 		switch (scrSide) {
-			case 'right':
-				// rect = drawRect(board.paper.object,[board.paper.centre[0]+12,board.paper.centre[1]-180,80,80]);
-				rect = drawRect(board.paper.object,[board.paper.centre[0]+parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,80,80]);
+			case 'right':				
+				rect = drawRect(board.paper.object,[board.paper.centre[0]+parameters.visuals.size.stim[0]/2+parameters.visuals.width.keyIMGoffset,
+					board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,80,80]);
 	
-				rect.attr({"stroke-width":4});
+				rect.attr({"stroke-width":parameters.visuals.width.keyframe});
 				break;
-			case 'left':
-				// rect = drawRect(board.paper.object,[board.paper.centre[0]-90,board.paper.centre[1]-180,80,80]);
-				rect = drawRect(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0],board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,80,80]);
-				rect.attr({"stroke-width":4});
+			case 'left':				
+				rect = drawRect(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0]-parameters.visuals.width.keyIMGoffset-parameters.visuals.width.keyframe,
+					board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,80,80]);
+				rect.attr({"stroke-width":parameters.visuals.width.keyframe});
 				break;
 		}
 		return rect;

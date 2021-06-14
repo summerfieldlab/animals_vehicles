@@ -94,6 +94,8 @@ function setExperiment() {
   // width 
   parameters.visuals.width        =        {};
   parameters.visuals.width.stimframe =      4;  // frame around stimuli
+  parameters.visuals.width.keyframe  =      4;
+  parameters.visuals.width.keyIMGoffset   = 10;
   // colors
   parameters.visuals.cols         =        {};
   parameters.visuals.cols.fbn_pos =        "#080";  // positive feedback

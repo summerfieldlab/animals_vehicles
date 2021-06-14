@@ -7,14 +7,14 @@ function updateCue () {
 
 if(sdata.expt_contextIDX[coding.index]==1){
     board.cue.object.remove();
-    gardenName = "orchard_north.png"
+    gardenName = "an_store_1.png"
 
     drawGarden(gardenName,0);
     drawGarden(gardenName,1);
   }
 else if (sdata.expt_contextIDX[coding.index]==2){
     board.cue.object.remove();
-    gardenName ="orchard_south.png"
+    gardenName ="an_store_2.png"
 
     drawGarden(gardenName,0);
     drawGarden(gardenName,1);
@@ -56,13 +56,13 @@ function updateFeedback() {
       board.leftfeedback.text    = "+".concat(sdata.expt_rewardIDX[coding.index].toString());
       board.leftfeedback.colour  = parameters.visuals.cols.fbn_neu;
     }
-    board.leftfeedback.object   = drawText(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0]+40,board.paper.centre[1]],board.leftfeedback.text);
+    board.leftfeedback.object   = drawText(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0]+30,board.paper.centre[1]],board.leftfeedback.text);
     board.leftfeedback.object.attr({"font-size": board.font_bigsize});
     board.leftfeedback.object.attr({"fill": board.leftfeedback.colour,"stroke":board.leftfeedback.colour, "stroke-width":"1px", "paint-order":"stroke"});
   
     board.rightfeedback.text     = "+0";
     board.rightfeedback.colour   = parameters.visuals.cols.fbn_neu;
-    board.rightfeedback.object   = drawText(board.paper.object,[board.paper.centre[0]+parameters.visuals.size.stim[0]/2+40,board.paper.centre[1]],board.rightfeedback.text);
+    board.rightfeedback.object   = drawText(board.paper.object,[board.paper.centre[0]+parameters.visuals.size.stim[0]/2+50,board.paper.centre[1]],board.rightfeedback.text);
     board.rightfeedback.object.attr({"font-size": board.font_bigsize});
     board.rightfeedback.object.attr({"fill": board.rightfeedback.colour,"stroke":board.rightfeedback.colour, "stroke-width":"1px", "paint-order":"stroke"});
   }
@@ -83,17 +83,16 @@ function updateFeedback() {
       board.rightfeedback.colour  = parameters.visuals.cols.fbn_neu;
     }
   
-    board.rightfeedback.object   = drawText(board.paper.object,[board.paper.centre[0]+parameters.visuals.size.stim[0]/2+40,board.paper.centre[1]],board.rightfeedback.text);
+    board.rightfeedback.object   = drawText(board.paper.object,[board.paper.centre[0]+parameters.visuals.size.stim[0]/2+50,board.paper.centre[1]],board.rightfeedback.text);
     board.rightfeedback.object.attr({"font-size": board.font_bigsize});
     board.rightfeedback.object.attr({"fill": board.rightfeedback.colour,"stroke":board.rightfeedback.colour, "stroke-width":"1px", "paint-order":"stroke"});
   
     board.leftfeedback.text     = "+0";
     board.leftfeedback.colour   = parameters.visuals.cols.fbn_neu;
-    board.leftfeedback.object   = drawText(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0]+40,board.paper.centre[1]],board.leftfeedback.text);
+    board.leftfeedback.object   = drawText(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0]+30,board.paper.centre[1]],board.leftfeedback.text);
     board.leftfeedback.object.attr({"font-size": board.font_bigsize});
     board.leftfeedback.object.attr({"fill": board.leftfeedback.colour,"stroke":board.leftfeedback.colour, "stroke-width":"1px", "paint-order":"stroke"});
   }
-  //NOTE where did that come from? spaghetti code, eh?
-  //hideFeedback();
+ 
   }
   
