@@ -82,34 +82,6 @@ function showReject() {
 
 
 
-function showGarden(whichTree) {
-  /*
-  misleading name, does actually show feedback tree(growing/shrinking/not existing tree)
-  called by showFeedback()
-  whichTree: {'tree'/'trunk'/'empty'}
-  */
-
-  switch (whichTree) {
-    case 'tree':
-
-       drawFeedbackTree();
-       board.garden.tree.attr({'opacity':1});
-      break;
-
-    case 'trunk': // no trunk anymore, just scale tree always..
-      drawFeedbackTree();
-      board.garden.tree.attr({'opacity':1});
-      break;
-
-    case 'empty':
-        //board.garden.tree = board.stimuli.tree;
-      break;
-  }
-
-
-}
-
-
 function showStimuli() {
  /*
   stimulus presentation interval - shows stim in front of blurred cue
@@ -117,7 +89,8 @@ function showStimuli() {
 
   showBlurCue();
   showKeys();
-  board.stimuli.tree.attr({"opacity": 1});
+  board.stimuli.tree.image.attr({"opacity": 1});
+  board.stimuli.tree.frame.attr({"opacity": 1});
 
 
 }

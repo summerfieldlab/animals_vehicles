@@ -13,15 +13,21 @@ function drawKeys(keyAssign) {
 	*/
 		keyIMGs = [];
 		switch (keyAssign) {
-			case 0:
-				// keyIMGs[0] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'left' +	 '_alpha_reject.png'],board.paper.centre[0]-88,board.paper.centre[1]-175,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
-				// keyIMGs[1] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'right' + '_alpha_accept.png'],board.paper.centre[0]+14,board.paper.centre[1]-175,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
-				keyIMGs[0] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'left' +	 '_alpha_reject.png'],board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0],board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
-				keyIMGs[1] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'right' + '_alpha_accept.png'],board.paper.centre[0]+parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
+			case 0:				
+				keyIMGs[0] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'left' +	 '_alpha_reject.png'],
+				board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0],
+				board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
+				keyIMGs[1] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'right' + '_alpha_accept.png'],
+				board.paper.centre[0]+parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,
+				parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
 				break;
 			case 1:
-				keyIMGs[0] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'left' + '_alpha_accept.png'],board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0],board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
-				keyIMGs[1] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'right' + '_alpha_reject.png'],board.paper.centre[0]+parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
+				keyIMGs[0] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'left' + '_alpha_accept.png'],
+				board.paper.centre[0]-parameters.visuals.size.stim[0]/2-parameters.visuals.size.keyIMG[0],board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,
+				parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
+				keyIMGs[1] = board.paper.object.image([parameters.keyURL + 'arrow_' + 'right' + '_alpha_reject.png'],
+				board.paper.centre[0]+parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.keyIMG[1]/2,
+				parameters.visuals.size.keyIMG[0],parameters.visuals.size.keyIMG[1]);
 				break;
 		}
 		return keyIMGs;
@@ -57,8 +63,10 @@ function drawTree(treeName) {
 	draws the stimulus 
 */
 	stimulus = {}
-	stimulus.image = board.paper.object.image(parameters.stimURL.concat(treeName),board.paper.centre[0]-parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.stim[1]/2,parameters.visuals.size.stim[0],parameters.visuals.size.stim[1]).attr({"opacity": 0});
-	stimulus.frame = drawRect(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.stim[1]/2,parameters.visuals.size.stim[0],parameters.visuals.size.stim[1]]).attr({'stroke-width':4}) 
+	stimulus.image = board.paper.object.image(parameters.stimURL.concat(treeName),board.paper.centre[0]-parameters.visuals.size.stim[0]/2,
+	board.paper.centre[1]-parameters.visuals.size.stim[1]/2,parameters.visuals.size.stim[0],parameters.visuals.size.stim[1]).attr({"opacity": 0});
+	stimulus.frame = drawRect(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.stim[1]/2,
+		parameters.visuals.size.stim[0],parameters.visuals.size.stim[1]]).attr({'stroke-width':parameters.visuals.width.stimframe}) 
   	return stimulus
 
 }

@@ -37,13 +37,6 @@ function hideKeys() {
 
 
 
-function hideGarden() {
-  board.cue.object.attr({"opacity":0});
-  board.cue.context.attr({"opacity":0});
-  board.garden.tree.remove();
-
-}
-
 
 function hideInstructions() {
   board.instructions.object.attr({"opacity": 0});

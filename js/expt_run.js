@@ -66,8 +66,6 @@ function addPaper() {
 
   board.stimuli.tree = drawTree("an_size1_speed1_1.jpg");
   hideStimuli();
-  board.garden.tree = board.stimuli.tree;
-  hideGarden();
 
 
   // CLOCK

@@ -90,6 +90,10 @@ function setExperiment() {
   parameters.visuals.size.fbt     =        [150,100]; // feedback image
   parameters.visuals.size.keyIMG  =        [75,75];   // size of key image
 
+
+  // width 
+  parameters.visuals.width        =        {};
+  parameters.visuals.width.stimframe =      4;  // frame around stimuli
   // colors
   parameters.visuals.cols         =        {};
   parameters.visuals.cols.fbn_pos =        "#080";  // positive feedback

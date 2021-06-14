@@ -15,7 +15,6 @@ function newBlock() {
   */
   hideTrial();
   hideCue();
-  hideGarden();
   hideFeedback();
   hideKeys();
   showBlock();
@@ -102,7 +101,6 @@ function newTrial() {
   hideCue();
   hideStimuli();
   hideKeys();
-  hideGarden();
   hideFeedback();
 
   // step 4: show context
@@ -122,7 +120,6 @@ function newTrainingSession() {
 
   hideTrial();
   hideFeedback();
-  hideGarden();
   hideKeys();
 
   showFirstTrainingBlockInstructions();
@@ -136,7 +133,6 @@ function quitTrainingSession() {
 
   // hide old exp
   hideTrial();
-  hideGarden();
   hideFeedback();
   hideKeys();
   // save data
