@@ -58,7 +58,7 @@ function drawTree(treeName) {
 */
 	stimulus = {}
 	stimulus.image = board.paper.object.image(parameters.stimURL.concat(treeName),board.paper.centre[0]-parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.stim[1]/2,parameters.visuals.size.stim[0],parameters.visuals.size.stim[1]).attr({"opacity": 0});
-	stimulus.frame = drawRect(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visualus.size.stim[1]/2,parameters.visuals.size.stim[0],parameters.visualus.size.stim[1]]).attr({'stroke-width':4}) 
+	stimulus.frame = drawRect(board.paper.object,[board.paper.centre[0]-parameters.visuals.size.stim[0]/2,board.paper.centre[1]-parameters.visuals.size.stim[1]/2,parameters.visuals.size.stim[0],parameters.visuals.size.stim[1]]).attr({'stroke-width':4}) 
   	return stimulus
 
 }
