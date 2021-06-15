@@ -35,11 +35,12 @@ function handleResponse(key,category) {
 
     // show choice:
     showAction(category);
-
-    if(sdata.resp_correct[coding.index]){
-      setTimeout(nextTrial,parameters.feedpos_timeout);
-    } else {
-      setTimeout(nextTrial,parameters.feedneg_timeout);
+    if (finishedexperiment == false) {
+      if(sdata.resp_correct[coding.index]){
+        setTimeout(nextTrial,parameters.feedpos_timeout);
+      } else {
+        setTimeout(nextTrial,parameters.feedneg_timeout);
+      }
     }
 
   }
