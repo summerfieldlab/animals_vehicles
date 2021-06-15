@@ -23,7 +23,7 @@ function setInstructions() {
 /*
 	here I define my instructions
 */
-
+	// goWebsite(html_taskinstr)
 	switch (parameters.domaincode){
 		case 1:
 	
@@ -47,7 +47,7 @@ function setInstructions() {
 		inStruct.img[4]     = "instr/instr_an_store_blue.png";
 
 		// trial - stimulus & mapping
-		inStruct.txt[5]     = "Shortly after, you'll see an image of an animal, together with the key assignment for that trial.<br> You'll use the <b>f</b> and <b>j</b> keys to provide responses.<br><br> The key mapping changes randomly from trial to trial.<br><br> In the example below, you'll use the f key to reject and the j key to accept an animal."
+		inStruct.txt[5]     = "Shortly after, you'll see an image of an animal, together with the key assignment for that trial.<br> To communicate your decision, you'll press either the <b>F</b> or <b>J</b> key (corresponding to the left and right side of the screen).<br><br> The key mapping changes randomly from trial to trial.<br><br> In the example below, you'll use the f key to reject and the j key to accept an animal."
 		inStruct.img[5]     =  "instr/instr_an_store_blue_stim_fj.png";
 
 		inStruct.txt[6]     = "In contrast, if the locations of accept/reject were flipped as shown below, you''d instead use f to accept and j to reject an animal.";
@@ -59,19 +59,19 @@ function setInstructions() {
 		
 		// trial - feedback 2
 		inStruct.txt[8]    = "After a short delay, you'll receive your reward/penalty. <br>This indicates if your choice was good or bad."
-		inStruct.img[8]    = "instr/instr_an_store_blue_feedback_accept.png";
+		inStruct.img[8]    = "instr/instr_an_store_blue_feedback.png";
 
 		// trial - feedback 3
 		inStruct.txt[9]    = "You'll see a number on either side of the animal. <br> These are the rewards/penalties. <br> You will always receive a reward of zero for rejecting an animal...";
-		inStruct.img[9]    = "instr/instr_an_store_blue_feedback_arrow_reject.png"
+		inStruct.img[9]    = "instr/instr_an_store_blue_feedback.png"
 
 		// trial - feedback 4
 		inStruct.txt[10]    = "..and either a reward or a penalty for accepting an animal. <br> The value ranges from -50 to +50. <br> The chosen option will be highlighted by a rectangle.";
-		inStruct.img[10]    = "instr/instr_an_store_blue_feedback_arrow_accept.png";
+		inStruct.img[10]    = "instr/instr_an_store_blue_feedback.png";
 
 		// trial - feedback 5
-		inStruct.txt[11]    = "Remember: You want to accept animals that give a reward, and reject animals that would incur a penalty. <br> In the example below, accepting the animal was the right choice.";
-		inStruct.img[11]    = "instr/instr_an_store_blue_feedback_arrow_accept.png";
+		inStruct.txt[11]    = "Remember: You want to accept animals that give a reward, and reject animals that would incur a penalty. <br> In the example below, we should have rejected the animal.";
+		inStruct.img[11]    = "instr/instr_an_store_blue_feedback.png";
 
 		// reminder
 		inStruct.txt[12]    = "The reward/penalty depends on a feature that varies systematically across animals. <br> The relevant feature differs between the orange and blue store. <br> Your task is to figure our what these features might be. <br> Only accept those animals that give you a reward. <br> Avoid the other animals!";
@@ -83,6 +83,7 @@ function setInstructions() {
 		// summary
 		inStruct.txt[14]   = "<p><b> SUMMARY </b> <br>1. There are two stores <br>2. Different types of animals sell best in each store. <br>3. Figure out which animals to accept and which to reject in each store.<br>4. Maximize your reward!<br></p>";
 		inStruct.img[14]   = [];
+		break;
 
 	case 2:
 
@@ -106,10 +107,10 @@ function setInstructions() {
 		inStruct.img[4]     = "instr/instr_ve_store_blue.png";
 
 		// trial - stimulus & mapping
-		inStruct.txt[5]     = "Shortly after, you'll see an image of an vehicle, together with the key assignment for that trial.<br> You'll use the <b>f</b> and <b>j</b> keys to provide responses.<br><br> The key mapping changes randomly from trial to trial.<br><br> In the example below, you'll use the f key to reject and the j key to accept an vehicle."
+		inStruct.txt[5]     = "Shortly after, you'll see an image of a vehicle, together with the key assignment for that trial.<br>  To communicate your decision, you'll press either the <b>F</b> or <b>J</b> key (corresponding to the left and right side of the screen).<br><br> The key mapping changes randomly from trial to trial.<br><br> In the example below, you'll use the f key to reject and the j key to accept a vehicle."
 		inStruct.img[5]     =  "instr/instr_ve_store_blue_stim_fj.png";
 
-		inStruct.txt[6]     = "In contrast, if the locations of accept/reject were flipped as shown below, you''d instead use f to accept and j to reject an vehicle.";
+		inStruct.txt[6]     = "In contrast, if the locations of accept/reject were flipped as shown below, you''d instead use f to accept and j to reject a vehicle.";
 		inStruct.img[6]     = "instr/instr_ve_store_blue_stim_jf.png";
 
 		// trial - decision & feedback 1
@@ -121,11 +122,11 @@ function setInstructions() {
 		inStruct.img[8]    = "instr/instr_ve_store_blue_feedback_accept.png";
 
 		// trial - feedback 3
-		inStruct.txt[9]    = "You'll see a number on either side of the vehicle. <br> These are the rewards/penalties. <br> You always receive a reward of zero for rejecting an vehicle...";
+		inStruct.txt[9]    = "You'll see a number on either side of the vehicle. <br> These are the rewards/penalties. <br> You always receive a reward of zero for rejecting a vehicle...";
 		inStruct.img[9]    = "instr/instr_ve_store_blue_feedback_arrow_reject.png"
 
 		// trial - feedback 4
-		inStruct.txt[10]    = "..and either a reward or a penalty for accepting an vehicle. <br> The value ranges from -50 to +50. <br> The chosen option will be highlighted by a rectangle.";
+		inStruct.txt[10]    = "..and either a reward or a penalty for accepting a vehicle. <br> The value ranges from -50 to +50. <br> The chosen option will be highlighted by a rectangle.";
 		inStruct.img[10]    = "instr/instr_ve_store_blue_feedback_arrow_accept.png";
 
 		// trial - feedback 5
@@ -142,6 +143,7 @@ function setInstructions() {
 		// summary
 		inStruct.txt[14]   = "<p><b> SUMMARY </b> <br>1. There are two stores. <br>2. Different types of vehicles sell best in each store.<br>3. Figure out which vehicles to accept and which to reject for each store.<br>4. Maximize your reward!<br></p>";
 		inStruct.img[14]   = [];
+		break;
 	
 	}
 
