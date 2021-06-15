@@ -16,6 +16,8 @@ function showTrial() {
   // allow answering
   coding.answering = true;
   coding.newblock  = false;
+  // set response countdown
+  startCountdown();
 
   showStimuli();
 
@@ -165,7 +167,7 @@ function showFeedbackPos() {
   displays positive feedback (subject decided to plant tree)
 */
   hideStimuli();
-  hideBlurCue();
+  // hideBlurCue();
   hideKeys();
   showFixation(board.fixation);
   // updateFeedback();
@@ -184,7 +186,7 @@ function showFeedbackNeg() {
   displays negative feedback (subject decided not to plant tree)
  */
   hideStimuli();
-  hideBlurCue();
+  // hideBlurCue();
   hideKeys();
   showFixation(board.fixation);
   // updateFeedback();

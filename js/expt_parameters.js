@@ -40,14 +40,15 @@ function setExperiment() {
 
   // TIMINGS
   parameters.cue_timein       =  0;
-  parameters.cue_timeout      =  500;
-  parameters.stimulus_timein  =  500;
-  parameters.stimulus_timeout =  2500;
-  parameters.response_timeout =  2500;  // response time
-  parameters.warnings_timeout =  2500;  // response warning time
+  parameters.cue_timeout      =  1000;
+  parameters.stimulus_timein  =  1000;
+  parameters.stimulus_timeout =  4000;
+  parameters.response_timeout =  4000;  // max response time
+  parameters.warnings_timeout =     0;  // response warning time (after response_timeout has beed reached)
   parameters.feedback_timein  =   500;  // delay after action until feedback is displayed
   parameters.feedpos_timeout  =  1500;  // feedback time (good)
   parameters.feedneg_timeout  =  1500;  // feedback time (bad)
+  parameters.iti_timeout      =  1000;  // inter trial interval
 
 
   // TASK
@@ -103,9 +104,10 @@ function setExperiment() {
   parameters.visuals.cols.fbn_neu =        "black"; // neutral feedback
   parameters.visuals.cols.fb_bg   =        "grey";  // feedback background
   parameters.visuals.cols.instrtxt =       "white"; // instruction texts for each block
+  parameters.visuals.cols.ctx     =        ['#17B3C6','#F3700F']; // context rects
 
   // misc
-  parameters.visuals.blurlvl      =             3;  // how much blur?
+  parameters.visuals.blurlvl      =             10;  // how much blur?
 
 
   // TEXT

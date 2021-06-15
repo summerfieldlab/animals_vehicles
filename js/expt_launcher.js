@@ -99,17 +99,23 @@ function newTrial() {
 
   // step 3: hide new content
   hideCue();
+  hideBlurCue();
   hideStimuli();
   hideKeys();
   hideFeedback();
 
-  // step 4: show context
+  // step 4: brief iti, then show trial
+  setTimeout(beginTrial,parameters.iti_timeout);
+}
+
+
+function beginTrial() {
   showCue();          // context
 
   // step 5: show stimulus after timeout, wait for response
   coding.timestamp = getTimestamp();
   board.countdown.stimTimeIn  = setTimeout(showTrial, parameters.stimulus_timein);
-  startCountdown(); // manages response time
+  
 }
 
 

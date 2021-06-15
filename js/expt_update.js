@@ -5,21 +5,24 @@ Timo Flesch, 2016 [timo.flesch@gmail.com]
 
 function updateCue () {
 
-if(sdata.expt_contextIDX[coding.index]==1){
-    board.cue.object.remove();
+  board.cue.object.remove();
+  if(sdata.expt_contextIDX[coding.index]==1){
     gardenName = parameters.contexts[0];
-
     drawGarden(gardenName,0);
     drawGarden(gardenName,1);
+    // update context rect 
+    board.blurcue.context.attr({stroke:parameters.visuals.cols.ctx[0],"stroke-width":20}); 
+    board.cue.context.attr({stroke:parameters.visuals.cols.ctx[0],"stroke-width":20}); 
+    
   }
-else if (sdata.expt_contextIDX[coding.index]==2){
-    board.cue.object.remove();
-    gardenName =parameters.contexts[1];
-
+  else if (sdata.expt_contextIDX[coding.index]==2){    
+    gardenName =parameters.contexts[1];    
     drawGarden(gardenName,0);
     drawGarden(gardenName,1);
-  }
-
+    // update context rect 
+    board.blurcue.context.attr({stroke:parameters.visuals.cols.ctx[1],"stroke-width":20});
+    board.cue.context.attr({stroke:parameters.visuals.cols.ctx[1],"stroke-width":20});
+  }  
 }
 
 

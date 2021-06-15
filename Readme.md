@@ -6,8 +6,8 @@ Participants are asked to learn what type of animals/vehicles are preferred by c
 ## Todo list
 
 ### Stimuli
-- update file load routines (flow load js...)
-
+<!-- - update file load routines (flow load js...) -->
+- COMPRESS IMAGES
 ### Trials
 
 1. data: implement temp/final data saver
@@ -18,14 +18,15 @@ Participants are asked to learn what type of animals/vehicles are preferred by c
 <!-- 1. visuals: UNDO THIS keep ctx blurred during resp and feedback period (looks better). perhaps decrease blur lvl -->
 <!-- 1. logic: prevent expt from continuing once stopExperiment has been called -->
 <!-- 1. visuals: dark background, white font for instr -->
-1. logic: fix domain selector and context images (and task selector)
+<!-- 1. logic: fix domain selector and context images (and task selector) -->
 
-- fix response window issue that was brought up by Egnerites 
+<!-- - fix response window issue that was brought up by Egnerites  -->
 
 ### instructions, consent, feedback forms
 - import forms from rating task (updated ethics sheets)
 - write cover story: own pet shops / vehicle shops
 - update block-specific instructions (expt_parameters.js)
+- feedback forms: north/south -> orange/blue
 
 ## codebase semantics
 - replace "garden" with "shop"
