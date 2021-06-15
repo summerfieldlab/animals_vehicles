@@ -49,7 +49,7 @@ function createSdata(){
 	// generate vector of key mappings (1: left-accept, right-reject, 0: left-reject, right-accept)
 	sdata.expt_keyassignment = gen_keyAssignments();
 	// generate vector of key mapping descriptors ('left','right' vs 'right','left')
-	sdata.expt_keyStr       = gen_keyStrings();
+	// sdata.expt_keyStr       = gen_keyStrings();
 
 	// generate vector with "optimal" return up to each trial n (for performance assessment)
 	sdata.expt_returnOPT    = [];  //done on the fly
