@@ -85,7 +85,7 @@ function setExperiment() {
   parameters.visuals              =        {};
   // size
   parameters.visuals.size         =        {};
-  parameters.visuals.size.garden  =        [500,500]; // context
+  parameters.visuals.size.garden  =        [550,550]; // context
   parameters.visuals.size.stim    =        [300,200]; // stimulus image
   parameters.visuals.size.fbt     =        [150,100]; // feedback image
   parameters.visuals.size.keyIMG  =        [75,75];   // size of key image
@@ -102,6 +102,7 @@ function setExperiment() {
   parameters.visuals.cols.fbn_neg =        "#D00";  // negative feedback
   parameters.visuals.cols.fbn_neu =        "black"; // neutral feedback
   parameters.visuals.cols.fb_bg   =        "grey";  // feedback background
+  parameters.visuals.cols.instrtxt =       "white"; // instruction texts for each block
 
   // misc
   parameters.visuals.blurlvl      =             3;  // how much blur?

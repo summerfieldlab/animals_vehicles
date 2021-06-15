@@ -214,7 +214,7 @@ function showBlock() {
     board.block.text = parameters.txt.trainBreakInterleaved;
   }
   board.block.object = drawText(board.paper.object,board.block.centre,board.block.text);
-  board.block.object.attr({"font-size": board.font_medsize});
+  board.block.object.attr({"font-size": board.font_medsize,"fill":parameters.visuals.cols.instrtxt});
   coding.newblock  = true;
 }
 
@@ -233,7 +233,7 @@ function showFirstTrainingBlockInstructions() {
    board.block.text = parameters.txt.trainInstrInterleaved;
   }
   board.block.object = drawText(board.paper.object,board.block.centre,board.block.text);
-  board.block.object.attr({"font-size": board.font_medsize});
+  board.block.object.attr({"font-size": board.font_medsize,"fill":parameters.visuals.cols.instrtxt});
 
 }
 
@@ -247,7 +247,7 @@ function showTestBlockInstructions() {
   board.block.text = parameters.txt.testInstructions;
 
   board.block.object = drawText(board.paper.object,board.block.centre,board.block.text);
-  board.block.object.attr({"font-size": board.font_medsize});
+  board.block.object.attr({"font-size": board.font_medsize,"fill":parameters.visuals.cols.instrtxt});
   coding.newblock  = true;
 
 }
