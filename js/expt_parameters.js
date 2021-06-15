@@ -167,6 +167,9 @@ function setExperiment() {
   // STIM -------------------
   stim = {};
   stim.names = data_set_filenames();
+
+  // INSTRUCTIONS
+  setInstructions();
 }
 
 

@@ -17,7 +17,7 @@ inStruct.cap     = []; // caption/headline
 inStruct.txt     = []; // content
 inStruct.img     = []; // illustration
 
-setInstructions(); 
+// setInstructions(); 
 
 function setInstructions() {
 /*
