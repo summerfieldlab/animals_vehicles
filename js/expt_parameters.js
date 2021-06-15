@@ -242,17 +242,17 @@ function set_subjParams() {
     input.id = input.id.split('').map(Number);
     // 0. domain
     switch (input.id[0]) {
-      case 0:
+      case 1:
         parameters.domains = ['animals','animals'];
         parameters.domaincode =0;
         parameters.taskprefix = ['an_','an_'];
         break;
-      case 1:
+      case 2:
         parameters.domains = ['vehicles', 'vehicles'];
         parameters.domaincode = 1;
         parameters.taskprefix = ['ve_','ve_'];
         break;
-      case 2:
+      case 3:
         parameters.domains = ['animals','vehicles'];
         parameters.domaincode = 2;
         parameters.taskprefix = ['an_','ve_'];
