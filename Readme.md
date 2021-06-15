@@ -20,7 +20,7 @@ Participants are asked to learn what type of animals/vehicles are preferred by c
 <!-- - feedback forms: north/south -> orange/blue -->
 
 - import forms from rating task (updated ethics sheets, prolific ids)
-
+- VERICODE!!!!
 ## codebase semantics
 - replace "garden" with "shop"
 - replace "tree" with "stimulus"

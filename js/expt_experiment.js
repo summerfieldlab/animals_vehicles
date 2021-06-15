@@ -1,22 +1,22 @@
 /*
 Timo Flesch, 2016
 */
-function startExperiment() {
-/*
-  here I preload my images to ensure that the trials do not start with a blank screen
-*/
-  finishedinstructions = true;
-  // set new variables
-  setExperiment(); //expt_parameters.js
-  // inform participant that task is loading
-  goWebsite(html_loading);
+// function startExperiment() {
+// /*
+//   here I preload my images to ensure that the trials do not start with a blank screen
+// */
+//   finishedinstructions = true;
+//   // set new variables
+//   setExperiment(); //expt_parameters.js
+//   // inform participant that task is loading
+//   goWebsite(html_loading);
 
-  // call Jan's function to load data, will automatically proceed with newExperiment()
-  startLoading()
-}
+//   // call Jan's function to load data, will automatically proceed with newExperiment()
+//   startLoading()
+// }
 
 function newExperiment() {
-
+  finishedinstructions = true;
   // clean div
   goWebsite(html_task);
   // set flags

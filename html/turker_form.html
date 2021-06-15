@@ -10,7 +10,7 @@
     <!-- BODY -->
     <div class="bodyBox">
       <p>We would like to ask you some details about yourself.  We will not record anything about you that can identify you.  This is just so we can see whether there are any trends within the data.</p>
-      <p>Also, the MTurker ID will be used to make sure to make sure we pay you!</p>
+      <p>Also, the Prolific ID will be used to make sure to make sure we pay you!</p>
       <br>
       <table style="position:         absolute;
                     width:            300px;
@@ -26,6 +26,8 @@
                 <option selected value=""      >Select</option>
                 <option          value="male"  >Male  </option>
                 <option          value="female">Female</option>
+                <option          value="other" >Other</option>
+                <option          value="pref_not_say">Prefer not to say</option>
             </select>
           </td>
         </tr>
@@ -42,15 +44,16 @@
               <option          value="41-50">41-50 </option>
               <option          value="51-60">51-60 </option>
               <option          value="61+"  >61+     </option>
+              <option          value="pref_not_say">Prefer not to say</option>
             </select>
           </td>
         </tr>
         <tr>
           <td style="padding-top:10px; padding-bottom:10px;">
-            <b>Amazon Mechanical Turk Worker ID</b>
+            <b>Prolific ID</b>
           </td>
           <td>
-            <input type="text" id="turkerSelect"><br>
+            <input type="text" id="turkerSelect" required><br>
           </td>
         </tr>
       </table>

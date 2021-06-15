@@ -209,7 +209,7 @@ function changeButtons() {
 	if (pageIDX == inStruct.txt.length-1) { 		
  		$('#nextButton').text('Start');
  		$('#nextButton').off('click');
- 		$('#nextButton').attr('onclick',"startExperiment()");
+ 		$('#nextButton').attr('onclick',"goWebsite(html_task);newExperiment()");
  		$('.buttonBox#nextButton').css('background-color','red');
  	}
 }
