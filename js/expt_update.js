@@ -7,14 +7,14 @@ function updateCue () {
 
 if(sdata.expt_contextIDX[coding.index]==1){
     board.cue.object.remove();
-    gardenName = "an_store_1.png"
+    gardenName = parameters.contexts[0];
 
     drawGarden(gardenName,0);
     drawGarden(gardenName,1);
   }
 else if (sdata.expt_contextIDX[coding.index]==2){
     board.cue.object.remove();
-    gardenName ="an_store_2.png"
+    gardenName =parameters.contexts[1];
 
     drawGarden(gardenName,0);
     drawGarden(gardenName,1);

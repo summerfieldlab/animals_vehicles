@@ -55,7 +55,7 @@ function setExperiment() {
 
   parameters.keyStr           =         (parameters.keyassignment)? (['left: accept',' right: reject']) : (['right: accept',' left: reject']);
   // urls 
-  parameters.shopURL          =         "orchards/"  // folder that contains images of shops (the contexts)   
+  parameters.shopURL          =         "stores/"  // folder that contains images of shops (the contexts)   
   parameters.stimURL          =         "stims/"; // folder that contains image files of stimuli
   parameters.keyURL           =         "lib/png/"; // location of image files for key mapping
 
@@ -203,6 +203,7 @@ function data_set_filenames() {
       }
     }
     //  fileNames = rnd_fisherYates(fileNames);
+
      if (FLAG_DBG) {
        console.log(fileNames.join(',\n'))
      }
@@ -231,6 +232,7 @@ function set_subjParams() {
     parameters.keyassignment =            0; // l-no r-yes
     parameters.blockiness    =          200; // how many trials of one task per block?
     parameters.domains       = ['animals','animals'] // domains for task A and task B
+    parameters.contexts      = ['an_store_1.png','an_store_2.png'];
     parameters.domaincode    = 0;
   }
 
@@ -241,33 +243,41 @@ function set_subjParams() {
       case 0:
         parameters.domains = ['animals','animals'];
         parameters.domaincode =0;
+        parameters.taskprefix = ['an_','an_'];
         break;
       case 1:
         parameters.domains = ['vehicles', 'vehicles'];
         parameters.domaincode = 1;
+        parameters.taskprefix = ['ve_','ve_'];
         break;
       case 2:
         parameters.domains = ['animals','vehicles'];
         parameters.domaincode = 2;
+        parameters.taskprefix = ['an_','ve_'];
         break;
       default:
         parameters.domains = ['animals','animals'];
         parameters.domaincode = 0;
+        parameters.taskprefix =['an_','an_'];
     }
     
     // 1. curriculum
     switch (input.id[1]) {
       case  1:
         parameters.task_id = 'blocked-A-B'.split('-');
+        parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
       case 2:
         parameters.task_id = 'blocked-B-A'.split('-');
+        parameters.contexts = [parameters.taskprefix[0] + 'store_2.png', parameters.taskprefix[1] + 'store_1.png'];
         break;
       case 3:
         parameters.task_id = 'interleaved-A-B'.split('-');
+        parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
       default:
         parameters.task_id = 'blocked-A-B'.split('-');
+        parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
     }
 

@@ -46,8 +46,8 @@ function addPaper() {
   board.garden     =                 {};
 
   board.cue.centre = board.paper.centre;
-  drawGarden("an_store_1.png",0);
-  drawGarden("an_store_1.png",1);
+  drawGarden(parameters.contexts[0],0);
+  drawGarden(parameters.contexts[0],1);
   hideCue();
   hideBlurCue();
 
