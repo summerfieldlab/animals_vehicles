@@ -54,7 +54,7 @@ function setExperiment() {
   // TASK
   set_subjParams();  // obtains subject-specific params from URL (index.html?id=NUMS)
 
-  parameters.keyStr           =         (parameters.keyassignment)? (['left: accept',' right: reject']) : (['right: accept',' left: reject']);
+  parameters.keyStr           =         (parameters.keyassignment)? (['f: accept',' j: reject']) : (['j: accept',' f: reject']);
   // urls 
   parameters.shopURL          =         "stores/"  // folder that contains images of shops (the contexts)   
   parameters.stimURL          =         "stims/"; // folder that contains image files of stimuli
@@ -112,15 +112,15 @@ function setExperiment() {
 
   // TEXT
   parameters.txt                          =         {};
-  parameters.txt.trainBreakBlocked        =     "A couple of seconds' break. \n \n In the next block, you'll do a different task! \n \n There will be a new orchard and different features of the trees indicate their growth success. \n \n Thus, you need to learn from scratch. \n \n Press the SPACE bar when you're ready to continue";
+  parameters.txt.trainBreakBlocked        =     "A couple of seconds' break. \n \n In the next block, you'll do a different task! \n \n There will be a new store and different features of the stimuli will be predictive of the reward. \n \n Thus, you need to learn from scratch. \n \n Press the SPACE bar when you're ready to continue";
 
-  parameters.txt.trainInstrBlocked        =     "This is the first block of the experiment. \n \n The orchard will be the same for the entire block and a picture of it will be presented on each trial before you'll see the tree. \n \n Via trial and error, you'll learn the rule that tells you which trees grow best in this particular garden. \n \n Press the " + parameters.keyStr[0].split(':').slice(0,1)[0].toUpperCase() + " arrow key if you would like to plant the tree in your orchard, \n \n or the " + parameters.keyStr[1].split(':').slice(0,1)[0].toUpperCase() + " arrow key if you don't want to plant the tree. \n \n Press the SPACE bar when you're ready to continue";
+  parameters.txt.trainInstrBlocked        =     "This is the first block of the experiment. \n \n The store will be the same for the entire block and a picture of it will be presented on each trial before you'll see the stimulus. \n \n Via trial and error, you'll learn the rule that tells you which stimuli give you the highest reward in this store. \n \n Press the f or j key to accept/reject a stimulus. \n \n On each trial, you'll see on the screen which button corresponds to which response. For example, if accept is shown on the left, use the f key. \n\n If it's shown on the right, use the j key. \n\n Press the SPACE bar when you're ready to continue";
 
   parameters.txt.trainBreakInterleaved    =     "A couple of seconds' break. \n \n In the next block, you'll do the same experiment! \n \n Nothing has changed. We just want to give you enough time to discover the rules. \n \n Press the SPACE bar when you're ready to continue";
 
-  parameters.txt.trainInstrInterleaved    =     "This is the first block of the experiment. \n \n Please pay attention to the cue at the beginning of each trial that tells you in which orchard you're currently in! \n \n The cue is just an image of one of the two gardens (North or South). \n \n The cue will change every few trials!. \n \n You need to learn two rules: \n \n Which trees grow best in the North garden, and \n \n Which trees grow best in the South garden? \n \n Press the " + parameters.keyStr[0].split(':').slice(0,1)[0].toUpperCase() + " arrow key if you would like to plant the tree in your orchard, \n \n or the " + parameters.keyStr[1].split(':').slice(0,1)[0].toUpperCase() + " arrow key if you don't want to plant the tree. \n \n Press the SPACE bar when you're ready to continue";
+  parameters.txt.trainInstrInterleaved    =     "This is the first block of the experiment. \n \n Please pay attention to the cue at the beginning of each trial that tells you in which store you're currently in! \n \n The cue is just an image of one of the two stores (orange or blue). \n \n The cue will change every few trials!. \n \n You need to learn two rules: \n \n Which stimuli to accept in the orange store, and \n \n which stimuli to accept in the blue store. \n \n  \n \n Press the f or j key to accept/reject a stimulus. \n \n On each trial, you'll see on the screen which button corresponds to which response. For example, if accept is shown on the left, use the f key. \n\n If it's shown on the right, use the j key. \n\n Press the SPACE bar when you're ready to continue \n \n Press the SPACE bar when you're ready to continue";
 
-  parameters.txt.testInstructions         =     "Now let's see how well you've learned the rules for both gardens! \n \n In the next block, you'll have to plant trees in both gardens, using the knowledge that you've acquired so far! \n \n At the beginning of each trial, you'll see an image of the orchard you're currently in. (North or South). \n \n Then, you'll see a tree and have to decide whether to plant it or not. \n \n  WE WON'T GIVE YOU FEEDBACK. THIS IS THE TEST SESSION. \n \n Press the SPACE bar when you're ready to continue";
+  parameters.txt.testInstructions         =     "Now let's see how well you've learned the rules for both stores! \n \n In the next block, you'll have to accept/reject stimuli for sale in both stores, using the knowledge that you've acquired so far! \n \n At the beginning of each trial, you'll see an image of the store you're currently in (orange or blue). \n \n Then, you'll see a stimulus and have to decide whether to accept it or not. \n \n  WE WON'T GIVE YOU FEEDBACK. THIS IS THE TEST SESSION. \n \n Press the SPACE bar when you're ready to continue";
 
 
 
@@ -183,10 +183,10 @@ function data_set_filenames() {
   /*
      generates array of file names
   */
-    if (parameters.domaincode==0)
+    if (parameters.domaincode==1)
     {
         domains = ['an_'];
-    } else if (parameters.domaincode==1)
+    } else if (parameters.domaincode==2)
     {
       domains = ['ve_'];
     } else 
@@ -244,22 +244,22 @@ function set_subjParams() {
     switch (input.id[0]) {
       case 1:
         parameters.domains = ['animals','animals'];
-        parameters.domaincode =0;
+        parameters.domaincode = 1;
         parameters.taskprefix = ['an_','an_'];
         break;
       case 2:
         parameters.domains = ['vehicles', 'vehicles'];
-        parameters.domaincode = 1;
+        parameters.domaincode = 2;
         parameters.taskprefix = ['ve_','ve_'];
         break;
       case 3:
         parameters.domains = ['animals','vehicles'];
-        parameters.domaincode = 2;
+        parameters.domaincode = 3;
         parameters.taskprefix = ['an_','ve_'];
         break;
       default:
         parameters.domains = ['animals','animals'];
-        parameters.domaincode = 0;
+        parameters.domaincode = 1;
         parameters.taskprefix =['an_','an_'];
     }
     
