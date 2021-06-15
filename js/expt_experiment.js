@@ -64,9 +64,22 @@ function finishExperiment_data() {
   // send the data
   goWebsite(html_sending);
   saveExperiment("data/data");
-  goWebsite(html_vercode);
+  // load vericode website and inject group-specific vericode
+  gotoVericode();
+  
 }
 
+
+function gotoVericode() {
+  webfunc = function(data) {
+    document.getElementById("webbodyDiv").innerHTML = data;
+    document.getElementById('veriCode').innerHTML = parameters.vericode;
+    document.getElementById('veriURL').text = "https://app.prolific.co/submissions/complete?cc=" + parameters.vericode;
+    document.getElementById('veriURL').href = "https://app.prolific.co/submissions/complete?cc=" + parameters.vericode;    
+    coding.webfile = html_vercode;
+  };
+  $.post(html_vercode,[],webfunc);
+}
 
 function stopExperiment() {
   if(startedexperiment){

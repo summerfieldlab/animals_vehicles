@@ -54,6 +54,8 @@ function setExperiment() {
   // TASK
   set_subjParams();  // obtains subject-specific params from URL (index.html?id=NUMS)
 
+  parameters.vericode         =         '81B7C97D';
+
   parameters.keyStr           =         (parameters.keyassignment)? (['f: accept',' j: reject']) : (['j: accept',' f: reject']);
   // urls 
   parameters.shopURL          =         "stores/"  // folder that contains images of shops (the contexts)   
