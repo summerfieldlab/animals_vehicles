@@ -17,8 +17,9 @@ Participants are asked to learn what type of animals/vehicles are preferred by c
 <!-- 1. visuals: dark frame around stimulus image, to create stronger contrast -->
 <!-- 1. visuals: UNDO THIS keep ctx blurred during resp and feedback period (looks better). perhaps decrease blur lvl -->
 <!-- 1. logic: prevent expt from continuing once stopExperiment has been called -->
+<!-- 1. visuals: dark background, white font for instr -->
 1. logic: fix domain selector and context images
-1. visuals: cpoy accept/reject pngs from granada exp (no arrows underneath?)    
+
 - fix response window issue that was brought up by Egnerites 
 
 ### instructions, consent, feedback forms

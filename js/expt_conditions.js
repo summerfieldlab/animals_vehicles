@@ -25,7 +25,7 @@ function createSdata(){
 	// generate block indices
 	sdata.expt_block 	= gen_blockVect();
 
-	// generate context indices (to distinguish between branch and leaf tasks)
+	// generate context indices (to distinguish between task A and task B)
 	sdata.expt_contextIDX   = gen_contextVect();
 
 	// generate session indices (training 1 vs test 2)

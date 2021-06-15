@@ -52,7 +52,7 @@ function handleNoResponse() {
   sdata.resp_reactiontime[coding.index]      = NaN;
   sdata.resp_category[coding.index]          = NaN;
   sdata.resp_correct[coding.index]           = NaN;
-  sdata.resp_reward[coding.index]            =   0; // didn't plant tree
+  sdata.resp_reward[coding.index]            =   0; // default to reject
 
   if(!isFullscreen() && startedexperiment && !finishedexperiment) {
 //    finishExperiment_noresponse();
@@ -77,8 +77,8 @@ function saveResponse(key,category) {
     console.log('TRIAL ' +                        coding.trial);
     console.log('task '  + sdata.expt_contextIDX[coding.index]);
     console.log(treeName);
-    console.log("Stimulus Category (good or bad tree): "   +   sdata.expt_catIDX[coding.index]);
-    console.log("Response Category (plant or not plant): " + sdata.resp_category[coding.index]);
+    console.log("Stimulus Category (good or bad stimulus): "   +   sdata.expt_catIDX[coding.index]);
+    console.log("Response Category (accept or reject): " + sdata.resp_category[coding.index]);
     console.log('\n');
     console.log("Stimulus Reward: " + sdata.expt_rewardIDX[coding.index]);
     console.log("Optimal Reward: "  + sdata.expt_rewardOPT[coding.index]);
