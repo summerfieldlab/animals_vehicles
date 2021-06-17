@@ -15,6 +15,7 @@ function newBlock() {
   */
   hideTrial();
   hideCue();
+  hideBlurCue();
   hideFeedback();
   hideKeys();
   showBlock();

@@ -5,6 +5,8 @@ Timo Flesch, 2016 [timo.flesch@gmail.com]
 function hideTrial() {
   hideFixation(board.fixation);
   hideStimuli();
+  hideBlurCue();
+  hideCue();
   // hideInstructions();
   // hideClock();
 }

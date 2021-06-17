@@ -71,7 +71,7 @@ function setExperiment() {
   parameters.nb_unique        =         4; // 4 unique exemplars (per phase) 
   parameters.nb_exemplars     =        10; // total number of unique exemplars per stim in dataset
   parameters.nb_trials_train  =         parameters.nb_branchiness*parameters.nb_leafiness*parameters.nb_unique*parameters.nb_reps; //200 trials per training task 
-  parameters.nb_trials_test   =         parameters.nb_branchiness*parameters.nb_leafiness*parameters.nb_unique*parameters.nb_tasks_test; // 100 trials per training task 
+  parameters.nb_trials_test   =         parameters.nb_branchiness*parameters.nb_leafiness*parameters.nb_unique*parameters.nb_tasks_test; // 100 trials per test task 
   parameters.nb_blocks        =         2; // has to be at least 2 (both tasks
   parameters.nb_blocks_test   =         1; // .. + test)
   parameters.nb_total_train   =         (parameters.nb_blocks)*parameters.nb_trials_train; // 400 training trials in total
