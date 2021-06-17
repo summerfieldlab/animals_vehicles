@@ -240,7 +240,7 @@ function set_subjParams() {
     parameters.blockiness    =          200; // how many trials of one task per block?
     parameters.domains       = ['animals','animals'] // domains for task A and task B
     parameters.contexts      = ['an_store_1.png','an_store_2.png'];
-    parameters.domaincode    = 0;
+    parameters.domaincode    = 1;
   }
 
   else {

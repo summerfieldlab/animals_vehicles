@@ -43,10 +43,10 @@ div.bodyBox{
   background:            #fff;
 
   position:              absolute;
-  top:                   150px;
-  bottom:                150px;
-  left:                  10%;
-  right:                 10%;
+  top:                   5%;
+  bottom:                5%;
+  left:                  5%;
+  right:                 5%;
   padding:               40px 80px 40px 80px;
 
   color:                 #444;
