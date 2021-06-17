@@ -28,7 +28,7 @@ function setInstructions() {
 		case 1:
 	
 		inStruct.txt[0]     = " Hi! <br> Thanks for taking part in this experiment! <br> Please use the buttons below to navigate through the instructions."
-		inStruct.img[0]     = [];
+		inStruct.img[0]     = "";
 
 		// north orchard
 		inStruct.txt[1]     = "Imagine that you've just started a new job as store manager. <br> You are responsible for two animal stores.<br>The first one is the <b>blue animal store</b>. <br>"
@@ -79,13 +79,16 @@ function setInstructions() {
 
 		// structure
 		inStruct.txt[13]    ="There will be a TRAINING PHASE and a TEST PHASE. <br> You'll receive feedback only during the training phase. <br> The training phase consists of two blocks and the test phase of one block. <br>All the blocks are of equal length.<br>There will be breaks between the blocks. <br>"
-		inStruct.img[13]    = [];
+		inStruct.img[13]    = "";
 		// summary
 		inStruct.txt[14]   = "<p><b> SUMMARY </b> <br>1. There are two stores <br>2. Different types of animals sell best in each store. <br>3. Figure out which animals to accept and which to reject in each store.<br>4. Maximize your reward!<br></p>";
-		inStruct.img[14]   = [];
+		inStruct.img[14]   = "";
 		break;
 
 	case 2:
+
+		inStruct.txt[0]     = " Hi! <br> Thanks for taking part in this experiment! <br> Please use the buttons below to navigate through the instructions."
+		inStruct.img[0]     = "";
 
 		// north orchard
 		inStruct.txt[1]     = "Imagine that you've just started a new job as store manager. <br> You are responsible for two vehicle stores.<br>The first one is the <b>blue vehicle store</b>. <br>"
@@ -136,10 +139,10 @@ function setInstructions() {
 
 		// structure
 		inStruct.txt[13]    ="There will be a TRAINING PHASE and a TEST PHASE. <br> You'll receive feedback only during the training phase. <br> The training phase consists of two blocks and the test phase of one block. <br>All the blocks are of equal length.<br>There will be breaks between the blocks. <br>"
-		inStruct.img[13]    = [];
+		inStruct.img[13]    = "";
 		// summary
 		inStruct.txt[14]   = "<p><b> SUMMARY </b> <br>1. There are two stores <br>2. Different types of vehicles sell best in each store. <br>3. Figure out which vehicles to accept and which to reject in each store.<br>4. Maximize your reward!<br></p>";
-		inStruct.img[14]   = [];
+		inStruct.img[14]   = "";
 		break;
 	
 	}
