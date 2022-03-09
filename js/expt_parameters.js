@@ -272,22 +272,23 @@ function set_subjParams() {
     switch (input.id[1]) {
       case  1:
         parameters.task_id = 'blocked-A-B'.split('-');
-        parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
+        // parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
       case 2:
         parameters.task_id = 'blocked-B-A'.split('-');
-        parameters.contexts = [parameters.taskprefix[0] + 'store_2.png', parameters.taskprefix[1] + 'store_1.png'];
+        // parameters.contexts = [parameters.taskprefix[0] + 'store_2.png', parameters.taskprefix[1] + 'store_1.png'];
         break;
       case 3:
         parameters.task_id = 'interleaved-A-B'.split('-');
-        parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
+        // parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
       default:
         parameters.task_id = 'blocked-A-B'.split('-');
-        parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
+        // parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
     }
 
+    parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
     // 2. reward & boundary 
     parameters.val_rewAssignment   = input.id[2]; // second and third items
 
