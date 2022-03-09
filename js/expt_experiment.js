@@ -20,7 +20,7 @@ function newExperiment() {
   // clean div
   goWebsite(html_task);
   // set flags
-   startedexperiment  = true;
+  startedexperiment = true;
   finishedexperiment = false;
 
   // run the experiment
@@ -30,21 +30,18 @@ function newExperiment() {
 
 function finishExperiment_resize() {
   //instructions screen
-  if(!isFullscreen() && $('#startButton').length>0){
-    document.getElementById('startButton').disabled = true;
+  if (!isFullscreen() && $("#startButton").length > 0) {
+    document.getElementById("startButton").disabled = true;
   }
   //task screen
-  if(!isFullscreen() && startedexperiment && !finishedexperiment) {
+  if (!isFullscreen() && startedexperiment && !finishedexperiment) {
     stopExperiment();
     saveExperiment("data/resize");
     goWebsite(html_errscreen);
-  }
-   else if(!isFullscreen() && startedinstructions && !finishedinstructions) {
+  } else if (!isFullscreen() && startedinstructions && !finishedinstructions) {
     goWebsite(html_errscreen);
-
   }
 }
-
 
 function finishExperiment_noresponse() {
   // stop the experiment
@@ -55,10 +52,9 @@ function finishExperiment_noresponse() {
   goWebsite(html_errnoresp);
 }
 
-
 function finishExperiment_data() {
   // stop the experiment
-  console.log('finished experiment');
+  console.log("finished experiment");
   edata.exp_finishtime = getTimestamp();
   //stopExperiment();
   // send the data
@@ -66,23 +62,23 @@ function finishExperiment_data() {
   saveExperiment("data/data");
   // load vericode website and inject group-specific vericode
   gotoVericode();
-  
 }
 
-
 function gotoVericode() {
-  webfunc = function(data) {
+  webfunc = function (data) {
     document.getElementById("webbodyDiv").innerHTML = data;
-    document.getElementById('veriCode').innerHTML = parameters.vericode;
-    document.getElementById('veriURL').text = "https://app.prolific.co/submissions/complete?cc=" + parameters.vericode;
-    document.getElementById('veriURL').href = "https://app.prolific.co/submissions/complete?cc=" + parameters.vericode;    
+    document.getElementById("veriCode").innerHTML = parameters.vericode;
+    document.getElementById("veriURL").text =
+      "https://app.prolific.co/submissions/complete?cc=" + parameters.vericode;
+    document.getElementById("veriURL").href =
+      "https://app.prolific.co/submissions/complete?cc=" + parameters.vericode;
     coding.webfile = html_vercode;
   };
-  $.post(html_vercode,[],webfunc);
+  $.post(html_vercode, [], webfunc);
 }
 
 function stopExperiment() {
-  if(startedexperiment){
+  if (startedexperiment) {
     // set flags
     finishedexperiment = true;
     // remove
@@ -95,25 +91,24 @@ function stopExperiment() {
   }
 }
 
-
-function saveExperiment(path_data){
+function saveExperiment(path_data) {
   //set the data to be saved
-  var path_tmp  = "data/tmp";
+  var path_tmp = "data/tmp";
 
   var alldata = {
-      task:       participant_task,
-      path:       path_tmp,
-      id:         participant_id,
-      rule_taskNorth: JSON.stringify(participant_taskNorth_rule),
-      rule_taskSouth: JSON.stringify(participant_taskSouth_rule),
-      task_id:     JSON.stringify(parameters.task_id),
-      key_assign:  JSON.stringify(parameters.keyStr),
-      sdata:      JSON.stringify(sdata),
-      edata:      JSON.stringify(edata),
-      parameters: JSON.stringify(parameters),
+    task: participant_task,
+    path: path_tmp,
+    id: participant_id,
+    rule_taskNorth: JSON.stringify(participant_taskNorth_rule),
+    rule_taskSouth: JSON.stringify(participant_taskSouth_rule),
+    task_id: JSON.stringify(parameters.task_id),
+    key_assign: JSON.stringify(parameters.keyStr),
+    sdata: JSON.stringify(sdata),
+    edata: JSON.stringify(edata),
+    parameters: JSON.stringify(parameters),
   };
 
-  if(finishedexperiment) {
+  if (finishedexperiment) {
     alldata.move = path_data;
   }
   //send it to the back-end

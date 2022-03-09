@@ -3,9 +3,8 @@ Timo Flesch, 2016 [timo.flesch@gmail.com]
 */
 
 function removeStimuli() {
-  
-  board.stimuli.tree.image.remove();
-  board.stimuli.tree.frame.remove();
+  board.stimuli.stimulus.image.remove();
+  board.stimuli.stimulus.frame.remove();
 }
 function removeInstructions() {
   // board.instructions.object.remove();
@@ -16,17 +15,17 @@ function removeFeedback() {
   board.rightfeedback.object.remove();
   board.rightfeedback.rect.remove();
 }
-function removePaper(){
+function removePaper() {
   board.paper.object.remove();
 }
 
 function removeCue() {
-	board.cue.object.remove();
+  board.cue.object.remove();
   board.cue.context.remove();
 }
 
 function removeBlurCue() {
-	board.blurcue.object.remove();
+  board.blurcue.object.remove();
   board.blurcue.context.remove();
 }
 

@@ -1,4 +1,3 @@
-
 /* **************************************************************************************
 
 Launches blocks and trials
@@ -26,13 +25,12 @@ function startBlock() {
   /*
     begins with first trial in new block
   */
-  if (coding.newblock){
-    coding.newblock  = false;
+  if (coding.newblock) {
+    coding.newblock = false;
     hideBlock();
     newTrial();
   }
 }
-
 
 function nextTrial() {
   /*
@@ -44,12 +42,16 @@ function nextTrial() {
   coding.trial++;
 
   // INCREMENT BLOCK
-  if (coding.trial==parameters.nb_trials_train || (coding.trial==parameters.nb_trials_test & sdata.expt_sessIDX[coding.index]==2)) {
+  if (
+    coding.trial == parameters.nb_trials_train ||
+    (coding.trial == parameters.nb_trials_test) &
+      (sdata.expt_sessIDX[coding.index] == 2)
+  ) {
     coding.block++;
-    coding.trial=0;
-    coding.return    = coding.index;
+    coding.trial = 0;
+    coding.return = coding.index;
     // END OF EXPERIMENT
-    if (coding.block==parameters.nb_blocks+parameters.nb_blocks_test) {
+    if (coding.block == parameters.nb_blocks + parameters.nb_blocks_test) {
       // empty the canvas
       stopExperiment();
       // get feedback!
@@ -59,19 +61,17 @@ function nextTrial() {
     }
 
     // NEW BLOCK
-    coding.newblock  = true;
-    if (sdata.expt_sessIDX[coding.index]==2) {
+    coding.newblock = true;
+    if (sdata.expt_sessIDX[coding.index] == 2) {
       // quit the training phase
       quitTrainingSession();
       // launch the test phase
       launchTestSession();
       return;
-    }
-    else {
+    } else {
       newBlock();
       return;
     }
-
   }
 
   // NEW TRIAL
@@ -79,24 +79,26 @@ function nextTrial() {
 }
 
 function newTrial() {
-/*
+  /*
   !!most important function, defines what happens during a trial!!
 */
 
-  if (!startedexperiment) { return; }
+  if (!startedexperiment) {
+    return;
+  }
 
   // step 1: remove old crap
   removeCue();
   removeBlurCue();
-  removeStimuli();    // remove old tree
-  removeKeys();       // remove keys
-  removeFeedback();   // remove feedback (rects and values)
+  removeStimuli(); // remove old stimulus
+  removeKeys(); // remove keys
+  removeFeedback(); // remove feedback (rects and values)
 
   // step 2: update content
-  updateCue();       //draw new context rect
-  updateStimuli();   // draw new tree
-  updateKeys();      // draw new key assignmenth
-  updateFeedback();  // draw new feedback
+  updateCue(); //draw new context rect
+  updateStimuli(); // draw new stimulus
+  updateKeys(); // draw new key assignmenth
+  updateFeedback(); // draw new feedback
 
   // step 3: hide new content
   hideCue();
@@ -106,22 +108,22 @@ function newTrial() {
   hideFeedback();
 
   // step 4: brief iti, then show trial
-  setTimeout(beginTrial,parameters.iti_timeout);
+  setTimeout(beginTrial, parameters.iti_timeout);
 }
 
-
 function beginTrial() {
-  showCue();          // context
+  showCue(); // context
 
   // step 5: show stimulus after timeout, wait for response
   coding.timestamp = getTimestamp();
-  board.countdown.stimTimeIn  = setTimeout(showTrial, parameters.stimulus_timein);
-  
+  board.countdown.stimTimeIn = setTimeout(
+    showTrial,
+    parameters.stimulus_timein
+  );
 }
 
-
 function newTrainingSession() {
-/*
+  /*
   begins new training session (either blocked or interleaved)
 */
 
@@ -132,9 +134,8 @@ function newTrainingSession() {
   showFirstTrainingBlockInstructions();
 }
 
-
 function quitTrainingSession() {
-/*
+  /*
   finishes training session and asks for feedback
 */
 
@@ -147,20 +148,17 @@ function quitTrainingSession() {
 
   // remove canvas
   removePaper();
-
 }
 
 function launchTestSession() {
-/*
+  /*
   begins new test session (always interleaved)
 */
 
-
-  coding.task++
+  coding.task++;
   goWebsite(html_task);
   addPaper();
   // hideInstructions();
   showTestBlockInstructions();
   saveExperiment();
-
 }
