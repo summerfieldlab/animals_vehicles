@@ -25,7 +25,7 @@ function showTrial() {
 
 function showCue() {
   /*
-    shwos contextual cue (orchard)
+    shwos contextual cue (shop)
   */
 
   hideFixation(board.fixation);
@@ -37,7 +37,7 @@ function showCue() {
 
 function showBlurCue() {
   /*
-    shows blurred version of contextual cue (orchard)
+    shows blurred version of contextual cue (shop)
   */
 
   board.blurcue.object.attr({ opacity: 1 });
@@ -46,7 +46,7 @@ function showBlurCue() {
 
 function showAction(whichAction) {
   /*
-  whichAction: [1/0] (plant,don't plant)
+  whichAction: [1/0] (accept,reject)
 */
 
   whichAction ? showAccept() : showReject();
@@ -54,7 +54,7 @@ function showAction(whichAction) {
 
 function showAccept() {
   /*
-  shows that subject planted stimulus
+  shows that subject accepted stimulus
 */
   showChoiceRect(1);
   // if training or if congruent test trial, provide feedback
@@ -71,7 +71,7 @@ function showAccept() {
 
 function showReject() {
   /*
-  shows that subject did not plant stimulus
+  shows that subject did not accept stimulus
 */
   showChoiceRect(0);
   // if training, or test with congruent trial, provide feedback (same holds as earlier)
@@ -117,12 +117,12 @@ function showInstructions() {
 // /*
 //   shows feedback (reward + resized stimulus)
 // */
-//   if(sdata.resp_category[coding.index]){ // if decided to plant
+//   if(sdata.resp_category[coding.index]){ // if decided to accept
 //
 //    showFeedbackPos();
 //
 //
-//   } else { // if not decided to plant or no response
+//   } else { // if not decided to accept or no response
 //    showShop('empty'); // show empty shop
 //    showFeedbackNeg();
 //    // setTimeout(showFeedbackNeg,parameters.feedback_timein);
@@ -156,7 +156,7 @@ function showChoiceRect(acceptOrReject) {
 
 function showFeedbackPos() {
   /*
-  displays positive feedback (subject decided to plant stimulus)
+  displays positive feedback (subject decided to accept stimulus)
 */
   hideStimuli();
   // hideBlurCue();
@@ -174,7 +174,7 @@ function showFeedbackPos() {
 }
 function showFeedbackNeg() {
   /*
-  displays negative feedback (subject decided not to plant stimulus)
+  displays negative feedback (subject decided not to accept stimulus)
  */
   hideStimuli();
   // hideBlurCue();

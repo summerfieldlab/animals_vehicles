@@ -144,8 +144,8 @@ function setExperiment() {
   sdata.expt_sizeIDX = []; // level of size
   sdata.expt_speedIDX = []; // level of speed
   sdata.expt_rewardIDX = []; // reward: neg & pos
-  sdata.expt_catIDX = []; // category: plant vs don't plant
-  sdata.expt_contextIDX = []; // task: north vs south
+  sdata.expt_catIDX = []; // category: accept vs reject
+  sdata.expt_contextIDX = []; // task: blue vs orange
   sdata.expt_domainIDX = []; // domain: animals vs objects
   createSdata();
 
@@ -242,7 +242,7 @@ function set_subjParams() {
   input = getQueryParams();
 
   if (typeof input.id == "undefined") {
-    parameters.task_id = "blocked-A-B".split("-"); // blocked north south
+    parameters.task_id = "blocked-A-B".split("-"); // blocked blue orange
     parameters.val_rewAssignment = 1; // no flipped assignments, cardinal boundary
     parameters.keyassignment = 0; // l-no r-yes
     parameters.blockiness = 200; // how many trials of one task per block?

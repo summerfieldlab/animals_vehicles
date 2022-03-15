@@ -29,12 +29,12 @@ function setInstructions() {
         " Hi! <br> Thanks for taking part in this experiment! <br> Please use the buttons below to navigate through the instructions.";
       inStruct.img[0] = "";
 
-      // north orchard
+      // blue shop
       inStruct.txt[1] =
         "Imagine that you've just started a new job as store manager. <br> You are responsible for two animal stores.<br>The first one is the <b>blue animal store</b>. <br>";
       inStruct.img[1] = "instr/instr_an_store_blue.png";
 
-      // south orchard
+      // orange shop
       inStruct.txt[2] =
         "And the second one is the <b>orange animal store</b>. <br>";
       inStruct.img[2] = "instr/instr_an_store_orange.png";
@@ -103,12 +103,12 @@ function setInstructions() {
         " Hi! <br> Thanks for taking part in this experiment! <br> Please use the buttons below to navigate through the instructions.";
       inStruct.img[0] = "";
 
-      // north orchard
+      // blue shop
       inStruct.txt[1] =
         "Imagine that you've just started a new job as store manager. <br> You are responsible for two vehicle stores.<br>The first one is the <b>blue vehicle store</b>. <br>";
       inStruct.img[1] = "instr/instr_ve_store_blue.png";
 
-      // south orchard
+      // orange shop
       inStruct.txt[2] =
         "And the second one is the <b>orange vehicle store</b>. <br>";
       inStruct.img[2] = "instr/instr_ve_store_orange.png";
