@@ -36,7 +36,7 @@ function hideKeys() {
 }
 
 function hideInstructions() {
-  board.instructions.object.attr({ opacity: 0 });
+  board.instructions.object.attr({ opacity: 0 });  
 }
 
 function hideFeedback() {
@@ -48,4 +48,5 @@ function hideFeedback() {
 
 function hideBlock() {
   board.block.object.remove();
+  board.block.image.remove();
 }

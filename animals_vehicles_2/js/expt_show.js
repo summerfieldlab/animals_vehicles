@@ -241,8 +241,12 @@ function showTestBlockInstructions() {
 
   board.block = {};
   board.block.centre = board.paper.centre;
-  board.block.text = parameters.txt.testInstructions;
-
+  if (parameters.domaincode == 1) {
+    board.block.text = parameters.txt.testInstructions_dom1;
+  } else if (parameters.domaincode == 2) {
+    board.block.text = parameters.txt.testInstructions_dom2;
+  }
+  board.block.centre[1] *= 0.5;
   board.block.object = drawText(
     board.paper.object,
     board.block.centre,
@@ -252,5 +256,16 @@ function showTestBlockInstructions() {
     "font-size": board.font_medsize,
     fill: parameters.visuals.cols.instrtxt,
   });
-  coding.newblock = true;
+
+  // add illustration
+  shopName = "instr_" + parameters.taskprefix[3] + "both_stores.png";
+  board.block.image = board.paper.object
+    .image(
+      parameters.shopURL.concat(shopName),
+      board.paper.centre[0] - parameters.visuals.size.shop[0] / 2,
+      board.paper.centre[1] + parameters.visuals.size.shop[1] / 4,
+      parameters.visuals.size.shop[0],
+      parameters.visuals.size.shop[1]
+    )
+    .attr({ opacity: 1 }).coding.newblock = true;
 }
