@@ -94,7 +94,7 @@ function setInstructions() {
       // structure
       inStruct.txt[13] =
         "Now here is the catch! There will be a <b>training phase</b> and a <b>test phase</b>. <br> <b>In the test phase, we'll give you two new stores that sell vehicles instead of animals. </b> <br> Importantly, these vehicle stores are frequented by customers with similar preferences to those who go to the animal stores. <br> This means that you will be able to apply your knowledge about the animal stores to the vehicle stores. <br> You should only accept those vehicles that you think will be liked by your customers, and reject the others. <br> To make the job easier, we will give you feedback on some of the test trials, but not all of them."
-      inStruct.img[13] = ""; //TODO insert vehicle stores image
+      inStruct.img[13] = "instr/instr_ve_both_stores.png"; 
       // summary
       inStruct.txt[14] =
         "<p><b> SUMMARY </b> <br>1. There are two animal stores during training, and two vehicle stores during the test phase. <br>2. Different types of animals sell best in each store. <br>3. Figure out which animals to accept and which to reject in each store.<br> 4. Transfer this knowledge to two vehicle stores in the test phase! <br> 5. Maximize your reward!<br></p>";
@@ -168,7 +168,7 @@ function setInstructions() {
       // structure
       inStruct.txt[13] =
         "Now here is the catch! There will be a <b>training phase</b> and a <b>test phase</b>. <br> <b>In the test phase, we'll give you two new stores that sell animals instead of vehicles. </b> <br> Importantly, these animal stores are frequented by customers with similar preferences to those who go to the vehicle stores. <br> This means that you will be able to apply your knowledge about the vehicle stores to the animal stores. <br> You should only accept those animals that you think will be liked by your customers, and reject the others. <br> To make the job easier, we will give you feedback on some of the test trials, but not all of them."
-      inStruct.img[13] = ""; //TODO insert vehicle stores image
+      inStruct.img[13] = "instr/instr_an_both_stores.png"; 
       // summary
       inStruct.txt[14] =
         "<p><b> SUMMARY </b> <br>1. There are two vehicle stores during training, and two animal stores during the test phase. <br>2. Different types of vehicles sell best in each store. <br>3. Figure out which vehicles to accept and which to reject in each store.<br> 4. Transfer this knowledge to two animals stores in the test phase! <br> 5. Maximize your reward!<br></p>";
