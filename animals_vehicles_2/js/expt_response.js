@@ -1,5 +1,5 @@
 /*
-Timo Flesch, 2016 [timo.flesch@gmail.com]
+Timo Flesch [timoflesch19 [at] gmail [dot] com]
 */
 // <!-- Response methods -->
 function handleLeft() {

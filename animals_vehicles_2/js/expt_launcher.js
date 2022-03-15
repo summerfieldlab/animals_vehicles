@@ -3,7 +3,7 @@
 Launches blocks and trials
 original version: Timo Flesch, 2016
 updated version: Timo Flesch, 2021
-[timoflesch19@gmail.com]
+[[timoflesch19 [at] gmail [dot] com]]
 
 based on earlier version of script by jdobalaguer@gmail.com
 ************************************************************************************** */
