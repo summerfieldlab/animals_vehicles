@@ -93,7 +93,7 @@ function gen_keyStrings() {
     ["right: accept", " left: reject"],
     ["left: accept", " right: reject"],
   ];
-  for (var ii = 0; ii < sdata.expt_keyassignment.length; ii++) {
+  for (let ii = 0; ii < sdata.expt_keyassignment.length; ii++) {
     keyStrings.push(keyMappings[sdata.expt_keyassignment[ii]]);
   }
   return keyStrings;
@@ -130,9 +130,10 @@ function gen_blockVect() {
 		  generates array of block indices
 	  */
   tmp = new Array();
+  var thisBlock = [];
   // training blocks
   for (i = 1; i <= parameters.nb_blocks; i++) {
-    var thisBlock = repmat(i, parameters.nb_trials_train);
+    thisBlock = repmat(i, parameters.nb_trials_train);
     tmp = tmp.concat(thisBlock);
   }
   // test block
@@ -141,7 +142,7 @@ function gen_blockVect() {
     i <= parameters.nb_blocks + parameters.nb_blocks_test;
     i++
   ) {
-    var thisBlock = repmat(i, parameters.nb_trials_test);
+    thisBlock = repmat(i, parameters.nb_trials_test);
     tmp = tmp.concat(thisBlock);
   }
   return tmp;
@@ -197,23 +198,24 @@ function gen_sizeVect() {
 		 generates vector of size levels
 	  */
   var tmp = new Array();
+  var thisSize = [];
   // train
   var trainBlock = [];
   for (i = 1; i <= parameters.nb_unique * parameters.nb_blocks; i++) {
     for (j = 1; j <= parameters.nb_size; j++) {
-      var thisBranch = repmat(j, parameters.nb_speed);
-      tmp = tmp.concat(thisBranch);
+      thisSize = repmat(j, parameters.nb_speed);
+      tmp = tmp.concat(thisSize);
     }
   }
   trainBlock = repmat(tmp, parameters.nb_reps);
 
   //test
   var testBlock = [];
-  var tmp = [];
+  tmp = [];
   for (i = 1; i <= parameters.nb_unique * parameters.nb_blocks_test; i++) {
     for (j = 1; j <= parameters.nb_size; j++) {
-      var thisBranch = repmat(j, parameters.nb_speed);
-      tmp = tmp.concat(thisBranch);
+      thisSize = repmat(j, parameters.nb_speed);
+      tmp = tmp.concat(thisSize);
     }
   }
   testBlock = repmat(tmp, parameters.nb_tasks_test);
@@ -228,7 +230,7 @@ function gen_catVect() {
   // 1. obtain catard and cat matrices
   condMatrices = loadTaskMatrix(parameters.val_rewAssignment);
   // 2. loop through trials and assign category  accordingly
-  for (var ii = 0; ii < sdata.expt_contextIDX.length; ii++) {
+  for (let ii = 0; ii < sdata.expt_contextIDX.length; ii++) {
     if (sdata.expt_contextIDX[ii] == 1) {
       catVect[ii] =
         condMatrices.catMat_speed[sdata.expt_speedIDX[ii] - 1][
@@ -244,6 +246,38 @@ function gen_catVect() {
   return catVect;
 }
 
+function gen_congruencyVect() {
+  /*
+  creates vector that determines for each trial whether it's congruent or not
+  (congruent=same response in task A and task B)
+*/
+  congruencyVect = [];
+  condMatrices = loadTaskMatrix(parameters.val_rewAssignment);
+  for (let ii = 0; ii < sdata.expt_contextIDX.length; ii++) {
+    congruencyVect[ii] = Number(
+      condMatrices.catMat_speed[sdata.expt_speedIDX[ii] - 1][
+        sdata.expt_sizeIDX[ii] - 1
+      ] ==
+        condMatrices.catMat_size[sdata.expt_speedIDX[ii] - 1][
+          sdata.expt_sizeIDX[ii] - 1
+        ]
+    );
+    // however, if it's a boundary trial, treat as incongruent
+    if (
+      (condMatrices.catMat_speed[sdata.expt_speedIDX[ii] - 1][
+        sdata.expt_sizeIDX[ii] - 1
+      ] ==
+        0) &&
+      (condMatrices.catMat_size[sdata.expt_speedIDX[ii] - 1][
+        sdata.expt_sizeIDX[ii] - 1
+      ] ==
+        0)
+    ) {
+      congruencyVect[ii] = 0;
+    }
+  }
+}
+
 function gen_rewardVect() {
   /*
    * simplified rewvect generation to avoid redundancy
@@ -252,7 +286,7 @@ function gen_rewardVect() {
   // 1. obtain reward and rew matrices
   condMatrices = loadTaskMatrix(parameters.val_rewAssignment);
   // 2. loop through trials and assign category  accordingly
-  for (var ii = 0; ii < sdata.expt_contextIDX.length; ii++) {
+  for (let ii = 0; ii < sdata.expt_contextIDX.length; ii++) {
     if (sdata.expt_contextIDX[ii] == 1) {
       rewVect[ii] =
         condMatrices.rewMat_speed[sdata.expt_speedIDX[ii] - 1][
@@ -274,8 +308,8 @@ function gen_exemplarVect() {
 		  both for training and test phase (note: I want different exemplars)
 	  */
   exemplarVectTrain = [];
-  for (var blockID = 0; blockID < parameters.nb_blocks; blockID++) {
-    for (var ii = 0; ii < parameters.exemplar_ids_train.length; ii++) {
+  for (let blockID = 0; blockID < parameters.nb_blocks; blockID++) {
+    for (let ii = 0; ii < parameters.exemplar_ids_train.length; ii++) {
       exemplarVectTrain = exemplarVectTrain.concat(
         repmat(
           parameters.exemplar_ids_train[ii],
@@ -286,8 +320,8 @@ function gen_exemplarVect() {
   }
 
   exemplarVectTest = [];
-  for (var blockID = 0; blockID < parameters.nb_blocks_test; blockID++) {
-    for (var ii = 0; ii < parameters.exemplar_ids_test.length; ii++) {
+  for (let blockID = 0; blockID < parameters.nb_blocks_test; blockID++) {
+    for (let ii = 0; ii < parameters.exemplar_ids_test.length; ii++) {
       exemplarVectTest = exemplarVectTest.concat(
         repmat(
           parameters.exemplar_ids_test[ii],
@@ -333,7 +367,7 @@ function shrink_vect(thisVect) {
   // loop from 0 over blockiness to vectlength-blockiness
   //for each iteration: add #blockiness items from first and second task successively to new rect, return this
   for (
-    var ii = 0;
+    let ii = 0;
     ii <= trialsTrain1.length - parameters.blockiness;
     ii = ii + parameters.blockiness
   ) {
