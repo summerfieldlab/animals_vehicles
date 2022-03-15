@@ -267,5 +267,6 @@ function showTestBlockInstructions() {
       parameters.visuals.size.shop[0],
       parameters.visuals.size.shop[1]
     )
-    .attr({ opacity: 1 }).coding.newblock = true;
+    .attr({ opacity: 1 });
+    coding.newblock = true;
 }
