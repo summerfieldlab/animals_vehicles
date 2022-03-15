@@ -199,8 +199,8 @@ function gen_sizeVect() {
 	var trainBlock = [];
 	for (i = 1; i <= parameters.nb_unique * parameters.nb_blocks; i++) {
 		for (j = 1; j <= parameters.nb_size; j++) {
-			var thisBranch = repmat(j, parameters.nb_speed);
-			tmp = tmp.concat(thisBranch);
+			var thisSize = repmat(j, parameters.nb_speed);
+			tmp = tmp.concat(thisSize);
 		}
 	}
 	trainBlock = repmat(tmp, parameters.nb_reps);
@@ -210,8 +210,8 @@ function gen_sizeVect() {
 	var tmp = [];
 	for (i = 1; i <= parameters.nb_unique * parameters.nb_blocks_test; i++) {
 		for (j = 1; j <= parameters.nb_size; j++) {
-			var thisBranch = repmat(j, parameters.nb_speed);
-			tmp = tmp.concat(thisBranch);
+			var thisSize = repmat(j, parameters.nb_speed);
+			tmp = tmp.concat(thisSize);
 		}
 	}
 	testBlock = repmat(tmp, parameters.nb_tasks_test);

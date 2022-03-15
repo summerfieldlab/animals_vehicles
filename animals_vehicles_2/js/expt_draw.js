@@ -123,7 +123,7 @@ function drawStimulus(stimulusName) {
 
 function drawShop(shopName, blurOrNot) {
   /*
-	draws orchard, either blurred or not blurred
+	draws shop, either blurred or not blurred
 */
   if (blurOrNot) {
     board.blurcue.object = board.paper.object

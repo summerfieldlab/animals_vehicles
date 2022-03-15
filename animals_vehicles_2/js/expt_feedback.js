@@ -11,8 +11,8 @@ updated version: Timo Flesch, 2021
 ************************************************************************************** */
 
 
-var participant_taskNorth_rule = '';
-var participant_taskSouth_rule = '';
+var participant_taskBlue_rule = '';
+var participant_taskOrange_rule = '';
 
 
 function getHumanFeedback() {
@@ -21,8 +21,8 @@ function getHumanFeedback() {
 	*/
 
 
-	participant_taskNorth_rule = $("#userNorthOrchard").val();
-	participant_taskSouth_rule = $("#userSouthOrchard").val();
+	participant_taskBlue_rule = $("#userBlueShop").val();
+	participant_taskOrange_rule = $("#userOrangeShop").val();
 
 	finishExperiment_data();
 
