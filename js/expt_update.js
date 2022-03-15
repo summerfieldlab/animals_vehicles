@@ -40,9 +40,9 @@ function updateKeys() {
 function updateStimuli() {
   stimulusName = sdata.expt_domainIDX[coding.index].concat(
     "size"
-      .concat(sdata.expt_branchIDX[coding.index].toString())
+      .concat(sdata.expt_sizeIDX[coding.index].toString())
       .concat("_speed")
-      .concat(sdata.expt_leafIDX[coding.index].toString())
+      .concat(sdata.expt_speedIDX[coding.index].toString())
       .concat(
         "_" + sdata.expt_exemplarIDX[coding.index].toString().concat(".jpg")
       )

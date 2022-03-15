@@ -60,21 +60,21 @@ function setExperiment() {
   parameters.stimURL = "stims/"; // folder that contains image files of stimuli
   parameters.keyURL = "lib/png/"; // location of image files for key mapping
 
-  parameters.nb_branchiness = 5; // how many levels?
-  parameters.nb_leafiness = 5; // how many levels?
+  parameters.nb_size = 5; // how many levels?
+  parameters.nb_speed = 5; // how many levels?
   parameters.nb_reps = 2; // how many repetitions (of exemplars) within each block?
   parameters.nb_reps_test = 1; // how many reps of each task within test ?
   parameters.nb_tasks_test = 2; // how many tasks within test block? needs to be 2 to cover both tasks!!
   parameters.nb_unique = 4; // 4 unique exemplars (per phase)
   parameters.nb_exemplars = 10; // total number of unique exemplars per stim in dataset
   parameters.nb_trials_train =
-    parameters.nb_branchiness *
-    parameters.nb_leafiness *
+    parameters.nb_size *
+    parameters.nb_speed *
     parameters.nb_unique *
     parameters.nb_reps; //200 trials per training task
   parameters.nb_trials_test =
-    parameters.nb_branchiness *
-    parameters.nb_leafiness *
+    parameters.nb_size *
+    parameters.nb_speed *
     parameters.nb_unique *
     parameters.nb_tasks_test; // 100 trials per test task
   parameters.nb_blocks = 2; // has to be at least 2 (both tasks
@@ -139,8 +139,8 @@ function setExperiment() {
   sdata.expt_index = []; // trial IDX (total)
   sdata.expt_trial = []; // trial IDX (within block)
   sdata.expt_block = []; // block IDX
-  sdata.expt_branchIDX = []; // level of branchiness
-  sdata.expt_leafIDX = []; // level of leafiness
+  sdata.expt_sizeIDX = []; // level of size
+  sdata.expt_speedIDX = []; // level of speed
   sdata.expt_rewardIDX = []; // reward: neg & pos
   sdata.expt_catIDX = []; // category: plant vs don't plant
   sdata.expt_contextIDX = []; // task: north vs south
@@ -204,8 +204,8 @@ function data_set_filenames() {
 
   fileNames = [];
   for (var dd = 0; dd < domains.length; dd++) {
-    for (var ii = 1; ii <= parameters.nb_branchiness; ii++) {
-      for (var jj = 1; jj <= parameters.nb_leafiness; jj++) {
+    for (var ii = 1; ii <= parameters.nb_size; ii++) {
+      for (var jj = 1; jj <= parameters.nb_speed; jj++) {
         for (var kk = 1; kk <= parameters.nb_unique; kk++) {
           fileNames.push(
             [

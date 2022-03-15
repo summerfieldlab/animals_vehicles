@@ -39,11 +39,11 @@ function createSdata() {
 	// generate session indices (training 1 vs test 2)
 	sdata.expt_sessIDX = gen_sessVect();
 
-	// generate branchiness indices (rep([1,1,1,1,1,2,2,2......5,5,5,5]))
-	sdata.expt_branchIDX = gen_branchVect();
+	// generate size indices (rep([1,1,1,1,1,2,2,2......5,5,5,5]))
+	sdata.expt_sizeIDX = gen_sizeVect();
 
-	// generate leafiness indices (rep([1,2,3,4,5,1,2,3,4,5....]))
-	sdata.expt_leafIDX = gen_leafVect();
+	// generate speed indices (rep([1,2,3,4,5,1,2,3,4,5....]))
+	sdata.expt_speedIDX = gen_speedVect();
 
 	// generate vector with exemplar indices [I have several exemplars per level]
 	sdata.expt_exemplarIDX = gen_exemplarVect();
@@ -159,8 +159,8 @@ function gen_sessVect() {
 function gen_contextVect() {
 	/*
 		  generates vector with task indices
-		  idx 1 = leaf task
-		  idx 2 = branch task
+		  idx 1 = speed task
+		  idx 2 = size task
 		  ix  3 = test task [need to get rid of this....]
 	  */
 
@@ -177,29 +177,29 @@ function gen_contextVect() {
 	}
 }
 
-function gen_leafVect() {
+function gen_speedVect() {
 	/*
-		  generates vector of leafiness levels
+		  generates vector of speed levels
 	  */
 	// training & test
 	tmp = repmat(
-		colon(1, parameters.nb_leafiness),
-		sdata.expt_index.length / parameters.nb_leafiness
+		colon(1, parameters.nb_speed),
+		sdata.expt_index.length / parameters.nb_speed
 	);
 
 	return tmp;
 }
 
-function gen_branchVect() {
+function gen_sizeVect() {
 	/*
-		 generates vector of branchiness levels
+		 generates vector of size levels
 	  */
 	var tmp = new Array();
 	// train
 	var trainBlock = [];
 	for (i = 1; i <= parameters.nb_unique * parameters.nb_blocks; i++) {
-		for (j = 1; j <= parameters.nb_branchiness; j++) {
-			var thisBranch = repmat(j, parameters.nb_leafiness);
+		for (j = 1; j <= parameters.nb_size; j++) {
+			var thisBranch = repmat(j, parameters.nb_speed);
 			tmp = tmp.concat(thisBranch);
 		}
 	}
@@ -209,8 +209,8 @@ function gen_branchVect() {
 	var testBlock = [];
 	var tmp = [];
 	for (i = 1; i <= parameters.nb_unique * parameters.nb_blocks_test; i++) {
-		for (j = 1; j <= parameters.nb_branchiness; j++) {
-			var thisBranch = repmat(j, parameters.nb_leafiness);
+		for (j = 1; j <= parameters.nb_size; j++) {
+			var thisBranch = repmat(j, parameters.nb_speed);
 			tmp = tmp.concat(thisBranch);
 		}
 	}
@@ -229,13 +229,13 @@ function gen_catVect() {
 	for (var ii = 0; ii < sdata.expt_contextIDX.length; ii++) {
 		if (sdata.expt_contextIDX[ii] == 1) {
 			catVect[ii] =
-				condMatrices.catMat_leaf[sdata.expt_leafIDX[ii] - 1][
-				sdata.expt_branchIDX[ii] - 1
+				condMatrices.catMat_speed[sdata.expt_speedIDX[ii] - 1][
+				sdata.expt_sizeIDX[ii] - 1
 				];
 		} else {
 			catVect[ii] =
-				condMatrices.catMat_branch[sdata.expt_leafIDX[ii] - 1][
-				sdata.expt_branchIDX[ii] - 1
+				condMatrices.catMat_size[sdata.expt_speedIDX[ii] - 1][
+				sdata.expt_sizeIDX[ii] - 1
 				];
 		}
 	}
@@ -253,13 +253,13 @@ function gen_rewardVect() {
 	for (var ii = 0; ii < sdata.expt_contextIDX.length; ii++) {
 		if (sdata.expt_contextIDX[ii] == 1) {
 			rewVect[ii] =
-				condMatrices.rewMat_leaf[sdata.expt_leafIDX[ii] - 1][
-				sdata.expt_branchIDX[ii] - 1
+				condMatrices.rewMat_speed[sdata.expt_speedIDX[ii] - 1][
+				sdata.expt_sizeIDX[ii] - 1
 				];
 		} else {
 			rewVect[ii] =
-				condMatrices.rewMat_branch[sdata.expt_leafIDX[ii] - 1][
-				sdata.expt_branchIDX[ii] - 1
+				condMatrices.rewMat_size[sdata.expt_speedIDX[ii] - 1][
+				sdata.expt_sizeIDX[ii] - 1
 				];
 		}
 	}
@@ -277,7 +277,7 @@ function gen_exemplarVect() {
 			exemplarVectTrain = exemplarVectTrain.concat(
 				repmat(
 					parameters.exemplar_ids_train[ii],
-					parameters.nb_branchiness * parameters.nb_leafiness
+					parameters.nb_size * parameters.nb_speed
 				)
 			);
 		}
@@ -289,7 +289,7 @@ function gen_exemplarVect() {
 			exemplarVectTest = exemplarVectTest.concat(
 				repmat(
 					parameters.exemplar_ids_test[ii],
-					parameters.nb_branchiness * parameters.nb_leafiness
+					parameters.nb_size * parameters.nb_speed
 				)
 			);
 		}
@@ -306,8 +306,8 @@ function shrink_blocks() {
 		  important: run after shuffling!!!
 	   */
 
-	sdata.expt_leafIDX = shrink_vect(sdata.expt_leafIDX);
-	sdata.expt_branchIDX = shrink_vect(sdata.expt_branchIDX);
+	sdata.expt_speedIDX = shrink_vect(sdata.expt_speedIDX);
+	sdata.expt_sizeIDX = shrink_vect(sdata.expt_sizeIDX);
 	sdata.expt_catIDX = shrink_vect(sdata.expt_catIDX);
 	sdata.expt_exemplarIDX = shrink_vect(sdata.expt_exemplarIDX);
 	sdata.expt_contextIDX = shrink_vect(sdata.expt_contextIDX);
@@ -350,8 +350,8 @@ function shuffle_trials() {
 	  */
 	var shuffIDX = [];
 	shuffIDX = mk_shuffIDX();
-	sdata.expt_leafIDX = shuffle_vect(shuffIDX, sdata.expt_leafIDX);
-	sdata.expt_branchIDX = shuffle_vect(shuffIDX, sdata.expt_branchIDX);
+	sdata.expt_speedIDX = shuffle_vect(shuffIDX, sdata.expt_speedIDX);
+	sdata.expt_sizeIDX = shuffle_vect(shuffIDX, sdata.expt_sizeIDX);
 	sdata.expt_catIDX = shuffle_vect(shuffIDX, sdata.expt_catIDX);
 	sdata.expt_exemplarIDX = shuffle_vect(shuffIDX, sdata.expt_exemplarIDX);
 	sdata.expt_contextIDX = shuffle_vect(shuffIDX, sdata.expt_contextIDX);
@@ -415,7 +415,7 @@ function loadTaskMatrix(matID) {
 	switch (matID) {
 		case 1:
 			// high high
-			taskMatrices.rewMat_leaf = [
+			taskMatrices.rewMat_speed = [
 				[-50, -50, -50, -50, -50],
 				[-25, -25, -25, -25, -25],
 				[0, 0, 0, 0, 0],
@@ -423,7 +423,7 @@ function loadTaskMatrix(matID) {
 				[50, 50, 50, 50, 50],
 			];
 
-			taskMatrices.catMat_leaf = [
+			taskMatrices.catMat_speed = [
 				[-1, -1, -1, -1, -1],
 				[-1, -1, -1, -1, -1],
 				[0, 0, 0, 0, 0],
@@ -431,7 +431,7 @@ function loadTaskMatrix(matID) {
 				[1, 1, 1, 1, 1],
 			];
 
-			taskMatrices.rewMat_branch = [
+			taskMatrices.rewMat_size = [
 				[-50, -25, 0, 25, 50],
 				[-50, -25, 0, 25, 50],
 				[-50, -25, 0, 25, 50],
@@ -439,7 +439,7 @@ function loadTaskMatrix(matID) {
 				[-50, -25, 0, 25, 50],
 			];
 
-			taskMatrices.catMat_branch = [
+			taskMatrices.catMat_size = [
 				[-1, -1, 0, 1, 1],
 				[-1, -1, 0, 1, 1],
 				[-1, -1, 0, 1, 1],
@@ -449,7 +449,7 @@ function loadTaskMatrix(matID) {
 			break;
 		case 2:
 			// low low
-			taskMatrices.rewMat_leaf = [
+			taskMatrices.rewMat_speed = [
 				[50, 50, 50, 50, 50],
 				[25, 25, 25, 25, 25],
 				[0, 0, 0, 0, 0],
@@ -457,7 +457,7 @@ function loadTaskMatrix(matID) {
 				[-50, -50, -50, -50, -50],
 			];
 
-			taskMatrices.catMat_leaf = [
+			taskMatrices.catMat_speed = [
 				[1, 1, 1, 1, 1],
 				[1, 1, 1, 1, 1],
 				[0, 0, 0, 0, 0],
@@ -465,7 +465,7 @@ function loadTaskMatrix(matID) {
 				[-1, -1, -1, -1, -1],
 			];
 
-			taskMatrices.rewMat_branch = [
+			taskMatrices.rewMat_size = [
 				[50, 25, 0, -25, -50],
 				[50, 25, 0, -25, -50],
 				[50, 25, 0, -25, -50],
@@ -473,7 +473,7 @@ function loadTaskMatrix(matID) {
 				[50, 25, 0, -25, -50],
 			];
 
-			taskMatrices.catMat_branch = [
+			taskMatrices.catMat_size = [
 				[1, 1, 0, -1, -1],
 				[1, 1, 0, -1, -1],
 				[1, 1, 0, -1, -1],
@@ -484,7 +484,7 @@ function loadTaskMatrix(matID) {
 
 		case 3:
 			// low high
-			taskMatrices.rewMat_leaf = [
+			taskMatrices.rewMat_speed = [
 				[50, 50, 50, 50, 50],
 				[25, 25, 25, 25, 25],
 				[0, 0, 0, 0, 0],
@@ -492,7 +492,7 @@ function loadTaskMatrix(matID) {
 				[-50, -50, -50, -50, -50],
 			];
 
-			taskMatrices.catMat_leaf = [
+			taskMatrices.catMat_speed = [
 				[1, 1, 1, 1, 1],
 				[1, 1, 1, 1, 1],
 				[0, 0, 0, 0, 0],
@@ -500,7 +500,7 @@ function loadTaskMatrix(matID) {
 				[-1, -1, -1, -1, -1],
 			];
 
-			taskMatrices.rewMat_branch = [
+			taskMatrices.rewMat_size = [
 				[-50, -25, 0, 25, 50],
 				[-50, -25, 0, 25, 50],
 				[-50, -25, 0, 25, 50],
@@ -508,7 +508,7 @@ function loadTaskMatrix(matID) {
 				[-50, -25, 0, 25, 50],
 			];
 
-			taskMatrices.catMat_branch = [
+			taskMatrices.catMat_size = [
 				[-1, -1, 0, 1, 1],
 				[-1, -1, 0, 1, 1],
 				[-1, -1, 0, 1, 1],
@@ -519,7 +519,7 @@ function loadTaskMatrix(matID) {
 
 		case 4:
 			// high low
-			taskMatrices.rewMat_leaf = [
+			taskMatrices.rewMat_speed = [
 				[-50, -50, -50, -50, -50],
 				[-25, -25, -25, -25, -25],
 				[0, 0, 0, 0, 0],
@@ -527,7 +527,7 @@ function loadTaskMatrix(matID) {
 				[50, 50, 50, 50, 50],
 			];
 
-			taskMatrices.catMat_leaf = [
+			taskMatrices.catMat_speed = [
 				[-1, -1, -1, -1, -1],
 				[-1, -1, -1, -1, -1],
 				[0, 0, 0, 0, 0],
@@ -535,7 +535,7 @@ function loadTaskMatrix(matID) {
 				[1, 1, 1, 1, 1],
 			];
 
-			taskMatrices.rewMat_branch = [
+			taskMatrices.rewMat_size = [
 				[50, 25, 0, -25, -50],
 				[50, 25, 0, -25, -50],
 				[50, 25, 0, -25, -50],
@@ -543,7 +543,7 @@ function loadTaskMatrix(matID) {
 				[50, 25, 0, -25, -50],
 			];
 
-			taskMatrices.catMat_branch = [
+			taskMatrices.catMat_size = [
 				[1, 1, 0, -1, -1],
 				[1, 1, 0, -1, -1],
 				[1, 1, 0, -1, -1],
@@ -554,7 +554,7 @@ function loadTaskMatrix(matID) {
 
 		case 5:
 			// high high
-			taskMatrices.rewMat_leaf = [
+			taskMatrices.rewMat_speed = [
 				[-50, -50, -50, -25, 0],
 				[-50, -50, -25, 0, 25],
 				[-50, -25, 0, 25, 50],
@@ -562,7 +562,7 @@ function loadTaskMatrix(matID) {
 				[0, 25, 50, 50, 50],
 			];
 
-			taskMatrices.catMat_leaf = [
+			taskMatrices.catMat_speed = [
 				[-1, -1, -1, -1, 0],
 				[-1, -1, -1, 0, 1],
 				[-1, -1, 0, 1, 1],
@@ -570,7 +570,7 @@ function loadTaskMatrix(matID) {
 				[0, 1, 1, 1, 1],
 			];
 
-			taskMatrices.rewMat_branch = [
+			taskMatrices.rewMat_size = [
 				[0, 25, 50, 50, 50],
 				[-25, 0, 25, 50, 50],
 				[-50, -25, 0, 25, 50],
@@ -578,7 +578,7 @@ function loadTaskMatrix(matID) {
 				[-50, -50, -50, -25, 0],
 			];
 
-			taskMatrices.catMat_branch = [
+			taskMatrices.catMat_size = [
 				[0, 1, 1, 1, 1],
 				[-1, 0, 1, 1, 1],
 				[-1, -1, 0, 1, 1],
@@ -588,7 +588,7 @@ function loadTaskMatrix(matID) {
 			break;
 		case 6:
 			// low low
-			taskMatrices.rewMat_leaf = [
+			taskMatrices.rewMat_speed = [
 				[50, 50, 50, 25, 0],
 				[50, 50, 25, 0, -25],
 				[50, 25, 0, -25, -50],
@@ -596,7 +596,7 @@ function loadTaskMatrix(matID) {
 				[0, -25, -50, -50, -50],
 			];
 
-			taskMatrices.catMat_leaf = [
+			taskMatrices.catMat_speed = [
 				[1, 1, 1, 1, 0],
 				[1, 1, 1, 0, -1],
 				[1, 1, 0, -1, -1],
@@ -604,7 +604,7 @@ function loadTaskMatrix(matID) {
 				[0, -1, -1, -1, -1],
 			];
 
-			taskMatrices.rewMat_branch = [
+			taskMatrices.rewMat_size = [
 				[0, -25, -50, -50, -50],
 				[25, 0, -25, -50, -50],
 				[50, 25, 0, -25, -50],
@@ -612,7 +612,7 @@ function loadTaskMatrix(matID) {
 				[50, 50, 50, 25, 0],
 			];
 
-			taskMatrices.catMat_branch = [
+			taskMatrices.catMat_size = [
 				[0, -1, -1, -1, -1],
 				[1, 0, -1, -1, -1],
 				[1, 1, 0, -1, -1],
@@ -623,7 +623,7 @@ function loadTaskMatrix(matID) {
 
 		case 7:
 			// low high
-			taskMatrices.rewMat_leaf = [
+			taskMatrices.rewMat_speed = [
 				[50, 50, 50, 25, 0],
 				[50, 50, 25, 0, -25],
 				[50, 25, 0, -25, -50],
@@ -631,7 +631,7 @@ function loadTaskMatrix(matID) {
 				[0, -25, -50, -50, -50],
 			];
 
-			taskMatrices.catMat_leaf = [
+			taskMatrices.catMat_speed = [
 				[1, 1, 1, 1, 0],
 				[1, 1, 1, 0, -1],
 				[1, 1, 0, -1, -1],
@@ -639,7 +639,7 @@ function loadTaskMatrix(matID) {
 				[0, -1, -1, -1, -1],
 			];
 
-			taskMatrices.rewMat_branch = [
+			taskMatrices.rewMat_size = [
 				[0, 25, 50, 50, 50],
 				[-25, 0, 25, 50, 50],
 				[-50, -25, 0, 25, 50],
@@ -647,7 +647,7 @@ function loadTaskMatrix(matID) {
 				[-50, -50, -50, -25, 0],
 			];
 
-			taskMatrices.catMat_branch = [
+			taskMatrices.catMat_size = [
 				[0, 1, 1, 1, 1],
 				[-1, 0, 1, 1, 1],
 				[-1, -1, 0, 1, 1],
@@ -658,7 +658,7 @@ function loadTaskMatrix(matID) {
 
 		case 8:
 			// high low
-			taskMatrices.rewMat_leaf = [
+			taskMatrices.rewMat_speed = [
 				[-50, -50, -50, -25, 0],
 				[-50, -50, -25, 0, 25],
 				[-50, -25, 0, 25, 50],
@@ -666,7 +666,7 @@ function loadTaskMatrix(matID) {
 				[0, 25, 50, 50, 50],
 			];
 
-			taskMatrices.catMat_leaf = [
+			taskMatrices.catMat_speed = [
 				[-1, -1, -1, -1, 0],
 				[-1, -1, -1, 0, 1],
 				[-1, -1, 0, 1, 1],
@@ -674,7 +674,7 @@ function loadTaskMatrix(matID) {
 				[0, 1, 1, 1, 1],
 			];
 
-			taskMatrices.rewMat_branch = [
+			taskMatrices.rewMat_size = [
 				[0, -25, -50, -50, -50],
 				[25, 0, -25, -50, -50],
 				[50, 25, 0, -25, -50],
@@ -682,7 +682,7 @@ function loadTaskMatrix(matID) {
 				[50, 50, 50, 25, 0],
 			];
 
-			taskMatrices.catMat_branch = [
+			taskMatrices.catMat_size = [
 				[0, -1, -1, -1, -1],
 				[1, 0, -1, -1, -1],
 				[1, 1, 0, -1, -1],
