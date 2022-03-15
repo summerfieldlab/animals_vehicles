@@ -3,7 +3,7 @@
 Shows raphael objects (opacity to 1)
 original version: Timo Flesch, 2016
 updated version: Timo Flesch, 2021
-[timoflesch19@gmail.com]
+[[timoflesch19 [at] gmail [dot] com]]
 
 
 ************************************************************************************** */

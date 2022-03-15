@@ -1,11 +1,14 @@
 /*
-Timo Flesch, 2016 [timo.flesch@gmail.com]
+Timo Flesch [timoflesch19 [at] gmail [dot] com]
 */
 
 function updateCue() {
   board.cue.object.remove();
   if (sdata.expt_contextIDX[coding.index] == 1) {
-    shopName = parameters.contexts[0];
+    shopName =
+      sdata.expt_sessIDX[coding.index] == 1
+        ? parameters.contexts[0]
+        : parameters.contexts[2];
     drawShop(shopName, 0);
     drawShop(shopName, 1);
     // update context rect
@@ -18,7 +21,10 @@ function updateCue() {
       "stroke-width": 20,
     });
   } else if (sdata.expt_contextIDX[coding.index] == 2) {
-    shopName = parameters.contexts[1];
+    shopName =
+      sdata.expt_sessIDX[coding.index] == 1
+        ? parameters.contexts[1]
+        : parameters.contexts[3];
     drawShop(shopName, 0);
     drawShop(shopName, 1);
     // update context rect

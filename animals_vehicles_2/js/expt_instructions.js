@@ -3,7 +3,7 @@
 Shows instructions via html injection
 original version: Timo Flesch, 2016
 updated version: Timo Flesch, 2021
-[timoflesch19@gmail.com]
+[[timoflesch19 [at] gmail [dot] com]]
 
 
 ************************************************************************************** */
@@ -23,6 +23,7 @@ function setInstructions() {
 	  here I define my instructions
   */
   // goWebsite(html_taskinstr)
+  // domaincode==1: first animals, then vehicles. domaincode==2: first vehicles, then animals
   switch (parameters.domaincode) {
     case 1:
       inStruct.txt[0] =

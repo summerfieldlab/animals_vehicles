@@ -3,7 +3,7 @@
 Sets all the important parameters
 original version: Timo Flesch, 2016
 updated version: Timo Flesch, 2021
-[timoflesch19@gmail.com]
+[[timoflesch19 [at] gmail [dot] com]]
 
 ************************************************************************************** */
 
@@ -194,13 +194,8 @@ function data_set_filenames() {
   /*
      generates array of file names
   */
-  if (parameters.domaincode == 1) {
-    domains = ["an_"];
-  } else if (parameters.domaincode == 2) {
-    domains = ["ve_"];
-  } else {
-    domains = ["an_", "ve_"];
-  }
+
+  domains = ["an_", "ve_"];
 
   fileNames = [];
   for (var dd = 0; dd < domains.length; dd++) {
@@ -237,7 +232,7 @@ function set_subjParams() {
     grabs params from url argument
     input structure:
     ?id=abcd
-    a = 0/1/2   = domains. 0 =animals, 1 = vehicles, 2 = animals&vehicles
+    a = 1/2   = domains. 1 =animals->vehicles, 2 = vehicles->animals
     b = 1/2/3 = bAB,bBA,interl
     c  = 1:8   = cardinal: nn,ff,fn,nf, diagonal: nn,ff,fn,nf (f=flipped, n=normal)
     d = 1/2/3   = blockiness: 2,20,200
@@ -249,51 +244,47 @@ function set_subjParams() {
     parameters.val_rewAssignment = 1; // no flipped assignments, cardinal boundary
     parameters.keyassignment = 0; // l-no r-yes
     parameters.blockiness = 200; // how many trials of one task per block?
-    parameters.domains = ["animals", "animals"]; // domains for task A and task B
-    parameters.contexts = ["an_store_1.png", "an_store_2.png"];
+    parameters.domains = ["animals", "vehicles"]; // domains for training [0] and test [1] phase
+    parameters.contexts = [
+      "an_store_1.png",
+      "an_store_2.png",
+      "ve_store_1.png",
+      "ve_store_2.png",
+    ];
     parameters.domaincode = 1;
   } else {
     input.id = input.id.split("").map(Number);
     // 0. domain
     switch (input.id[0]) {
       case 1:
-        parameters.domains = ["animals", "animals"];
+        parameters.domains = ["animals", "vehicles"];
         parameters.domaincode = 1;
-        parameters.taskprefix = ["an_", "an_"];
+        parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
         break;
       case 2:
-        parameters.domains = ["vehicles", "vehicles"];
+        parameters.domains = ["vehicles", "animals"];
         parameters.domaincode = 2;
-        parameters.taskprefix = ["ve_", "ve_"];
-        break;
-      case 3:
-        parameters.domains = ["animals", "vehicles"];
-        parameters.domaincode = 3;
-        parameters.taskprefix = ["an_", "ve_"];
+        parameters.taskprefix = ["ve_", "ve_", "an_", "an_"];
         break;
       default:
-        parameters.domains = ["animals", "animals"];
+        parameters.domains = ["animals", "vehicles"];
         parameters.domaincode = 1;
-        parameters.taskprefix = ["an_", "an_"];
+        parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
     }
 
     // 1. curriculum
     switch (input.id[1]) {
       case 1:
         parameters.task_id = "blocked-A-B".split("-");
-        // parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
       case 2:
         parameters.task_id = "blocked-B-A".split("-");
-        // parameters.contexts = [parameters.taskprefix[0] + 'store_2.png', parameters.taskprefix[1] + 'store_1.png'];
         break;
       case 3:
         parameters.task_id = "interleaved-A-B".split("-");
-        // parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
       default:
         parameters.task_id = "blocked-A-B".split("-");
-        // parameters.contexts = [parameters.taskprefix[0] + 'store_1.png', parameters.taskprefix[1] + 'store_2.png'];
         break;
     }
 
