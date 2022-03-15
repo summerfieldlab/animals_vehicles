@@ -56,6 +56,9 @@ function createSdata() {
   // generate vector with reward values, depending on task and feature level
   sdata.expt_rewardIDX = gen_rewardVect();
 
+  // generate vector that indicates whether or not a trial is congruent:
+  sdata.expt_congruencyIDX = gen_congruencyVect();
+
   // generate vector of key mappings (1: left-accept, right-reject, 0: left-reject, right-accept)
   sdata.expt_keyassignment = gen_keyAssignments();
   // generate vector of key mapping descriptors ('left','right' vs 'right','left')
