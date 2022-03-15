@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* **************************************************************************************
 
 Shows instructions via html injection
@@ -42,7 +44,7 @@ function setInstructions() {
 
       // what to do
       inStruct.txt[3] =
-        "<b>The stores are located in different parts of the city.</b><br>Each store caters for a different customer base with unique preferences for certain features of the animals.<br> <b>Your task is to figure out what type of animals are preferred by customers of each store</b><<br> You do this by either accepting or rejecting animals for a given store, and observing the reward/penalty incurred by your choice.";
+        "<b>The stores are located in different parts of the city.</b><br>Each store caters for a different customer base with unique preferences for certain features of the animals.<br> <b>Your task is to figure out what type of animals are preferred by customers of each store</b><<br> You do this by either accepting or rejecting animals for a given store, and then observing the reward/penalty incurred by your choice.";
       inStruct.img[3] = "";
 
       // trial - context
@@ -52,11 +54,11 @@ function setInstructions() {
 
       // trial - stimulus & mapping
       inStruct.txt[5] =
-        "Shortly after, you'll see an image of an animal, together with the key assignment for that trial.<br> To communicate your decision, you'll press either the <b>F</b> or <b>J</b> key (corresponding to the left and right side of the screen).<br> The key mapping changes randomly from trial to trial.<br><br> In the example below, you'll use the f key to reject and the j key to accept an animal.";
+        "Shortly after, you'll see an image of an animal, together with the key assignment for that trial.<br> To communicate your decision, you'll press either the <b>F</b> or <b>J</b> key (corresponding to the left and right side of the screen).<br> The key mapping changes randomly from trial to trial.<br><br> In the example below, you'll use the <b>F</b> key to reject and the <b>J</b> key to accept an animal.";
       inStruct.img[5] = "instr/instr_an_store_blue_stim_fj.png";
 
       inStruct.txt[6] =
-        "In contrast, if the locations of accept/reject were flipped as shown below, you''d instead use f to accept and j to reject an animal.";
+        "In contrast, if the locations of accept/reject were flipped as shown below, you''d instead use <b>F</b> to accept and <b>J</b> to reject an animal.";
       inStruct.img[6] = "instr/instr_an_store_blue_stim_jf.png";
 
       // trial - decision & feedback 1
@@ -66,7 +68,7 @@ function setInstructions() {
 
       // trial - feedback 2
       inStruct.txt[8] =
-        "After a short delay, you'll receive your reward/penalty. <br>This indicates if your choice was good or bad.<br> If you've bought/accepted an animal that doesn't sell well, you'll receive a penalty<br>In contrast, if your chosen animal sells well, you'll receive a reward.";
+        "After a short delay, you'll receive your reward/penalty. <br>This indicates if your choice was good or bad.<br> If you've bought/accepted an animal that is not liked by your customers, you'll receive a penalty<br>In contrast, if customers like your chosen animal, you'll receive a reward.";
       inStruct.img[8] = "instr/instr_an_store_blue_feedback.png";
 
       // trial - feedback 3
@@ -91,11 +93,11 @@ function setInstructions() {
 
       // structure
       inStruct.txt[13] =
-        "There will be a TRAINING PHASE and a TEST PHASE. <br> You'll receive feedback only during the training phase. <br> The training phase consists of two blocks and the test phase of one block. <br>All the blocks are of equal length.<br>There will be breaks between the blocks. <br>";
-      inStruct.img[13] = "";
+        "Now here is the catch! There will be a <b>training phase</b> and a <b>test phase</b>. <br> <b>In the test phase, we'll give you two new stores that sell vehicles instead of animals. </b> <br> Importantly, these vehicle stores are frequented by customers with similar preferences to those who go to the animal stores. <br> This means that you will be able to apply your knowledge about the animal stores to the vehicle stores. <br> You should only accept those vehicles that you think will be liked by your customers, and reject the others. <br> To make the job easier, we will give you feedback on some of the test trials, but not all of them."
+      inStruct.img[13] = "instr/instr_ve_both_stores.png"; 
       // summary
       inStruct.txt[14] =
-        "<p><b> SUMMARY </b> <br>1. There are two stores <br>2. Different types of animals sell best in each store. <br>3. Figure out which animals to accept and which to reject in each store.<br>4. Maximize your reward!<br></p>";
+        "<p><b> SUMMARY </b> <br>1. There are two animal stores during training, and two vehicle stores during the test phase. <br>2. Different types of animals sell best in each store. <br>3. Figure out which animals to accept and which to reject in each store.<br> 4. Transfer this knowledge to two vehicle stores in the test phase! <br> 5. Maximize your reward!<br></p>";
       inStruct.img[14] = "";
       break;
 
@@ -116,7 +118,7 @@ function setInstructions() {
 
       // what to do
       inStruct.txt[3] =
-        "<b>The stores are located in different parts of the city.</b><br>Each store caters for a different customer base with unique preferences for certain features of the vehicles.<br> <b>Your task is to figure out what type of vehicles are preferred by customers of each store</b><<br> You do this by either accepting or rejecting vehicles for a given store, and observing the reward/penalty incurred by your choice.";
+        "<b>The stores are located in different parts of the city.</b><br>Each store caters for a different customer base with unique preferences for certain features of the vehicles.<br> <b>Your task is to figure out what type of vehicles are preferred by customers of each store</b><<br> You do this by either accepting or rejecting vehicles for a given store, and then observing the reward/penalty incurred by your choice.";
       inStruct.img[3] = "";
 
       // trial - context
@@ -126,11 +128,11 @@ function setInstructions() {
 
       // trial - stimulus & mapping
       inStruct.txt[5] =
-        "Shortly after, you'll see an image of a vehicle, together with the key assignment for that trial.<br> To communicate your decision, you'll press either the <b>F</b> or <b>J</b> key (corresponding to the left and right side of the screen).<br> The key mapping changes randomly from trial to trial.<br><br> In the example below, you'll use the f key to reject and the j key to accept a vehicle.";
+        "Shortly after, you'll see an image of an vehicle, together with the key assignment for that trial.<br> To communicate your decision, you'll press either the <b>F</b> or <b>J</b> key (corresponding to the left and right side of the screen).<br> The key mapping changes randomly from trial to trial.<br><br> In the example below, you'll use the <b>F</b> key to reject and the <b>J</b> key to accept an vehicle.";
       inStruct.img[5] = "instr/instr_ve_store_blue_stim_fj.png";
 
       inStruct.txt[6] =
-        "In contrast, if the locations of accept/reject were flipped as shown below, you''d instead use f to accept and j to reject a vehicle.";
+        "In contrast, if the locations of accept/reject were flipped as shown below, you''d instead use <b>F</b> to accept and <b>J</b> to reject an vehicle.";
       inStruct.img[6] = "instr/instr_ve_store_blue_stim_jf.png";
 
       // trial - decision & feedback 1
@@ -140,17 +142,17 @@ function setInstructions() {
 
       // trial - feedback 2
       inStruct.txt[8] =
-        "After a short delay, you'll receive your reward/penalty. <br>This indicates if your choice was good or bad.<br> If you've bought/accepted a vehicle that doesn't sell well, you'll receive a penalty<br>In contrast, if your chosen vehicle sells well, you'll receive a reward.";
+        "After a short delay, you'll receive your reward/penalty. <br>This indicates if your choice was good or bad.<br> If you've bought/accepted an vehicle that is not liked by your customers, you'll receive a penalty<br>In contrast, if customers like your chosen vehicle, you'll receive a reward.";
       inStruct.img[8] = "instr/instr_ve_store_blue_feedback.png";
 
       // trial - feedback 3
       inStruct.txt[9] =
-        "You'll see a number on either side of the vehicle. <br> These are the rewards/penalties. <br> You will always receive a reward of zero for rejecting a vehicle...";
+        "You'll see a number on either side of the vehicle. <br> These are the rewards/penalties. <br> You will always receive a reward of zero for rejecting an vehicle...";
       inStruct.img[9] = "instr/instr_ve_store_blue_feedback.png";
 
       // trial - feedback 4
       inStruct.txt[10] =
-        "..and either a reward or a penalty for accepting a vehicle. <br> The value ranges from -50 to +50. <br> The chosen option will be highlighted by a rectangle.";
+        "..and either a reward or a penalty for accepting an vehicle. <br> The value ranges from -50 to +50. <br> The chosen option will be highlighted by a rectangle.";
       inStruct.img[10] = "instr/instr_ve_store_blue_feedback.png";
 
       // trial - feedback 5
@@ -165,11 +167,11 @@ function setInstructions() {
 
       // structure
       inStruct.txt[13] =
-        "There will be a TRAINING PHASE and a TEST PHASE. <br> You'll receive feedback only during the training phase. <br> The training phase consists of two blocks and the test phase of one block. <br>All the blocks are of equal length.<br>There will be breaks between the blocks. <br>";
-      inStruct.img[13] = "";
+        "Now here is the catch! There will be a <b>training phase</b> and a <b>test phase</b>. <br> <b>In the test phase, we'll give you two new stores that sell animals instead of vehicles. </b> <br> Importantly, these animal stores are frequented by customers with similar preferences to those who go to the vehicle stores. <br> This means that you will be able to apply your knowledge about the vehicle stores to the animal stores. <br> You should only accept those animals that you think will be liked by your customers, and reject the others. <br> To make the job easier, we will give you feedback on some of the test trials, but not all of them."
+      inStruct.img[13] = "instr/instr_an_both_stores.png"; 
       // summary
       inStruct.txt[14] =
-        "<p><b> SUMMARY </b> <br>1. There are two stores <br>2. Different types of vehicles sell best in each store. <br>3. Figure out which vehicles to accept and which to reject in each store.<br>4. Maximize your reward!<br></p>";
+        "<p><b> SUMMARY </b> <br>1. There are two vehicle stores during training, and two animal stores during the test phase. <br>2. Different types of vehicles sell best in each store. <br>3. Figure out which vehicles to accept and which to reject in each store.<br> 4. Transfer this knowledge to two animals stores in the test phase! <br> 5. Maximize your reward!<br></p>";
       inStruct.img[14] = "";
       break;
   }

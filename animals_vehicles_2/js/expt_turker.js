@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 html_humanform = "html/turker_form.html";
 
 var participant_age = "";

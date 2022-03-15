@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /*
 Timo Flesch [timoflesch19 [at] gmail [dot] com]
 */

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /*
 Timo Flesch [timoflesch19 [at] gmail [dot] com]
 */
@@ -34,7 +36,7 @@ function hideKeys() {
 }
 
 function hideInstructions() {
-  board.instructions.object.attr({ opacity: 0 });
+  board.instructions.object.attr({ opacity: 0 });  
 }
 
 function hideFeedback() {
@@ -46,4 +48,5 @@ function hideFeedback() {
 
 function hideBlock() {
   board.block.object.remove();
+  board.block.image.remove();
 }

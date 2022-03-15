@@ -1,0 +1,38 @@
+# Experiment flow 
+## flow load
+setExperiment() // expt_parameters.js
+setInstructions() // expt_instructions
+changeInstructions() // expt_instructions
+goWebsite(html_instructions) //html_instructions
+
+## instructions
+goWebsite(html_task);newExperiment() //expt_experiment
+runExperiment()
+
+## expt_run
+ addPaper(); //expt_run. draws stimuli etc and hides them
+newTrainingSession(); //expt_launcher
+
+## expt_launcher
+
+showFirstTrainingBlockInstructions
+
+## expt_show
+  coding.newblock = true;
+    jwerty.key("space", startBlock); // in runExperiment, expt_run
+function startBlock() { // in expt_launcher
+  /*
+    begins with first trial in new block
+  */
+  if (coding.newblock) {
+    coding.newblock = false;
+    hideBlock();
+    newTrial();
+  }
+}
+
+ coding.answering = true;
+coding.newblock = false;
+
+if handleResponse (left or right)
+showAction // expt_show
