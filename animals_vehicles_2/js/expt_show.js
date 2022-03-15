@@ -57,9 +57,14 @@ function showAccept() {
   shows that subject planted stimulus
 */
   showChoiceRect(1);
-  // if training, provide feedback
-
+  // if training or if congruent test trial, provide feedback
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
+    setTimeout(showFeedbackPos, parameters.feedback_timein);
+  } else if (
+    sdata.expt_sessIDX[coding.index] == 2 &&
+    coding.task == 1 &&
+    sdata.expt_congruencyIDX[coding.index] == 1
+  ) {
     setTimeout(showFeedbackPos, parameters.feedback_timein);
   }
 }
@@ -69,8 +74,14 @@ function showReject() {
   shows that subject did not plant stimulus
 */
   showChoiceRect(0);
-  // if training, provide feedback (same holds as earlier)
+  // if training, or test with congruent trial, provide feedback (same holds as earlier)
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
+    setTimeout(showFeedbackNeg, parameters.feedback_timein);
+  } else if (
+    sdata.expt_sessIDX[coding.index] == 2 &&
+    coding.task == 1 &&
+    sdata.expt_congruencyIDX[coding.index] == 1
+  ) {
     setTimeout(showFeedbackNeg, parameters.feedback_timein);
   }
 }
@@ -268,5 +279,5 @@ function showTestBlockInstructions() {
       parameters.visuals.size.shop[1]
     )
     .attr({ opacity: 1 });
-    coding.newblock = true;
+  coding.newblock = true;
 }
