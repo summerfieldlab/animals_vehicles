@@ -146,6 +146,7 @@ function setExperiment() {
   sdata.expt_rewardIDX = []; // reward: neg & pos
   sdata.expt_catIDX = []; // category: accept vs reject
   sdata.expt_contextIDX = []; // task: blue vs orange
+  sdata.expt_congruencyIDX = []; // congruency of trials
   sdata.expt_domainIDX = []; // domain: animals vs objects
   createSdata();
 
