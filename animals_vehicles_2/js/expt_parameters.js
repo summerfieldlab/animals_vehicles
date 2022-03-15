@@ -253,6 +253,7 @@ function set_subjParams() {
       "ve_store_1.png",
       "ve_store_2.png",
     ];
+    parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
     parameters.domaincode = 1;
   } else {
     input.id = input.id.split("").map(Number);
