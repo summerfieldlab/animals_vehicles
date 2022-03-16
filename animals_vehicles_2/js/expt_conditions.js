@@ -279,6 +279,7 @@ function gen_congruencyVect() {
       congruencyVect[ii] = 0;
     }
   }
+  return congruencyVect;
 }
 
 function gen_rewardVect() {
