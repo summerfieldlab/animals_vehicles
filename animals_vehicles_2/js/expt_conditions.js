@@ -397,6 +397,7 @@ function shuffle_trials() {
   sdata.expt_contextIDX = shuffle_vect(shuffIDX, sdata.expt_contextIDX);
   sdata.expt_domainIDX = shuffle_vect(shuffIDX, sdata.expt_domainIDX);
   sdata.expt_rewardIDX = shuffle_vect(shuffIDX, sdata.expt_rewardIDX);
+  sdata.expt_congruencyIDX = shuffle_vect(shuffIDX, sdata.expt_congruencyIDX);
   shuffSwitch = 1;
 }
 
