@@ -113,23 +113,6 @@ function showInstructions() {
   board.instructions.object.attr({ opacity: 1 });
 }
 
-// function showFeedback() {
-// /*
-//   shows feedback (reward + resized stimulus)
-// */
-//   if(sdata.resp_category[coding.index]){ // if decided to accept
-//
-//    showFeedbackPos();
-//
-//
-//   } else { // if not decided to accept or no response
-//    showShop('empty'); // show empty shop
-//    showFeedbackNeg();
-//    // setTimeout(showFeedbackNeg,parameters.feedback_timein);
-//
-//   }
-// }
-
 function showChoiceRect(acceptOrReject) {
   /*
   acceptOrReject: [1/0];
@@ -257,10 +240,10 @@ function showTestBlockInstructions() {
   } else if (parameters.domaincode == 2) {
     board.block.text = parameters.txt.testInstructions_dom2;
   }
-  board.block.centre[1] *= 0.5;
+
   board.block.object = drawText(
     board.paper.object,
-    board.block.centre,
+    [board.block.centre[0], board.block.centre[1] * 0.5],
     board.block.text
   );
   board.block.object.attr({
