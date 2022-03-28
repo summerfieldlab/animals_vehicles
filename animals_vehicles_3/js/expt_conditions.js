@@ -215,7 +215,7 @@ function gen_sizeVect() {
   //test
   var testBlock = [];
   tmp = [];
-  for (i = 1; i <= parameters.nb_unique * parameters.nb_blocks_test; i++) {
+  for (i = 1; i <= parameters.nb_unique_test * parameters.nb_blocks_test; i++) {
     for (j = 1; j <= parameters.nb_size; j++) {
       thisSize = repmat(j, parameters.nb_speed);
       tmp = tmp.concat(thisSize);
