@@ -6,39 +6,24 @@ Timo Flesch [timoflesch19 [at] gmail [dot] com]
 
 function updateCue() {
   board.cue.object.remove();
-  if (sdata.expt_contextIDX[coding.index] == 1) {
-    shopName =
-      sdata.expt_sessIDX[coding.index] == 1
-        ? parameters.contexts[0]
-        : parameters.contexts[2];
-    drawShop(shopName, 0);
-    drawShop(shopName, 1);
-    // update context rect
-    board.blurcue.context.attr({
-      stroke: parameters.visuals.cols.ctx[0],
-      "stroke-width": 20,
-    });
-    board.cue.context.attr({
-      stroke: parameters.visuals.cols.ctx[0],
-      "stroke-width": 20,
-    });
-  } else if (sdata.expt_contextIDX[coding.index] == 2) {
-    shopName =
-      sdata.expt_sessIDX[coding.index] == 1
-        ? parameters.contexts[1]
-        : parameters.contexts[3];
-    drawShop(shopName, 0);
-    drawShop(shopName, 1);
-    // update context rect
-    board.blurcue.context.attr({
-      stroke: parameters.visuals.cols.ctx[1],
-      "stroke-width": 20,
-    });
-    board.cue.context.attr({
-      stroke: parameters.visuals.cols.ctx[1],
-      "stroke-width": 20,
-    });
-  }
+
+  shopName =
+    sdata.expt_domainIDX[coding.index] +
+    "store_" +
+    sdata.expt_contextIDX[coding.index] +
+    ".png";
+  shopColor = parameters.visuals.cols.ctx[sdata.expt_contextIDX[coding.index]-1];
+  drawShop(shopName, 0);
+  drawShop(shopName, 1);
+  // update context rect
+  board.blurcue.context.attr({
+    stroke: shopColor,
+    "stroke-width": 20,
+  });
+  board.cue.context.attr({
+    stroke: shopColor,
+    "stroke-width": 20,
+  });
 }
 
 function updateKeys() {

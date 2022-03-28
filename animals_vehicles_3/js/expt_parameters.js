@@ -62,23 +62,27 @@ function setExperiment() {
   parameters.stimURL = "stims/"; // folder that contains image files of stimuli
   parameters.keyURL = "lib/png/"; // location of image files for key mapping
 
+  parameters.nb_test_domains = 2; // how many test domains (two: vehicles/animals)
   parameters.nb_size = 5; // how many levels?
   parameters.nb_speed = 5; // how many levels?
   parameters.nb_reps = 2; // how many repetitions (of exemplars) within each block?
   parameters.nb_reps_test = 1; // how many reps of each task within test ?
   parameters.nb_tasks_test = 2; // how many tasks within test block? needs to be 2 to cover both tasks!!
   parameters.nb_unique = 4; // 4 unique exemplars (per phase)
+  parameters.nb_unique_test = 3; // 3 unique exemplars per test task
   parameters.nb_exemplars = 10; // total number of unique exemplars per stim in dataset
   parameters.nb_trials_train =
     parameters.nb_size *
     parameters.nb_speed *
     parameters.nb_unique *
-    parameters.nb_reps; //200 trials per training task
+    parameters.nb_reps; //200 trials per training task * 2 tasks = 400 training in total
   parameters.nb_trials_test =
+    parameters.nb_test_domains *
     parameters.nb_size *
     parameters.nb_speed *
-    parameters.nb_unique *
-    parameters.nb_tasks_test; // 100 trials per test task
+    parameters.nb_unique_test *
+    parameters.nb_tasks_test; // 75 trials per test task * 2 tasks * 2 domains = 300 in total
+
   parameters.nb_blocks = 2; // has to be at least 2 (both tasks
   parameters.nb_blocks_test = 1; // .. + test)
   parameters.nb_total_train = parameters.nb_blocks * parameters.nb_trials_train; // 400 training trials in total
@@ -134,13 +138,14 @@ function setExperiment() {
 
   parameters.txt.testInstructions_dom1 =
     "Now let's see how well you've learned the rules for the ANIMAL stores! \n \n In the next block, you'll have to apply the knowledge you have gained about customer preferences to two VEHICLE stores. \n \n At the beginning of each trial, you'll see an image of the store you're currently in (orange or blue). \n \n Then, you'll see a stimulus and have to decide whether to accept it or not. \n \n  WE'll ONLY GIVE YOU FEEDBACK ON SOME TRIALS. THIS IS THE TEST SESSION. \n \n Remember that customers of the vehicles stores have similar preferences to those who went to animals stores!\n \n Press the SPACE bar when you're ready to continue";
-  parameters.txt.testInstructions_dom2 = "Now let's see how well you've learned the rules for the VEHICLE stores! \n \n In the next block, you'll have to apply the knowledge you have gained about customer preferences to two ANIMAL stores. \n \n At the beginning of each trial, you'll see an image of the store you're currently in (orange or blue). \n \n Then, you'll see a stimulus and have to decide whether to accept it or not. \n \n  WE'll ONLY GIVE YOU FEEDBACK ON SOME TRIALS. THIS IS THE TEST SESSION. \n \n Remember that customers of the animals stores have similar preferences to those who went to vehicles stores!\n \n Press the SPACE bar when you're ready to continue";
+  parameters.txt.testInstructions_dom2 =
+    "Now let's see how well you've learned the rules for the VEHICLE stores! \n \n In the next block, you'll have to apply the knowledge you have gained about customer preferences to two ANIMAL stores. \n \n At the beginning of each trial, you'll see an image of the store you're currently in (orange or blue). \n \n Then, you'll see a stimulus and have to decide whether to accept it or not. \n \n  WE'll ONLY GIVE YOU FEEDBACK ON SOME TRIALS. THIS IS THE TEST SESSION. \n \n Remember that customers of the animals stores have similar preferences to those who went to vehicles stores!\n \n Press the SPACE bar when you're ready to continue";
   // SDATA ----------------
   sdata = {};
   // expt
   sdata.expt_index = []; // trial IDX (total)
   sdata.expt_trial = []; // trial IDX (within block)
-  sdata.expt_block = []; // block IDX
+  // sdata.expt_block = []; // block IDX
   sdata.expt_sizeIDX = []; // level of size
   sdata.expt_speedIDX = []; // level of speed
   sdata.expt_rewardIDX = []; // reward: neg & pos
@@ -189,7 +194,7 @@ function set_exemplar_ids() {
   // split into training and test indices
   return [
     arr.slice(0, parameters.nb_unique),
-    arr.slice(parameters.nb_unique, parameters.nb_unique * 2),
+    arr.slice(parameters.nb_unique, parameters.nb_unique +parameters.nb_unique_test),
   ];
 }
 
@@ -204,7 +209,7 @@ function data_set_filenames() {
   for (var dd = 0; dd < domains.length; dd++) {
     for (var ii = 1; ii <= parameters.nb_size; ii++) {
       for (var jj = 1; jj <= parameters.nb_speed; jj++) {
-        for (var kk = 1; kk <= parameters.nb_unique; kk++) {
+        for (var kk = 1; kk <= parameters.nb_exemplars; kk++) {
           fileNames.push(
             [
               domains[dd] +
@@ -247,7 +252,7 @@ function set_subjParams() {
     parameters.val_rewAssignment = 1; // no flipped assignments, cardinal boundary
     parameters.keyassignment = 0; // l-no r-yes
     parameters.blockiness = 200; // how many trials of one task per block?
-    parameters.domains = ["animals", "vehicles"]; // domains for training [0] and test [1] phase
+    parameters.domains = ["animals", ["animals","vehicles"]]; // domains for training [0] and test [1] phase
     parameters.contexts = [
       "an_store_1.png",
       "an_store_2.png",
@@ -261,17 +266,17 @@ function set_subjParams() {
     // 0. domain
     switch (input.id[0]) {
       case 1:
-        parameters.domains = ["animals", "vehicles"];
+        parameters.domains = ["animals", ["animals","vehicles"]];
         parameters.domaincode = 1;
         parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
         break;
       case 2:
-        parameters.domains = ["vehicles", "animals"];
+        parameters.domains = ["vehicles", ["animals","vehicles"]];
         parameters.domaincode = 2;
         parameters.taskprefix = ["ve_", "ve_", "an_", "an_"];
         break;
       default:
-        parameters.domains = ["animals", "vehicles"];
+        parameters.domains = ["animals", ["animals","vehicles"]];
         parameters.domaincode = 1;
         parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
     }
@@ -295,6 +300,8 @@ function set_subjParams() {
     parameters.contexts = [
       parameters.taskprefix[0] + "store_1.png",
       parameters.taskprefix[1] + "store_2.png",
+      parameters.taskprefix[2] + "store_1.png",
+      parameters.taskprefix[3] + "store_2.png",
     ];
     // 2. reward & boundary
     parameters.val_rewAssignment = input.id[2]; // second and third items
