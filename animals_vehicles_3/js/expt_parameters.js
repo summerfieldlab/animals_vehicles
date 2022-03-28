@@ -77,7 +77,7 @@ function setExperiment() {
     parameters.nb_unique *
     parameters.nb_reps; //200 trials per training task * 2 tasks = 400 training in total
   parameters.nb_trials_test =
-    paramters.nb_test_domains *
+    parameters.nb_test_domains *
     parameters.nb_size *
     parameters.nb_speed *
     parameters.nb_unique_test *
@@ -145,7 +145,7 @@ function setExperiment() {
   // expt
   sdata.expt_index = []; // trial IDX (total)
   sdata.expt_trial = []; // trial IDX (within block)
-  sdata.expt_block = []; // block IDX
+  // sdata.expt_block = []; // block IDX
   sdata.expt_sizeIDX = []; // level of size
   sdata.expt_speedIDX = []; // level of speed
   sdata.expt_rewardIDX = []; // reward: neg & pos
@@ -194,7 +194,7 @@ function set_exemplar_ids() {
   // split into training and test indices
   return [
     arr.slice(0, parameters.nb_unique),
-    arr.slice(parameters.nb_unique, parameters.nb_unique * 2),
+    arr.slice(parameters.nb_unique, parameters.nb_unique +parameters.nb_unique_test),
   ];
 }
 

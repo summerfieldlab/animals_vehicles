@@ -32,8 +32,8 @@ function createSdata() {
   // generate domain indices
   sdata.expt_domainIDX = gen_domVect();
 
-  // generate block indices
-  sdata.expt_block = gen_blockVect();
+  // generate block indices (unused)
+  // sdata.expt_block = gen_blockVect();
 
   // generate context indices (to distinguish between task A and task B)
   sdata.expt_contextIDX = gen_contextVect();
@@ -107,23 +107,24 @@ function gen_domVect() {
 	  generates vector of domain indices (prefixes of an_ or ve_)
 	  */
 
-  // training trials
+  // training trials (single domain)
   idcs_train = repmat(
     parameters.domains[0].slice(0, 2) + "_",
     parameters.nb_trials_train
   ).concat(
     repmat(parameters.domains[0].slice(0, 2) + "_", parameters.nb_trials_train)
   ); // task A and task B
-  // test trials (from other domain)
+
+  // test trials (both domains)
   idcs_test = repmat(
-    parameters.domains[1].slice(0, 2) + "_",
+    parameters.domains[1][0].slice(0, 2) + "_",
     parameters.nb_trials_test / 2
   ).concat(
     repmat(
-      parameters.domains[1].slice(0, 2) + "_",
+      parameters.domains[1][1].slice(0, 2) + "_",
       parameters.nb_trials_test / 2
     )
-  ); // task A and B
+  ); // domains 1 and 2
 
   return idcs_train.concat(idcs_test);
 }
@@ -167,15 +168,26 @@ function gen_contextVect() {
 		  generates vector with task indices
 		  idx 1 = speed task
 		  idx 2 = size task
-		  ix  3 = test task [need to get rid of this....]
 	  */
 
   var blockTask1 = repmat(1, parameters.nb_trials_train);
   var blockTask2 = repmat(2, parameters.nb_trials_train);
   var blockTask3 = repmat(
     1,
-    parameters.nb_trials_test / parameters.nb_tasks_test
-  ).concat(repmat(2, parameters.nb_trials_test / parameters.nb_tasks_test)); // half one task, half other task
+    parameters.nb_trials_test /
+      parameters.nb_tasks_test /
+      parameters.nb_test_domains
+  ).concat(
+    repmat(
+      2,
+      parameters.nb_trials_test /
+        parameters.nb_tasks_test /
+        parameters.nb_test_domains
+    )
+  ); // half one task, half other task
+  // now repeat for other test domain
+  blockTask3 = blockTask3.concat(blockTask3);
+  // return in correct order
   if (parameters.task_id.slice(1).join("-") == "A-B") {
     return blockTask1.concat(blockTask2).concat(blockTask3);
   } else if (parameters.task_id.slice(1).join("-") == "B-A") {
@@ -221,7 +233,10 @@ function gen_sizeVect() {
       tmp = tmp.concat(thisSize);
     }
   }
-  testBlock = repmat(tmp, parameters.nb_tasks_test);
+  testBlock = repmat(
+    tmp,
+    parameters.nb_tasks_test * parameters.nb_test_domains
+  );
   return trainBlock.concat(testBlock);
 }
 
@@ -267,14 +282,12 @@ function gen_congruencyVect() {
     );
     // however, if it's a boundary trial, treat as incongruent
     if (
-      (condMatrices.catMat_speed[sdata.expt_speedIDX[ii] - 1][
+      condMatrices.catMat_speed[sdata.expt_speedIDX[ii] - 1][
         sdata.expt_sizeIDX[ii] - 1
-      ] ==
-        0) &&
-      (condMatrices.catMat_size[sdata.expt_speedIDX[ii] - 1][
+      ] == 0 &&
+      condMatrices.catMat_size[sdata.expt_speedIDX[ii] - 1][
         sdata.expt_sizeIDX[ii] - 1
-      ] ==
-        0)
+      ] == 0
     ) {
       congruencyVect[ii] = 0;
     }
@@ -336,7 +349,12 @@ function gen_exemplarVect() {
   }
 
   return repmat(exemplarVectTrain, parameters.nb_reps).concat(
-    repmat(exemplarVectTest, parameters.nb_reps_test * parameters.nb_tasks_test)
+    repmat(
+      exemplarVectTest,
+      parameters.nb_reps_test *
+        parameters.nb_tasks_test *
+        parameters.nb_test_domains
+    )
   );
 }
 
