@@ -12,7 +12,7 @@ function updateCue() {
     "store_" +
     sdata.expt_contextIDX[coding.index] +
     ".png";
-  shopColor = parameters.visuals.cols.ctx[sdata.expt_contextIDX[coding.index]];
+  shopColor = parameters.visuals.cols.ctx[sdata.expt_contextIDX[coding.index]-1];
   drawShop(shopName, 0);
   drawShop(shopName, 1);
   // update context rect
