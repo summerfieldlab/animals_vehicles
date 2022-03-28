@@ -252,7 +252,7 @@ function set_subjParams() {
     parameters.val_rewAssignment = 1; // no flipped assignments, cardinal boundary
     parameters.keyassignment = 0; // l-no r-yes
     parameters.blockiness = 200; // how many trials of one task per block?
-    parameters.domains = ["animals", "vehicles"]; // domains for training [0] and test [1] phase
+    parameters.domains = ["animals", ["animals","vehicles"]]; // domains for training [0] and test [1] phase
     parameters.contexts = [
       "an_store_1.png",
       "an_store_2.png",
@@ -266,17 +266,17 @@ function set_subjParams() {
     // 0. domain
     switch (input.id[0]) {
       case 1:
-        parameters.domains = ["animals", "vehicles"];
+        parameters.domains = ["animals", ["animals","vehicles"]];
         parameters.domaincode = 1;
         parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
         break;
       case 2:
-        parameters.domains = ["vehicles", "animals"];
+        parameters.domains = ["vehicles", ["animals","vehicles"]];
         parameters.domaincode = 2;
         parameters.taskprefix = ["ve_", "ve_", "an_", "an_"];
         break;
       default:
-        parameters.domains = ["animals", "vehicles"];
+        parameters.domains = ["animals", ["animals","vehicles"]];
         parameters.domaincode = 1;
         parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
     }
@@ -300,6 +300,8 @@ function set_subjParams() {
     parameters.contexts = [
       parameters.taskprefix[0] + "store_1.png",
       parameters.taskprefix[1] + "store_2.png",
+      parameters.taskprefix[2] + "store_1.png",
+      parameters.taskprefix[3] + "store_2.png",
     ];
     // 2. reward & boundary
     parameters.val_rewAssignment = input.id[2]; // second and third items
