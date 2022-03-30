@@ -16,8 +16,7 @@ var params_ui = {};
 var stim = {};
 var numbers = {};
 var board = {};
-var data_pre = {};
-var data_post = {};
+var data_arena = {};
 
 function arena_setParams() {
   // CANVAS

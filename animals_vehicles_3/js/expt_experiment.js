@@ -1,33 +1,58 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-/*
-Timo Flesch, 2016
-*/
-// function startExperiment() {
-// /*
-//   here I preload my images to ensure that the trials do not start with a blank screen
-// */
-//   finishedinstructions = true;
-//   // set new variables
-//   setExperiment(); //expt_parameters.js
-//   // inform participant that task is loading
-//   goWebsite(html_loading);
 
-//   // call Jan's function to load data, will automatically proceed with newExperiment()
-//   startLoading()
-// }
+function startDissimRatingExperiment() {
+  // clean div
+  goWebsite(html_dissim);
+  finishedinstructions = true;
+  startedinstructions = false;
+  starteddissimjudge = true;
+  finisheddissimjudge = false;
+
+  // run the experiment
+  runDissimJudgeExp();
+}
+
+function startMainExperiment() {
+  finishedinstructions = true;
+  startedinstructions = false;
+  setExperiment(); //expt_parameters.js
+  edata.exp_starttime = getTimestamp();
+
+  newExperiment();
+}
 
 function newExperiment() {
-  finishedinstructions = true;
   // clean div
   goWebsite(html_task);
   // set flags
   startedexperiment = true;
   finishedexperiment = false;
-
   // run the experiment
-  edata.exp_starttime = getTimestamp();
   runExperiment(); //expt_run.js
+}
+
+function finishDissimRatingExperiment() {
+  //saveExperiment(); // i think uncommenting this leads to the occasional remaining file in tmp, if calls asynchronous
+  starteddissimjudge = false;
+  finisheddissimjudge = true;
+  startedinstructions = false;
+  finishedinstructions = true;
+
+  finishExperiment_data(); //saves data and continues with payment
+}
+
+function finishMainExperiment() {
+  saveExperiment();
+  startedexperiment = false;
+  finishedexperiment = true;
+  startedinstructions = true;
+  finishedinstructions = false;
+  // continue with instructions for arena task
+  instr_id = "arena_task";
+  setInstructions(instr_id);
+  changeInstructions();
+  goWebsite(html_taskinstr);
 }
 
 function finishExperiment_resize() {
@@ -41,6 +66,10 @@ function finishExperiment_resize() {
     saveExperiment("data/resize");
     goWebsite(html_errscreen);
   } else if (!isFullscreen() && startedinstructions && !finishedinstructions) {
+    goWebsite(html_errscreen);
+  } else if (!isFullscreen() && starteddissimjudge && !finisheddissimjudge) {
+    arena_removeUI();
+    saveExperiment("data/resize");
     goWebsite(html_errscreen);
   }
 }
@@ -108,9 +137,13 @@ function saveExperiment(path_data) {
     sdata: JSON.stringify(sdata),
     edata: JSON.stringify(edata),
     parameters: JSON.stringify(parameters),
+    data_arenatask: JSON.stringify(data_arena),
+    params_dissimexp: JSON.stringify(params_exp),
+    params_dissimvis: JSON.stringify(params_vis),
+    params_dissimui: JSON.stringify(params_ui),
   };
 
-  if (finishedexperiment) {
+  if (finishedexperiment && finisheddissimjudge) {
     alldata.move = path_data;
   }
   //send it to the back-end

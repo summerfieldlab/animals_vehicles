@@ -4,7 +4,7 @@
 
 Sets all the important parameters
 original version: Timo Flesch, 2016
-updated version: Timo Flesch, 2021
+updated version: Timo Flesch, 2022
 [[timoflesch19 [at] gmail [dot] com]]
 
 ************************************************************************************** */
@@ -23,6 +23,8 @@ var board;
 var coding;
 // stimulus container
 var stim;
+// which instructions
+var instr_id;
 
 function setExperiment() {
   // EDATA ----------------
@@ -183,7 +185,7 @@ function setExperiment() {
   stim.names = data_set_filenames();
 
   // INSTRUCTIONS
-  setInstructions();
+  setInstructions("main_task");
 }
 
 function set_exemplar_ids() {
