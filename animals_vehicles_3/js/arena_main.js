@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* **************************************************************************************
 
 Implements 2D dissimilarity ratings 
@@ -6,26 +8,16 @@ Implements 2D dissimilarity ratings
 
 ************************************************************************************** */
 
-
 function runDissimJudgeExp() {
-	
-	// init params 
-	arena_setParams();
+  // init params
+  arena_setParams();
 
-	// draw user interface
-	arena_setUI();
+  // draw user interface
+  arena_setUI();
 
-	// add nice clock
-	// drawClock([board.centre[0], board.centre[1]+window.innerHeight*0.49]);
+  // add nice clock
+  // drawClock([board.centre[0], board.centre[1]+window.innerHeight*0.49]);
 
-
-	// init raphael-set and fill with stimuli, allow participant to start.
-	stims_fillSet();   
-
-};
-
-
-
-
-
-
+  // init raphael-set and fill with stimuli, allow participant to start.
+  stims_fillSet();
+}
