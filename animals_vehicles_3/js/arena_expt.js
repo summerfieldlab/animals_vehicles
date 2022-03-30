@@ -14,7 +14,7 @@ function exp_saveStimCoords() {
 */
   for (var ii = 0; ii < board.set.length; ii++) {
     stimIDX = ii + params_exp.numStimuli * (numbers.trialCount - 1);
-    stim.coordsFinal[stimIDX] = [
+    arena_stims.coordsFinal[stimIDX] = [
       board.set[ii].attr("x"),
       board.set[ii].attr("y"),
     ];
@@ -22,13 +22,13 @@ function exp_saveStimCoords() {
 }
 
 function exp_saveParticipantData() {
-  data_arena.pre_trialID = stim.stimVect.trialID;
-  data_arena.pre_stimExemplar = stim.stimVect.exemplar;
-  data_arena.pre_stimSizeLevel = stim.stimVect.size;
-  data_arena.pre_stimSpeedLevel = stim.stimVect.speed;
-  data_arena.pre_stimCoords_Final = stim.coordsFinal;
-  data_arena.pre_stimCoords_Orig = stim.coordsOrig;
-  data_arena.pre_stimNames = stim.stimNames;
+  data_arena.pre_trialID = arena_stims.stimVect.trialID;
+  data_arena.pre_stimExemplar = arena_stims.stimVect.exemplar;
+  data_arena.pre_stimSizeLevel = arena_stims.stimVect.size;
+  data_arena.pre_stimSpeedLevel = arena_stims.stimVect.speed;
+  data_arena.pre_stimCoords_Final = arena_stims.coordsFinal;
+  data_arena.pre_stimCoords_Orig = arena_stims.coordsOrig;
+  data_arena.pre_stimNames = arena_stims.stimNames;
 }
 
 function exp_exportData() {
@@ -38,13 +38,13 @@ function exp_exportData() {
 
   // first, build data structure
   var data = {
-    trialID: stim.stimVect.trialID,
-    stimExemplar: stim.stimVect.exemplar,
-    stimSizeLevel: stim.stimVect.size,
-    stimSpeedLevel: stim.stimVect.speed,
-    stimCoords_Final: stim.coordsFinal,
-    stimCoords_Orig: stim.coordsOrig,
-    stimNames: stim.stimNames,
+    trialID: arena_stims.stimVect.trialID,
+    stimExemplar: arena_stims.stimVect.exemplar,
+    stimSizeLevel: arena_stims.stimVect.size,
+    stimSpeedLevel: arena_stims.stimVect.speed,
+    stimCoords_Final: arena_stims.coordsFinal,
+    stimCoords_Orig: arena_stims.coordsOrig,
+    stimNames: arena_stims.stimNames,
   };
 
   // second, convert data to JSON and send to backend

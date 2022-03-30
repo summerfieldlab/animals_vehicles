@@ -192,27 +192,27 @@ function setInstructions(task_id) {
 
     // basics
     inStruct.txt[2] =
-      "In this part of the experiment, you'll have to arrange trees on the screen such that the distances between them reflect how dissimilar they appear to be from each other. <br><br> At the beginning of each trial, you'll see a grey arena with 25 trees that are arranged in a circle.<br>";
+      "In this part of the experiment, you'll have to arrange stimuli on the screen such that the distances between them reflect how dissimilar they appear to be from each other. <br><br> At the beginning of each trial, you'll see a grey arena with 25 stimuli that are arranged in a circle.<br>";
     inStruct.img[2] = "instructions/canvas.png";
 
     // drag and drop
     inStruct.txt[3] =
-      "If you click with the left mouse button on a tree and hold down the button, you're able to move the tree around within the grey area. <br><br> Release the button to confirm your selection.<br><br> The animation below illustrates how this looks like in practice.";
+      "If you click with the left mouse button on a stimulus and hold down the button, you're able to move the stimulus around within the grey area. <br><br> Release the button to confirm your selection.<br><br> The animation below illustrates how this looks like in practice.";
     inStruct.img[3] = "instructions/dragndrop.gif";
 
     // dissim ratings
     inStruct.txt[4] =
-      "If you think that two trees are quite similar to each other, move them close together. If they appear to be dissimilar, make sure they're far apart from each other.<br> You'll have to do this for <b>ALL</b> 25 trees before you move on. That is, in your final arrangement, the distance between any two trees should reflect the subjective dissimilarity. <br> Please have a look at the example below for clarification.";
+      "If you think that two stimuli are quite similar to each other, move them close together. If they appear to be dissimilar, make sure they're far apart from each other.<br> You'll have to do this for <b>ALL</b> 25 stimuli before you move on. That is, in your final arrangement, the distance between any two stimuli should reflect the subjective dissimilarity. <br> Please have a look at the example below for clarification.";
     inStruct.img[4] = "instructions/arrange.gif";
 
     // next
     inStruct.txt[5] =
-      "Once you're satisfied with the arrangement, press the green <b>Next Trial</b> button at the bottom of the page. <br>You'll then proceed with the next trial, where you'll be asked to perform the same task with a slightly different set of trees. <br> Please note that the arrangement in the example below is arbitrary and doesn't contain any useful information for you to complete the task :)";
+      "Once you're satisfied with the arrangement, press the green <b>Next Trial</b> button at the bottom of the page. <br>You'll then proceed with the next trial, where you'll be asked to perform the same task with a slightly different set of stimuli. <br> Please note that the arrangement in the example below is arbitrary and doesn't contain any useful information for you to complete the task :)";
     inStruct.img[5] = "instructions/proceed.gif";
 
     // sunnary
     inStruct.txt[6] =
-      "<b>Summary </b><br><br>1. On each trial, you'll see 25 trees that are arranged in a circle. <br><br>2. Your task is to change the arrangement until the distances between all 25 trees reflects the pairwise dissimilarities.<br><br>3. Once you're satisfied with your arrangement, you'll click the next trial button to proceed with a new set of trees.<br><br><br> <b>There will be six trials in total and it shouldn't take you longer than 15 minutes to finish this first phase of the experiment.<br>If you're ready to begin with the experiment, press the red start button below!</b>";
+      "<b>Summary </b><br><br>1. On each trial, you'll see 25 stimuli that are arranged in a circle. <br><br>2. Your task is to change the arrangement until the distances between all 25 stimuli reflects the pairwise dissimilarities.<br><br>3. Once you're satisfied with your arrangement, you'll click the next trial button to proceed with a new set of stimuli.<br><br><br> <b>There will be six trials in total and it shouldn't take you longer than 15 minutes to finish this first phase of the experiment.<br>If you're ready to begin with the experiment, press the red start button below!</b>";
 
     inStruct.img[6] = [];
   }

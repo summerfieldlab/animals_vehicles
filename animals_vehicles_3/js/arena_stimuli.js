@@ -1,14 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-/* **************************************************************************************
 
-Stimulus Handler Functions
-(c) Timo Flesch, 2016/17 
-
-
-************************************************************************************** */
-
-// SET ALL CONDITIONS
 function set_exp_stimVect() {
   /* 
  	creates object that sets stimulus identities for each trial 
@@ -17,20 +9,23 @@ function set_exp_stimVect() {
  	and allows us to rule out low-level exemplar-specific effects as these should average out within and across participants.
  */
   stimVect = {};
-  stimVect.size = [];
-  stimVect.trialID = [];
-  stimVect.speed = [];
-  stimVect.exemplar = [];
-
-  for (var kk = 1; kk <= params_exp.numTrials; kk++) {
-    for (var ii = 1; ii <= 5; ii++) {
-      for (var jj = 1; jj <= 5; jj++) {
-        stimVect.size.push(ii);
-        stimVect.speed.push(jj);
+  stimVect.trialID = []; // which trial does a stimulus belong to?
+  stimVect.domain = []; // which domain (animals/objects)
+  stimVect.size = []; // value of size dimension
+  stimVect.speed = []; // value of speed dimension
+  stimVect.exemplar = []; // which exemplar
+  this_domain_idx = 0;
+  for (var i_trial = 1; i_trial <= params_exp.numTrials; i_trial++) {
+    for (var i_size = 1; i_size <= 5; i_size++) {
+      for (var i_speed = 1; i_speed <= 5; i_speed++) {
+        stimVect.domain.push(params_exp.domains[this_domain_idx]);
+        this_domain_idx = this_domain_idx == 1 ? 0 : 1; // flip index between 0 and 1
+        stimVect.size.push(i_size);
+        stimVect.speed.push(i_speed);
         stimVect.exemplar.push(
           params_exp.exemplars[rnd_randInt(0, params_exp.exemplars.length)]
         );
-        stimVect.trialID.push(kk);
+        stimVect.trialID.push(i_trial);
       }
     }
   }
@@ -42,23 +37,24 @@ function set_exp_fileNames() {
   /*
 	generates array of file names
 */
-  stimVect = stim.stimVect;
+  stimuli = arena_stims.stimVect;
   fileNames = [];
-  for (var ii = 0; ii < params_exp.numTotal; ii++) {
+  for (var ii = 0; ii < stimuli.trialID.length; ii++) {
     fileNames.push(
       [
-        "B" +
-          stimVect.size[ii] +
-          "L" +
-          stimVect.speed[ii] +
+        stimuli.domain[ii] +
+          "size" +
+          stimuli.size[ii] +
+          "_speed" +
+          stimuli.speed[ii] +
           "_" +
-          stimVect.exemplar[ii] +
-          ".png",
+          stimuli.exemplar[ii].toString() +
+          ".jpg",
       ].join()
     );
   }
 
-  if (FLAG_DEBUG) {
+  if (FLAG_DBG_ARENA) {
     console.log(fileNames.join(",\n"));
   }
 

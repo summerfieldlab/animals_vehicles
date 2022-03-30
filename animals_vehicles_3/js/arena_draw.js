@@ -27,7 +27,7 @@ function stims_fillSet() {
   for (var i = 0; i < params_exp.numStimuli; i++) {
     stimIDX = i + params_exp.numStimuli * (numbers.trialCount - 1);
 
-    if (FLAG_DEBUG) {
+    if (FLAG_DBG_ARENA) {
       //console.log(stimIDX)
       //console.log(stimIDX==numbers.stimCount);
     }
@@ -42,7 +42,7 @@ function stims_fillSet() {
       ),
     ];
     stimulus = board.paper.object.image(
-      params_exp.treeDir + stim.stimNames[stimIDX],
+      params_exp.stimDir + arena_stims.stimNames[stimIDX],
       board.centre[0] + coords[0] - params_vis.stimSize / 2,
       board.centre[1] + coords[1] - params_vis.stimSize / 2,
       params_vis.stimSize,
@@ -51,7 +51,7 @@ function stims_fillSet() {
 
     // add object to set
     board.set.push(stimulus);
-    stim.coordsOrig[numbers.stimCount] = [
+    arena_stims.coordsOrig[numbers.stimCount] = [
       board.set[i].attr("x"),
       board.set[i].attr("y"),
     ];

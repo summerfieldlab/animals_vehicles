@@ -48,7 +48,7 @@ move = function (dx, dy) {
 
   this.toFront();
 
-  if (FLAG_DEBUG) {
+  if (FLAG_DBG_ARENA) {
     //display some text whilst object is moving
     $("#coords").html(
       [

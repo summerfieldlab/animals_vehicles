@@ -8,12 +8,12 @@ Parameters for  Arena Task
 
 ************************************************************************************** */
 
-var FLAG_DEBUG = 0;
+var FLAG_DBG_ARENA = 1;
 
 var params_vis = {};
 var params_exp = {};
 var params_ui = {};
-var stim = {};
+var arena_stims = {};
 var numbers = {};
 var board = {};
 var data_arena = {};
@@ -50,19 +50,20 @@ function arena_setParams() {
   params_ui.button.glow.width = "2";
 
   // EXPERIMENT
-  params_exp.treeDir = "./stims/";
-  params_exp.exemplars = ["a", "b", "c", "d", "e", "f", "g", "h"];
+  params_exp.stimDir = "./stims/";
+  params_exp.domains = ["an_", "ve_"];
+  params_exp.exemplars = Array.from(Array(10), (_, i) => i + 1);
   params_exp.numTrials = 4;
   params_exp.numStimuli = 25;
   params_exp.numTotal = params_exp.numTrials * params_exp.numStimuli;
 
   // STIMULI
-  stim.obj = []; // container for stim objects
-  stim.coordsOrig = []; // saves coordinates of stim objects
-  stim.coordsFinal = []; // submitted stimulus coordinates
+  arena_stims.obj = []; // container for stim objects
+  arena_stims.coordsOrig = []; // saves coordinates of stim objects
+  arena_stims.coordsFinal = []; // submitted stimulus coordinates
 
-  stim.stimVect = set_exp_stimVect();
-  stim.stimNames = set_exp_fileNames();
+  arena_stims.stimVect = set_exp_stimVect();
+  arena_stims.stimNames = set_exp_fileNames();
 
   // TRIAL COUNTERS
   numbers.trialCount = 1;

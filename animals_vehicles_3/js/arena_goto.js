@@ -16,7 +16,7 @@ function gotoNextTrial(){
 	exp_saveStimCoords();
 	// remove all stims
 	stims_emptySet();
-	// update trialCount 
+	// update overall trialCount 
 	numbers.trialCount++;
 	// add the new set of stims
 	stims_fillSet();
@@ -37,19 +37,8 @@ function gotoNextTask() {
 	else {
 		finishDissimRatingExperiment_post();	
 	}
-	//arena_drawThanks();
-
+	
 }
 
 
 
-function arena_drawThanks() {
-/*
-helper function to draw a little thank you message
-*/
-board.circle.remove();
-// stopClock();
-$('h1').html(['']);
-stimulus = board.paper.object.image('happytree.jpg',board.centre[0]-100,board.centre[1]-100,200,200)
-
-}
