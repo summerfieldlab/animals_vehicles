@@ -31,13 +31,8 @@ function gotoNextTask() {
 	
 	stims_emptySet();
 	arena_removeUI();
-	if (instr_id=='dissimrating_pre'){
-		finishDissimRatingExperiment_pre();
-	}
-	else {
-		finishDissimRatingExperiment_post();	
-	}
-	
+	finishDissimRatingExperiment();
+		
 }
 
 
