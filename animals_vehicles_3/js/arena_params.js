@@ -50,10 +50,9 @@ function arena_setParams() {
   params_ui.button.glow.width = "2";
 
   // EXPERIMENT
-  // params_exp.startTime = getTimestamp();
   params_exp.treeDir = "./stims/";
   params_exp.exemplars = ["a", "b", "c", "d", "e", "f", "g", "h"];
-  params_exp.numTrials = 6;
+  params_exp.numTrials = 4;
   params_exp.numStimuli = 25;
   params_exp.numTotal = params_exp.numTrials * params_exp.numStimuli;
 

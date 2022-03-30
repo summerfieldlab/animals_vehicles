@@ -24,8 +24,8 @@ function exp_saveStimCoords() {
 function exp_saveParticipantData() {
   data_arena.pre_trialID = stim.stimVect.trialID;
   data_arena.pre_stimExemplar = stim.stimVect.exemplar;
-  data_arena.pre_stimBranchLevel = stim.stimVect.branch;
-  data_arena.pre_stimLeafLevel = stim.stimVect.leaf;
+  data_arena.pre_stimSizeLevel = stim.stimVect.size;
+  data_arena.pre_stimSpeedLevel = stim.stimVect.speed;
   data_arena.pre_stimCoords_Final = stim.coordsFinal;
   data_arena.pre_stimCoords_Orig = stim.coordsOrig;
   data_arena.pre_stimNames = stim.stimNames;
@@ -40,8 +40,8 @@ function exp_exportData() {
   var data = {
     trialID: stim.stimVect.trialID,
     stimExemplar: stim.stimVect.exemplar,
-    stimBranchLevel: stim.stimVect.branch,
-    stimLeafLevel: stim.stimVect.leaf,
+    stimSizeLevel: stim.stimVect.size,
+    stimSpeedLevel: stim.stimVect.speed,
     stimCoords_Final: stim.coordsFinal,
     stimCoords_Orig: stim.coordsOrig,
     stimNames: stim.stimNames,

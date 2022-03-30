@@ -17,16 +17,16 @@ function set_exp_stimVect() {
  	and allows us to rule out low-level exemplar-specific effects as these should average out within and across participants.
  */
   stimVect = {};
-  stimVect.branch = [];
+  stimVect.size = [];
   stimVect.trialID = [];
-  stimVect.leaf = [];
+  stimVect.speed = [];
   stimVect.exemplar = [];
 
   for (var kk = 1; kk <= params_exp.numTrials; kk++) {
     for (var ii = 1; ii <= 5; ii++) {
       for (var jj = 1; jj <= 5; jj++) {
-        stimVect.branch.push(ii);
-        stimVect.leaf.push(jj);
+        stimVect.size.push(ii);
+        stimVect.speed.push(jj);
         stimVect.exemplar.push(
           params_exp.exemplars[rnd_randInt(0, params_exp.exemplars.length)]
         );
@@ -48,9 +48,9 @@ function set_exp_fileNames() {
     fileNames.push(
       [
         "B" +
-          stimVect.branch[ii] +
+          stimVect.size[ii] +
           "L" +
-          stimVect.leaf[ii] +
+          stimVect.speed[ii] +
           "_" +
           stimVect.exemplar[ii] +
           ".png",
