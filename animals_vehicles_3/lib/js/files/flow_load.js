@@ -36,7 +36,8 @@ function startLoading() {
   preloadImages(list, function() {
     console.log(preloadImages.cache.length)
     setExperiment();
-    setInstructions();
+    instr_id = "main_task";
+    setInstructions("main_task");
     goWebsite(html_taskinstr);
     changeInstructions(); 
     startedinstructions=true;   
