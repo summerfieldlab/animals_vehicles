@@ -1,4 +1,6 @@
 
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 // <!-- Div methods  -->
 var html_start            = "lib/html/start.html";
 var html_infosheet        = "lib/html/information_sheet.html";
@@ -8,7 +10,7 @@ var html_instructions     = "html/instructions.html";
 var html_loading          = "lib/html/loading.html";
 var html_taskinstr        = "lib/html/task_instr.html";
 
-
+var html_dissim           = "html/stimeval_page.html";
 var html_feedback         = "html/feedback_form.html";
 var html_task             = "html/task.html";
 var html_errnoresp        = "lib/html/error_noresponse.html";
