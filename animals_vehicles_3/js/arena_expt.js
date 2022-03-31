@@ -45,6 +45,7 @@ function exp_exportData() {
     stimCoords_Final: arena_stims.coordsFinal,
     stimCoords_Orig: arena_stims.coordsOrig,
     stimNames: arena_stims.stimNames,
+    taskids: arena_stims.trial_id,
   };
 
   // second, convert data to JSON and send to backend

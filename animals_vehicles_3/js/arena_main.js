@@ -14,6 +14,7 @@ function runDissimJudgeExp() {
 
   // draw user interface
   arena_setUI();
+  arena_update();
 
   // add nice clock
   // drawClock([board.centre[0], board.centre[1]+window.innerHeight*0.49]);

@@ -10,7 +10,7 @@ updated version: Timo Flesch, 2022
 ************************************************************************************** */
 
 // globals
-var FLAG_DBG = 1; //toggle debugging output
+var FLAG_DBG = 0; //toggle debugging output
 // subject data
 var sdata;
 // experiment data
@@ -54,7 +54,7 @@ function setExperiment() {
   // TASK
   set_subjParams(); // obtains subject-specific params from URL (index.html?id=NUMS)
 
-  parameters.vericode = "68279FDA";
+  parameters.vericode = "68279FDA"; //TODO change this
 
   parameters.keyStr = parameters.keyassignment
     ? ["f: accept", " j: reject"]
@@ -196,7 +196,10 @@ function set_exemplar_ids() {
   // split into training and test indices
   return [
     arr.slice(0, parameters.nb_unique),
-    arr.slice(parameters.nb_unique, parameters.nb_unique +parameters.nb_unique_test),
+    arr.slice(
+      parameters.nb_unique,
+      parameters.nb_unique + parameters.nb_unique_test
+    ),
   ];
 }
 
@@ -254,7 +257,7 @@ function set_subjParams() {
     parameters.val_rewAssignment = 1; // no flipped assignments, cardinal boundary
     parameters.keyassignment = 0; // l-no r-yes
     parameters.blockiness = 200; // how many trials of one task per block?
-    parameters.domains = ["animals", ["animals","vehicles"]]; // domains for training [0] and test [1] phase
+    parameters.domains = ["animals", ["animals", "vehicles"]]; // domains for training [0] and test [1] phase
     parameters.contexts = [
       "an_store_1.png",
       "an_store_2.png",
@@ -268,17 +271,17 @@ function set_subjParams() {
     // 0. domain
     switch (input.id[0]) {
       case 1:
-        parameters.domains = ["animals", ["animals","vehicles"]];
+        parameters.domains = ["animals", ["animals", "vehicles"]];
         parameters.domaincode = 1;
         parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
         break;
       case 2:
-        parameters.domains = ["vehicles", ["animals","vehicles"]];
+        parameters.domains = ["vehicles", ["animals", "vehicles"]];
         parameters.domaincode = 2;
         parameters.taskprefix = ["ve_", "ve_", "an_", "an_"];
         break;
       default:
-        parameters.domains = ["animals", ["animals","vehicles"]];
+        parameters.domains = ["animals", ["animals", "vehicles"]];
         parameters.domaincode = 1;
         parameters.taskprefix = ["an_", "an_", "ve_", "ve_"];
     }

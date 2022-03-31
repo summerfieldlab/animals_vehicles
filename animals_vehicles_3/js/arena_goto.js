@@ -20,6 +20,8 @@ function gotoNextTrial(){
 	numbers.trialCount++;
 	// add the new set of stims
 	stims_fillSet();
+	// change colour of aperture depending on context 
+	arena_update();
 }
 
 function gotoNextTask() {

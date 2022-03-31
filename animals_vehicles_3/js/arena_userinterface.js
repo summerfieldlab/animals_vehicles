@@ -12,26 +12,26 @@ function arena_setUI() {
   // CANVAS
   // set up circular canvas
   board.paper.object = drawPaper(board.rect);
-  board.circle = board.paper.object
-    .circle(board.centre[0], board.centre[1], board.radius)
-    .attr({
-      fill: params_vis.circle.colour,
-      opacity: params_vis.circle.opacity,
-    });
+  draw_aperture();
+
+  // draw reminder of task-specific shops
+  //remove_shoprect();
+  //draw_shopreminder();
+  draw_shoptext();
 
   // BUTTON
   // create button to go to next trial
   board.buttonBox = board.paper.object
     .rect(
-      board.centre[0] - 40,
+      board.centre[0] - 60,
       board.centre[1] + window.innerHeight * 0.42,
-      80,
+      120,
       25,
       5
     )
     .attr({
-      fill: params_ui.button.fill,
-      stroke: params_ui.button.stroke,
+      fill: params_vis.trialcolours[numbers.trialCount - 1],
+      stroke: params_vis.trialcolours[numbers.trialCount - 1],
       "stroke-width": params_ui.button.width,
     });
   board.buttonText = board.paper.object
@@ -43,6 +43,7 @@ function arena_setUI() {
     .attr({
       "font-family": params_ui.button.font,
       "font-size": params_ui.button.fontsize,
+      fill: "white",
     });
 
   board.buttonText.node.setAttribute("class", "donthighlight");
@@ -56,7 +57,7 @@ function arena_setUI() {
     .mouseover(function (event) {
       this.oGlow = board.buttonBox.glow({
         opacity: params_ui.button.glow.opacity,
-        color: params_ui.button.glow.colour,
+        color: params_vis.trialcolours[numbers.trialCount - 1],
         width: params_ui.button.glow.width,
       });
     })
@@ -75,3 +76,33 @@ function arena_setUI() {
 function arena_removeUI() {
   board.paper.object.remove();
 }
+
+function arena_update() {
+  /*
+  updates ui with trial-specific information
+  */
+  // update shop reminder
+  //remove_shopreminder();
+  remove_shoptext();
+  //draw_shopreminder();
+  draw_shoptext();
+
+  // give aperture colour of current task
+  board.circle.attr({
+    stroke: params_vis.trialcolours[numbers.trialCount - 1],
+    "stroke-width": 10,
+  });
+
+  // // ditto for task reminder
+  // board.shoprect.attr({
+  //   stroke: params_vis.trialcolours[numbers.trialCount - 1],
+  //   "stroke-width": 5,
+  // });
+
+  // give next trial button task-specific colours
+  board.buttonBox.attr({
+    stroke: params_vis.trialcolours[numbers.trialCount - 1],
+    fill: params_vis.trialcolours[numbers.trialCount - 1],
+  });
+}
+

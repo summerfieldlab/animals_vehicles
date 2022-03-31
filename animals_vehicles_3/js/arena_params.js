@@ -8,7 +8,7 @@ Parameters for  Arena Task
 
 ************************************************************************************** */
 
-var FLAG_DBG_ARENA = 1;
+var FLAG_DBG_ARENA = 0;
 
 var params_vis = {};
 var params_exp = {};
@@ -31,10 +31,15 @@ function arena_setParams() {
   board.paper = {};
 
   // VISUALS
-  params_vis.stimSize = 0.3 * board.radius;
+  params_vis.stim = {};
+  params_vis.stim.size = [0.25 * board.radius, (2 / 3) * 0.25 * board.radius]; // width, height
+  params_vis.stim.radius = 0.3 * board.radius;
+  params_vis.stim.border_col = "black";
+  params_vis.stim.border_width = "2";
   params_vis.circle = {};
   params_vis.circle.colour = "grey";
   params_vis.circle.opacity = "1";
+  params_vis.trialcolours = ["#17B3C6", "#17B3C6", "#F3700F", "#F3700F"];
 
   // USER INTERFACE
   params_ui.button = {};
@@ -51,17 +56,20 @@ function arena_setParams() {
 
   // EXPERIMENT
   params_exp.stimDir = "./stims/";
+  params_exp.shopDir = "./stores/";
   params_exp.domains = ["an_", "ve_"];
   params_exp.exemplars = Array.from(Array(10), (_, i) => i + 1);
   params_exp.numTrials = 4;
   params_exp.numStimuli = 25;
   params_exp.numTotal = params_exp.numTrials * params_exp.numStimuli;
+  params_exp.trialids = {};
+  params_exp.trialids.col = ["blue", "blue", "orange", "orange"];
 
   // STIMULI
   arena_stims.obj = []; // container for stim objects
   arena_stims.coordsOrig = []; // saves coordinates of stim objects
   arena_stims.coordsFinal = []; // submitted stimulus coordinates
-
+  arena_stims.trial_id = [1, 1, 2, 2]; // task id (1==blue or 2==orange)
   arena_stims.stimVect = set_exp_stimVect();
   arena_stims.stimNames = set_exp_fileNames();
 
