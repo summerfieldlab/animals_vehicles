@@ -28,6 +28,7 @@ function setInstructions(task_id) {
   // domaincode==1: first animals, then vehicles. domaincode==2: first vehicles, then animals
 
   if (task_id == "main_task") {
+    pageIDX = 0;
     switch (parameters.domaincode) {
       case 1:
         inStruct.txt[0] =
