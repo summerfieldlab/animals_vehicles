@@ -230,7 +230,7 @@ function setInstructions(task_id) {
     // next
     inStruct.txt[6] =
       "Once you're satisfied with the arrangement, press the <b>Next Trial</b> button at the bottom of the page. <br>You'll then proceed with the next trial, where you'll be asked to perform the same task with a slightly different set of stimuli. <br> Pay attention to the colour of the arena. If it's orange, apply the rule for orange shops. If it's blue, apply the rule of blue shops.";
-    inStruct.img[6] = "instr/arena_proceed.gif";
+    inStruct.img[6] = "instr/arena_nexttrial.gif";
 
     // sunnary
     inStruct.txt[7] =
