@@ -10,7 +10,8 @@ function set_exp_stimVect() {
  */
   stimVect = {};
   stimVect.trialID = []; // which trial does a stimulus belong to?
-  stimVect.domain = []; // which domain (animals/objects)
+  stimVect.domain = []; // which domain (animals/objects) 
+  stimVect.dom_idx = []; // same as above, but numerical 
   stimVect.size = []; // value of size dimension
   stimVect.speed = []; // value of speed dimension
   stimVect.exemplar = []; // which exemplar
@@ -22,6 +23,7 @@ function set_exp_stimVect() {
         this_domain_idx = this_domain_idx == 1 ? 0 : 1; // flip index between 0 and 1
         stimVect.size.push(i_size);
         stimVect.speed.push(i_speed);
+        stimVect.dom_idx.push(this_domain_idx);
         stimVect.exemplar.push(
           params_exp.exemplars[rnd_randInt(0, params_exp.exemplars.length)]
         );
