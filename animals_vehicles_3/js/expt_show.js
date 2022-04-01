@@ -253,11 +253,13 @@ function showTestBlockInstructions() {
 
   // add illustration
   shopName = "instr_" + parameters.taskprefix[3] + "both_stores.png";
+  // place just underneath the text box
+  textbox = board.block.object.getBBox()  
   board.block.image = board.paper.object
     .image(
       "instr/".concat(shopName),
       board.paper.centre[0] - parameters.visuals.size.shop[0] / 2,
-      board.paper.centre[1] + parameters.visuals.size.shop[1] / 4,
+      textbox.y + textbox.height + 10,
       parameters.visuals.size.shop[0],
       parameters.visuals.size.shop[1]
     )
