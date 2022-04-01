@@ -46,7 +46,7 @@ function arena_setUI() {
       fill: "white",
     });
 
-  board.buttonText.node.setAttribute("class", "donthighlight");
+  board.buttonText.node.setAttribute("class", "donthighlight"); // prevents user from accidentally highlighting/selecting UI text
   board.buttonObject = board.paper.object.set().attr({
     cursor: "pointer",
   });
@@ -105,4 +105,3 @@ function arena_update() {
     fill: params_vis.trialcolours[numbers.trialCount - 1],
   });
 }
-
