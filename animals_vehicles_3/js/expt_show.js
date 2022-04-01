@@ -57,16 +57,10 @@ function showAccept() {
   shows that subject accepted stimulus
 */
   showChoiceRect(1);
-  // if training or if congruent test trial, provide feedback
+  // if training, provide feedback
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
     setTimeout(showFeedbackPos, parameters.feedback_timein);
-  } else if (
-    sdata.expt_sessIDX[coding.index] == 2 &&
-    coding.task == 1 &&
-    sdata.expt_congruencyIDX[coding.index] == 1
-  ) {
-    setTimeout(showFeedbackPos, parameters.feedback_timein);
-  }
+  } 
 }
 
 function showReject() {
@@ -74,16 +68,10 @@ function showReject() {
   shows that subject did not accept stimulus
 */
   showChoiceRect(0);
-  // if training, or test with congruent trial, provide feedback (same holds as earlier)
+  // if training, provide feedback (same holds as earlier)
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
     setTimeout(showFeedbackNeg, parameters.feedback_timein);
-  } else if (
-    sdata.expt_sessIDX[coding.index] == 2 &&
-    coding.task == 1 &&
-    sdata.expt_congruencyIDX[coding.index] == 1
-  ) {
-    setTimeout(showFeedbackNeg, parameters.feedback_timein);
-  }
+  } 
 }
 
 function showStimuli() {
