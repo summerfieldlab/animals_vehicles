@@ -53,7 +53,7 @@ function setInstructions(task_id) {
 
         // what to do
         inStruct.txt[5] =
-          "<b>The stores are located in different parts of the city.</b><br>Each store caters for a different customer base with unique preferences for certain features of the animals.<br> <b>Your task is to figure out what type of animals are preferred by customers of each store./b><<br> You do this by either accepting or rejecting animals for a given store, and then observing the reward/penalty incurred by your choice.";
+          "<b>The stores are located in different parts of the city.</b><br>Each store caters for a different customer base with unique preferences.<br> Animals vary across numerous different features.<br>Customers in each store prefer animals with one specific feature that differs between stores.<br><b>Your task is to figure out what features make animals sell well in each store.</b><br> You do this by either accepting or rejecting animals for a given store, and then observing the reward/penalty incurred by your choice.";
         inStruct.img[5] = "";
 
         // trial - context
@@ -134,9 +134,9 @@ function setInstructions(task_id) {
           "And the second one is the <b>orange vehicle store</b>. <br>";
         inStruct.img[4] = "instr/instr_ve_store_orange.png";
 
-        // what to do
+        // what to do        
         inStruct.txt[5] =
-          "<b>The stores are located in different parts of the city.</b><br>Each store caters for a different customer base with unique preferences for certain features of the vehicles.<br> <b>Your task is to figure out what type of vehicles are preferred by customers of each store./b><<br> You do this by either accepting or rejecting vehicles for a given store, and then observing the reward/penalty incurred by your choice.";
+        "<b>The stores are located in different parts of the city.</b><br>Each store caters for a different customer base with unique preferences.<br> Vehicles vary across numerous different features.<br>Customers in each store prefer vehicles with one specific feature that differs between stores.<br><b>Your task is to figure out what features make vehicles sell well in each store.</b><br> You do this by either accepting or rejecting vehicles for a given store, and then observing the reward/penalty incurred by your choice.";
         inStruct.img[5] = "";
 
         // trial - context
