@@ -253,7 +253,7 @@ function set_subjParams() {
   */
   input = getQueryParams();
 
-  if (typeof input.id == "undefined") {
+  if (typeof input.id == "undefined" || input.id.length < 4) {
     parameters.task_id = "blocked-A-B".split("-"); // blocked blue orange
     parameters.val_rewAssignment = 1; // no flipped assignments, cardinal boundary
     parameters.keyassignment = 0; // l-no r-yes
