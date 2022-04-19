@@ -35,7 +35,7 @@ function setInstructions(task_id) {
           " Hi! <br> Thanks for taking part in this experiment! <br> Please use the buttons below to navigate through the instructions.";
         inStruct.img[0] = "";
         // task structure 
-        inStruct.txt[1] = "The experiment consists of a main task and a rating task. <br> There will be many breaks throughout the experiment. <br> In total, it should take around 60 minutes to complete."
+        inStruct.txt[1] = "The experiment consists of a main task and a rating task. <br> There will be many breaks throughout the experiment. <br> In total, it should take around 80 minutes to complete."
         inStruct.img[1] = "instr/taskstructure.png"
         // main task instructions
         inStruct.txt[2] = "Let's begin with the instructions for the main task. <br> The main task consists of a training and a test phase. <br> The training phase is divided into two halves, and you'll have a break in between. <br> There's another break between the training and the test phase. <br> We will ask you two short questions at the end of the main task."
@@ -118,7 +118,7 @@ function setInstructions(task_id) {
           " Hi! <br> Thanks for taking part in this experiment! <br> Please use the buttons below to navigate through the instructions.";
         inStruct.img[0] = "";
         // task structure 
-        inStruct.txt[1] = "The experiment consists of a main task and a rating task. <br> There will be many breaks throughout the experiment. <br> In total, it should take around 60 minutes to complete."
+        inStruct.txt[1] = "The experiment consists of a main task and a rating task. <br> There will be many breaks throughout the experiment. <br> In total, it should take around 80 minutes to complete."
         inStruct.img[1] = "instr/taskstructure.png"
         // main task instructions
         inStruct.txt[2] = "Let's begin with the instructions for the main task. <br> The main task consists of a training and a test phase. <br> The training phase is divided into two halves, and you'll have a break in between. <br> There's another break between the training and the test phase. <br> We will ask you two short questions at the end of the main task."
@@ -234,7 +234,7 @@ function setInstructions(task_id) {
 
     // sunnary
     inStruct.txt[7] =
-      "<b>Summary </b><br><br>1. On each trial, you'll see 25 stimuli that are arranged in a circle. <br><br>2. The colour indicates whether you should arrange them according to rule used in the blue shop or orange shop.<br><br> 3. Arange them so that the distances between them correspond to the approximate reward received in the shop (i.e. whether they were liked by customers) <br><br>4. Once you're satisfied with your arrangement, you'll click the next trial button to proceed with a new set of stimuli.<br><br><br> <b>There will be four trials in total and it shouldn't take you longer than 10 minutes to finish this first phase of the experiment.<br>If you're ready to begin with the experiment, press the red start button below!</b>";
+      "<b>Summary </b><br><br>1. On each trial, you'll see 25 stimuli that are arranged in a circle. <br><br>2. The colour indicates whether you should arrange them according to rule used in the blue shop or orange shop.<br><br> 3. Arange them so that the distances between them correspond to the approximate reward received in the shop (i.e. whether they were liked by customers) <br><br>4. Once you're satisfied with your arrangement, you'll click the next trial button to proceed with a new set of stimuli.<br><br><br> <b>There will be four trials in total and it shouldn't take you longer than 10 minutes to finish this last phase of the experiment.<br>If you're ready to begin with the experiment, press the red start button below!</b>";
 
     inStruct.img[7] = [];
   }
