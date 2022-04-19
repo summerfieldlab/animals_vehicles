@@ -21,6 +21,15 @@ function showTrial() {
   startCountdown();
 
   showStimuli();
+
+  // if code validation phase, provide random agent's response
+  if (FLAG_RANDOM == 1) {
+    if (Math.random() > 0.5) {
+      handleLeft();
+    } else {
+      handleRight();
+    }
+  }
 }
 
 function showCue() {
@@ -60,7 +69,7 @@ function showAccept() {
   // if training, provide feedback
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
     setTimeout(showFeedbackPos, parameters.feedback_timein);
-  } 
+  }
 }
 
 function showReject() {
@@ -71,7 +80,7 @@ function showReject() {
   // if training, provide feedback (same holds as earlier)
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
     setTimeout(showFeedbackNeg, parameters.feedback_timein);
-  } 
+  }
 }
 
 function showStimuli() {
@@ -242,7 +251,7 @@ function showTestBlockInstructions() {
   // add illustration
   shopName = "instr_" + parameters.taskprefix[3] + "both_stores.png";
   // place just underneath the text box
-  textbox = board.block.object.getBBox()  
+  textbox = board.block.object.getBBox();
   board.block.image = board.paper.object
     .image(
       "instr/".concat(shopName),
