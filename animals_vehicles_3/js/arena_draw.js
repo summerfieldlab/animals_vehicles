@@ -139,15 +139,20 @@ function draw_shoptext() {
     .attr({ "text-anchor": "start", "font-size": 22, fill: "black" });
 
   // move so text really is in centre
-  set = board.paper.object.set()
-  for(let i = 0; i<board.shoptext.length; i++){
+  set = board.paper.object.set();
+  for (let i = 0; i < board.shoptext.length; i++) {
     set.push(board.shoptext[i]);
   }
   text_width = set.getBBox().width;
-  new_x = board.centre[0]-text_width/2
-  for(let i = 0; i<board.shoptext.length; i++){
-    board.shoptext[i].attr({"x":new_x})
+  new_x = board.centre[0] - text_width / 2;
+  for (let i = 0; i < board.shoptext.length; i++) {
+    board.shoptext[i].attr({ x: new_x });
     new_x = new_x + board.shoptext[i].getBBox().width + 5;
+  }
+
+  // prevent user from highlighting/selecting UI text:
+  for (let i = 0; i < board.shoptext.length; i++) {
+    board.shoptext[i].node.setAttribute("class", "donthighlight");
   }
 }
 

@@ -11,6 +11,8 @@ updated version: Timo Flesch, 2022
 
 // globals
 var FLAG_DBG = 0; //toggle debugging output
+var FLAG_DEMO = 1; // demo of different expt phases, auto skip after a few trials per phase
+var FLAG_RANDOM = 0; // random agent provides responses on each trial (for final testing before expt goes live)
 // subject data
 var sdata;
 // experiment data
@@ -139,9 +141,9 @@ function setExperiment() {
     "This is the first block of the experiment. \n \n Please pay attention to the cue at the beginning of each trial that tells you which store you're currently in! \n \n The cue is just an image of one of the two stores (orange or blue). \n \n The cue will change every few trials! \n \n You need to learn two rules: \n \n Which stimuli to accept in the orange store, and \n \n which stimuli to accept in the blue store. \n \n  \n \n Press the f or j key to accept/reject a stimulus. \n \n On each trial, we'll tell you which button corresponds to which response. Use the F key for responses shown on the left. \n\n Use the J key for responses shown on the right. \n\n Press the SPACE bar when you're ready to continue";
 
   parameters.txt.testInstructions_dom1 =
-    "Now let's see how well you've learned the rules for the ANIMAL stores! \n \n In the next block, you'll have to apply the knowledge you have gained about customer preferences to two VEHICLE stores. \n \n At the beginning of each trial, you'll see an image of the store you're currently in (orange or blue). \n \n Then, you'll see a stimulus and have to decide whether to accept it or not. \n \n  WE'll ONLY GIVE YOU FEEDBACK ON SOME TRIALS. THIS IS THE TEST SESSION. \n \n Remember that customers of the vehicles stores have similar preferences to those who went to animals stores!\n \n Press the SPACE bar when you're ready to continue";
+    "In the next block, we'll test how well you've learned the rules for the ANIMAL stores! \n \n Additionally, you'll have to apply your knowledge about customer preferences to two VEHICLE stores. \n \n At the beginning of each trial, you'll see an image of the store you're currently in (orange or blue). This can either be a vehicle or animal store. \n \n Then, you'll see a stimulus and have to decide whether to accept it or not. \n \n  You won't receive feedback as this is the test session. \n \n Remember that customers of the vehicles stores have similar preferences as those who went to animals stores!\n \n Press the SPACE bar when you're ready to continue";
   parameters.txt.testInstructions_dom2 =
-    "Now let's see how well you've learned the rules for the VEHICLE stores! \n \n In the next block, you'll have to apply the knowledge you have gained about customer preferences to two ANIMAL stores. \n \n At the beginning of each trial, you'll see an image of the store you're currently in (orange or blue). \n \n Then, you'll see a stimulus and have to decide whether to accept it or not. \n \n  WE'll ONLY GIVE YOU FEEDBACK ON SOME TRIALS. THIS IS THE TEST SESSION. \n \n Remember that customers of the animals stores have similar preferences to those who went to vehicles stores!\n \n Press the SPACE bar when you're ready to continue";
+    "In the next block, we'll test how well you've learned the rules for the VEHICLE stores! \n \n Additionally, you'll have to apply your knowledge about customer preferences to two ANIMAL stores. \n \n At the beginning of each trial, you'll see an image of the store you're currently in (orange or blue). This can either be a vehicle or animal store. \n \n Then, you'll see a stimulus and have to decide whether to accept it or not. \n \n  You won't receive feedback as this is the test session. \n \n Remember that customers of the animals stores have similar preferences as those who went to vehicles stores!\n \n Press the SPACE bar when you're ready to continue";
   // SDATA ----------------
   sdata = {};
   // expt
@@ -252,7 +254,7 @@ function set_subjParams() {
   */
   input = getQueryParams();
 
-  if (typeof input.id == "undefined") {
+  if (typeof input.id == "undefined" || input.id.length < 4) {
     parameters.task_id = "blocked-A-B".split("-"); // blocked blue orange
     parameters.val_rewAssignment = 1; // no flipped assignments, cardinal boundary
     parameters.keyassignment = 0; // l-no r-yes
@@ -330,7 +332,7 @@ function set_subjParams() {
         break;
     }
     // however, if interleaved, set back to 200
-    if (input.id[0] == 3) {
+    if (input.id[1] == 3) {
       parameters.blockiness = 200;
     }
   }

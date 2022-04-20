@@ -21,6 +21,15 @@ function showTrial() {
   startCountdown();
 
   showStimuli();
+
+  // if code validation phase, provide random agent's response
+  if (FLAG_RANDOM == 1) {
+    if (Math.random() > 0.5) {
+      handleLeft();
+    } else {
+      handleRight();
+    }
+  }
 }
 
 function showCue() {
@@ -57,14 +66,8 @@ function showAccept() {
   shows that subject accepted stimulus
 */
   showChoiceRect(1);
-  // if training or if congruent test trial, provide feedback
+  // if training, provide feedback
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
-    setTimeout(showFeedbackPos, parameters.feedback_timein);
-  } else if (
-    sdata.expt_sessIDX[coding.index] == 2 &&
-    coding.task == 1 &&
-    sdata.expt_congruencyIDX[coding.index] == 1
-  ) {
     setTimeout(showFeedbackPos, parameters.feedback_timein);
   }
 }
@@ -74,14 +77,8 @@ function showReject() {
   shows that subject did not accept stimulus
 */
   showChoiceRect(0);
-  // if training, or test with congruent trial, provide feedback (same holds as earlier)
+  // if training, provide feedback (same holds as earlier)
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
-    setTimeout(showFeedbackNeg, parameters.feedback_timein);
-  } else if (
-    sdata.expt_sessIDX[coding.index] == 2 &&
-    coding.task == 1 &&
-    sdata.expt_congruencyIDX[coding.index] == 1
-  ) {
     setTimeout(showFeedbackNeg, parameters.feedback_timein);
   }
 }
@@ -253,11 +250,13 @@ function showTestBlockInstructions() {
 
   // add illustration
   shopName = "instr_" + parameters.taskprefix[3] + "both_stores.png";
+  // place just underneath the text box
+  textbox = board.block.object.getBBox();
   board.block.image = board.paper.object
     .image(
       "instr/".concat(shopName),
       board.paper.centre[0] - parameters.visuals.size.shop[0] / 2,
-      board.paper.centre[1] + parameters.visuals.size.shop[1] / 4,
+      textbox.y + textbox.height + 10,
       parameters.visuals.size.shop[0],
       parameters.visuals.size.shop[1]
     )

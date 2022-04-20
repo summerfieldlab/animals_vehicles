@@ -43,11 +43,26 @@ function nextTrial() {
   coding.index++;
   coding.trial++;
 
+  if (FLAG_DEMO == 1) {
+    // set indices to automatically skip phase on following trial
+    if (coding.index == 5) {
+      // skip to next training block after 5 trials
+      coding.index = 199;
+      coding.trial = 199;
+    } else if (coding.index == 205) {
+      // skip to test phase after 5 further trials
+      coding.index = 399;
+      coding.trial = 199;
+    } else if (coding.index == 405) {
+      coding.index = parameters.nb_trials_train*2 + parameters.nb_trials_test - 1;
+      coding.trial = parameters.nb_trials_test - 1;
+    }
+  }
   // INCREMENT BLOCK
   if (
-    coding.trial == parameters.nb_trials_train ||
-    (coding.trial == parameters.nb_trials_test) &
-      (sdata.expt_sessIDX[coding.index] == 2)
+    coding.index == parameters.nb_trials_train ||
+    coding.index == 2 * parameters.nb_trials_train ||
+    coding.index == 2 * parameters.nb_trials_train + parameters.nb_trials_test
   ) {
     coding.block++;
     coding.trial = 0;
