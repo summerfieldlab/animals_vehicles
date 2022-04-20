@@ -54,7 +54,7 @@ function nextTrial() {
       coding.index = 399;
       coding.trial = 199;
     } else if (coding.index == 405) {
-      coding.index = parameters.nb_trials_train + parameters.nb_trials_test - 1;
+      coding.index = parameters.nb_trials_train*2 + parameters.nb_trials_test - 1;
       coding.trial = parameters.nb_trials_test - 1;
     }
   }
