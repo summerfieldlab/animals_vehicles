@@ -11,7 +11,7 @@ updated version: Timo Flesch, 2022
 
 // globals
 var FLAG_DBG = 0; //toggle debugging output
-var FLAG_DEMO = 1; // demo of different expt phases, auto skip after a few trials per phase
+var FLAG_DEMO =0; // demo of different expt phases, auto skip after a few trials per phase
 var FLAG_RANDOM = 0; // random agent provides responses on each trial (for final testing before expt goes live)
 // subject data
 var sdata;
