@@ -332,7 +332,7 @@ function set_subjParams() {
         break;
     }
     // however, if interleaved, set back to 200
-    if (input.id[0] == 3) {
+    if (input.id[1] == 3) {
       parameters.blockiness = 200;
     }
   }
