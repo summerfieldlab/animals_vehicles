@@ -163,7 +163,7 @@ def fit_sigmoids_to_choices(
     tasks = ["task_a", "task_b"]
     reldims = [0, 1]
     irreldims = [1, 0]
-    if onlygood == True:
+    if onlygood is True:
         tasks = [t + "_good" for t in tasks]
     betas = {}
     for dom in domains:
@@ -185,7 +185,7 @@ def fit_sigmoids_to_choices(
                             betas[dom][cur][task]["rel"].append(
                                 fit_sigmoid(stats.zscore(np.arange(-2, 3)), choice_rel)
                             )
-                        except:
+                        except Exception:
                             print(choice_rel)
                         try:
                             betas[dom][cur][task]["irrel"].append(
@@ -193,7 +193,7 @@ def fit_sigmoids_to_choices(
                                     stats.zscore(np.arange(-2, 3)), choice_irrel
                                 )
                             )
-                        except:
+                        except Exception:
                             print(choice_irrel)
                 betas[dom][cur][task]["rel"] = np.asarray(betas[dom][cur][task]["rel"])
                 betas[dom][cur][task]["irrel"] = np.asarray(
@@ -256,7 +256,7 @@ def stats_fit_choicerdms(
     regresses participant's choice rdms against model rdms
     """
     tasks = ["task_a", "task_b"]
-    if onlygood == True:
+    if onlygood is True:
         tasks = [t + "_good" for t in tasks]
 
     dmat = gen_choicemodelrdms()
@@ -376,7 +376,7 @@ def fit_model_to_subjects(
     loops over subjects, tasks, domains etc
     """
     tasks = ["task_a", "task_b"]
-    if onlygood == True:
+    if onlygood is True:
         tasks = [t + "_good" for t in tasks]
     thetas = {}
     for dom in domains:

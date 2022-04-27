@@ -5,8 +5,22 @@ from scipy import stats
 from utils.analysis import fit_sigmoid, sigmoid
 
 
+def sem(x: np.array, ddof: int = 1, ax: int = 0) -> float:
+    """computes standard error of mean
+
+    Args:
+        x (np.array): array with some data
+        ddof (int, optional): degrees of freedom for std estimation. Defaults to 1.
+        ax (int, optional): axis of x along which to compte sem. Defaults to 0.
+
+    Returns:
+        float: sem of x
+    """
+    return np.std(x, ddof=1, axis=ax) / np.sqrt(np.shape(x)[ax])
+
+
 def disp_accuracy(alldata, domain):
-    sem = lambda x: np.std(x, ddof=1) / np.sqrt(np.size(x))
+
     # set boundary trials to nan
     alldata[domain]["blocked"]["resp_correct"][
         alldata[domain]["blocked"]["expt_category"] == 0
@@ -103,7 +117,7 @@ def disp_accuracy(alldata, domain):
                 ]
             )
         )
-    acc_a = np.asarray(acc_a)[mask_blocked == True]
+    acc_a = np.asarray(acc_a)[mask_blocked is True]
     acc_b = np.asarray(acc_b)[mask_blocked]
     ax[2].bar(
         0 - 0.1,
@@ -140,7 +154,7 @@ def disp_accuracy(alldata, domain):
                 ]
             )
         )
-    acc_a = np.asarray(acc_a)[mask_interleaved == True]
+    acc_a = np.asarray(acc_a)[mask_interleaved is True]
     acc_b = np.asarray(acc_b)[mask_interleaved]
     ax[2].bar(
         1 - 0.1,
@@ -168,7 +182,7 @@ def disp_accuracy(alldata, domain):
 def disp_lcurves(
     alldata, domains=["animals", "vehicles"], curricula=["blocked", "interleaved"]
 ):
-    sem = lambda x, ax: np.std(x, ddof=1, axis=ax) / np.sqrt(np.shape(x)[ax])
+
     w = 50
 
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
@@ -268,9 +282,9 @@ def disp_sigmoid_fits(
     displays gt data of participant choices together with best fitting sigmoids
     onlygood: fit only to participants who performed above chance (yes/no)
     """
-    sem = lambda x, ax: np.nanstd(x, ddof=1, axis=ax) / np.sqrt(np.shape(x)[ax])
+
     tasks = ["task_a", "task_b"]
-    if onlygood == True:
+    if onlygood is True:
         tasks = [t + "_good" for t in tasks]
     task_labels = ["blue store (speed)", "orange store (size)"]
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
@@ -362,11 +376,11 @@ def disp_param_estimates(
     displays average parameter estimates of sigmoid fit procedure
     onlygood: fit only to participants who performed above chance (yes/no)
     """
-    sem = lambda x, ax: np.nanstd(x, ddof=1, axis=ax) / np.sqrt(np.shape(x)[ax])
+
     tasks = ["task_a", "task_b"]
-    if onlygood == True:
+    if onlygood is True:
         tasks = [t + "_good" for t in tasks]
-    task_labels = ["blue store (speed)", "orange store (size)"]
+    # task_labels = ["blue store (speed)", "orange store (size)"]
     parameters = ["lapse rate", "slope", "offset"]
     dimensions = ["rel", "irrel"]
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
@@ -441,10 +455,10 @@ def disp_choicemats(
     and domain
     """
     tasks = ["task_a", "task_b"]
-    if onlygood == True:
+    if onlygood is True:
         tasks = [t + "_good" for t in tasks]
     task_labels = ["blue store (speed)", "orange store (size)"]
-    parameters = ["lapse rate", "slope", "offset"]
+    # parameters = ["lapse rate", "slope", "offset"]
 
     for dom in domains:
 
@@ -484,9 +498,9 @@ def disp_rsa_param_estimates(
     displays average parameter estimates of model-based rsa on choices
 
     """
-    sem = lambda x, ax: np.nanstd(x, ddof=1, axis=ax) / np.sqrt(np.shape(x)[ax])
+
     tasks = ["task_a", "task_b"]
-    if onlygood == True:
+    if onlygood is True:
         tasks = [t + "_good" for t in tasks]
     parameters = ["factorised model", "linear model"]
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
@@ -540,7 +554,7 @@ def disp_model_estimates(
     """
     displays average parameter estimates of choice model
     """
-    sem = lambda x, ax: np.nanstd(x, ddof=1, axis=ax) / np.sqrt(np.shape(x)[ax])
+
     parameters = ["bias", "lapse", "slope", "offset"]
 
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]

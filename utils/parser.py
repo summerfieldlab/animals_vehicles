@@ -3,6 +3,7 @@ import yaml
 import numpy as np
 from typing import Dict
 
+
 def init_alldata(keys: list) -> Dict:
     """initialised data dictionary
 
@@ -25,7 +26,9 @@ def init_alldata(keys: list) -> Dict:
 
 
 def parse_alldata(
-    data_dir: str, domains: list=["animals", "vehicles"], curricula: list=["blocked", "interleaved"]
+    data_dir: str,
+    domains: list = ["animals", "vehicles"],
+    curricula: list = ["blocked", "interleaved"],
 ) -> Dict:
     """parses data from .json files (one file per subject) and returns nested dictionary
        with data organised by curriculum and training domain
@@ -83,8 +86,8 @@ def parse_alldata(
     )
     # loop over subject data and add to alldata struct
     files = os.listdir(data_dir)
-    for ii,fn in enumerate(files):
-        if ii/len(files)%0.1==0:
+    for ii, fn in enumerate(files):
+        if ii / len(files) % 0.1 == 0:
             print(f"parsed {ii}/{len(files)} files")
         with open(data_dir + fn, "r") as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
@@ -127,7 +130,11 @@ def parse_alldata(
     return alldata
 
 
-def boundary_to_nan(alldata:Dict,  domains: list=["animals", "vehicles"], curricula: list=["blocked", "interleaved"])-> Dict:
+def boundary_to_nan(
+    alldata: Dict,
+    domains: list = ["animals", "vehicles"],
+    curricula: list = ["blocked", "interleaved"],
+) -> Dict:
     """helper function that sets all boundary trials in response vectors to NaN
 
     Args:
