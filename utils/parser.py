@@ -83,7 +83,9 @@ def parse_alldata(
     )
     # loop over subject data and add to alldata struct
     files = os.listdir(data_dir)
-    for fn in files:
+    for ii,fn in enumerate(files):
+        if ii/len(files)%0.1==0:
+            print(f"parsed {ii}/{len(files)} files")
         with open(data_dir + fn, "r") as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
         # rename domain variable
