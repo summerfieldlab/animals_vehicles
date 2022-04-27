@@ -1,0 +1,173 @@
+.donthighlight {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+html,body {
+
+  padding:0;
+  margin:0;
+
+}
+
+#wrap {
+
+  font:22px Arial, san-serif;
+
+}
+
+
+#grad {
+
+  background-image: linear-gradient(to right, red, green);
+  border-style: none;
+  position:fixed;
+  top:95%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left:-450px;
+  /* margin-right:20%; */
+  /* margin-bottom: 10px; */
+  height:20px;
+  width:900px;
+
+}
+
+#question {
+  border-style: none;
+  position: fixed;
+  bottom: 20%;
+  left: 52%;
+  margin-left: -300px;
+  width: 600px;
+  padding-left: 10%
+
+}
+
+
+#canvas {
+  border-style: solid;
+  position:fixed;
+  top:42%;
+  left: 53%;
+  margin-top: -200px;
+  margin-left:-200px;
+  /* margin-right:20%; */
+  /* margin-bottom: 10px; */
+  height:400px;
+  width:400px;
+}
+
+.likert {
+
+  position:fixed;
+  width: 60%;
+  bottom: 10%;
+  /* margin-bottom: 20% */
+  margin-left:20%;
+  /* margin-right:20%; */
+  /* padding:0 0 35px; */
+  border-style: none;
+
+}
+
+/* before statement: child of class likert, adds some cosmetic content, in this
+case a bar connecting the spaced radio buttons */
+.likert:before {
+
+  content: '';
+  position:relative;
+  top:14px;
+  left:10%;
+  display:block; /* "Displays an element as a block element (like <p>). It starts on a new line, and takes up the whole width" */
+  background-color:#efefef;
+  height:10px;
+  width:78%;
+
+}
+
+.likert:after {
+
+  content: '';
+  position:relative;
+  top:14px;
+  left:10%;
+  display:block; /* "Displays an element as a block element (like <p>). It starts on a new line, and takes up the whole width" */
+  background-image: linear-gradient(to right, red, green);
+  height:20px;
+  width:78%;
+
+}
+
+
+.likert li {
+
+  display:inline-block; /*have all list items in one line (columns instead of rows)*/
+  width:19%;
+  /* padding-top: 10%; */
+  text-align:center;
+  vertical-align: top; /*anchor text just below radio buttons */
+
+}
+
+
+.likert li input[type=radio] {
+
+  display:block;
+  position:relative;
+  top:0;
+  left:50%;
+  margin-left:-6px;
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+  transform: scale(1.5);
+
+}
+
+
+.likert li label {
+  width:100%;
+  /* border-style: solid; */
+  /* margin-top: 15px; */
+  padding-top: 30%;
+}
+
+
+/* remember this is the div, buttons go in there */
+.buttons {
+
+  position:absolute;
+  bottom:5%;
+  right:5%;
+  text-align:right;
+  /* border-style:solid; */
+
+}
+
+
+.buttons button {
+
+  padding: 15px 20px;
+  background-color: #67ab49;
+  border: 5;
+  border-radius: 3px;
+  font:22px Arial, san-serif;
+
+}
+
+
+.buttons #submit {background-color: white;}
+/* .buttons #submit:hover {background-color: yellow;} */
+
+
+
+.centre {
+/* position: absolute; */
+width: 250px;
+     height: 200px;
+     padding: 10px;
+     border: 3px dashed #1c87c9;
+     vertical-align: middle;
+ }​
+
+ 

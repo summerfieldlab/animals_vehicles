@@ -1,0 +1,7 @@
+edata : {"expt_subject":"ISoy","expt_sex":"other","expt_age":"21-30","expt_task":"timo/rating_task_2","expt_turker":"58545249cceb5b0001e4875a","exp_starttime":1622112582820}
+params_exp : {"n_size":5,"n_speed":5,"n_unique":10,"n_trials":250,"stimtype":"animal","feature":"large","stim_dir":"./stims/animals/","instr_dir":"instructions/","vericode":"81B7C97D"}
+params_ui : {"n_items":5,"stim":{"fill":"white","stroke":"black","edgecurvature":0,"strokewidth":5},"button":{"text":"Next Trial","fill":"white","stroke":"#3b4449","width":2,"font":"Helvetica","fontsize":"18","glow":{"opacity":"0.55","colour":"blue","width":"2"}},"grad":{"fill":"0-#999696-#ffffff","stroke":"black","strokewidth":1},"likert":{"locations":[-300,-150,0,150,300],"button":{"fill":"white","stroke":"#3b4449","width":2,"glow":{"opacity":5,"colour":"white","width":"2"}},"selector":{"fill":"black","stroke":2,"width":2,"opacity":"0%"},"labels":{"font":"Helvetica","fontsize":"20","weight":"bold","content":["very small","small","medium","large","very large"]},"question":{"font":"Helvetica","fontsize":"28","weight":"normal","content":"How large is this animal?"}}}
+stim_domain : animal
+stim_feature : large
+images : []
+responses : []
