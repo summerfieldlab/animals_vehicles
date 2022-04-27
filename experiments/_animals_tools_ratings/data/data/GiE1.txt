@@ -1,0 +1,8 @@
+edata : {"expt_subject":"GiE1","expt_sex":"","expt_age":"","expt_task":"timo/rating_task","expt_turker":"","exp_starttime":1620226213790,"exp_finishtime":1620226222729}
+params_exp : {"n_animals":306,"n_objects":490,"n_trials":300,"stimtype":"animal","feature":"fast","stim_dir":"./stims/animals/","instr_dir":"instructions/","vericode":"81B7C97D"}
+params_ui : {"n_items":5,"stim":{"fill":"white","stroke":"black","edgecurvature":10,"strokewidth":5},"button":{"text":"Next Trial","fill":"white","stroke":"#3b4449","width":2,"font":"Helvetica","fontsize":"18","glow":{"opacity":"0.55","colour":"blue","width":"2"}},"grad":{"fill":"0-#999696-#ffffff","stroke":"black","strokewidth":1},"likert":{"locations":[-300,-150,0,150,300],"button":{"fill":"white","stroke":"#3b4449","width":2,"glow":{"opacity":5,"colour":"white","width":"2"}},"selector":{"fill":"black","stroke":2,"width":2,"opacity":"0%"},"labels":{"font":"Helvetica","fontsize":"20","weight":"bold","content":["very slow","slow","medium","fast","very fast"]},"question":{"font":"Helvetica","fontsize":"28","weight":"normal","content":"How fast is this animal?"}}}
+stim_domain : animal
+stim_feature : fast
+images : []
+responses : []
+image_ids : []
