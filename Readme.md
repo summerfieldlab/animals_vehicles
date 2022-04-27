@@ -1,4 +1,4 @@
-# Codebase for category learning experiments with abstract features
+# Category learning experiments with abstract features
 This repository contains code for an experimental series on category learning with abstract features.
 
 ## Experiments
