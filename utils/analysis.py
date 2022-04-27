@@ -13,16 +13,49 @@ def print_testacc(
     onlygood: bool = False,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
+    whichtask: bool = "base",
 ):
+    """prints test accuracy
+
+    Args:
+        alldata (Dict): nested dict with participant data
+        onlygood (bool, optional): only participants who missed less than 25% of test trials. Defaults to False.
+        domains (list, optional): task domains. Defaults to ["animals", "vehicles"].
+        curricula (list, optional): training curricula. Defaults to ["blocked", "interleaved"].
+        whichtask (bool, optional): which test task (base vs transfer). Defaults to "base".
+    """
     alldata = boundary_to_nan(alldata)
+    print(f"** Accuracy on {whichtask} task **")
     for dom in domains:
         for cur in curricula:
-            acc = np.nanmean(alldata[dom][cur]["resp_correct"][:, 400:], 1)
-            if onlygood:
-                acc = acc[
-                    np.isnan(alldata[dom][cur]["resp_category"][:, 400:]).sum(1) < 50
+            resp_correct = alldata[dom][cur]["resp_correct"][:, 400:]
+            resp_category = alldata[dom][cur]["resp_category"][:, 400:]
+            expt_domain_test = alldata[dom][cur]["expt_domain"][:, 400:]
+            expt_domain_base = alldata[dom][cur]["expt_domain"][:, 0]
+            task_mask = np.asarray(
+                [
+                    expt_domain_test[i, :] == expt_domain_base[i]
+                    for i in range(len(expt_domain_base))
                 ]
-                # acc = acc[acc>0.5]
+            )
+            resp_correct = np.array(
+                [
+                    resp_correct[i, task_mask[i, :] == (whichtask == "base")]
+                    for i in range(len(task_mask))
+                ]
+            )
+            resp_category = np.array(
+                [
+                    resp_category[i, task_mask[i, :] == (whichtask == "base")]
+                    for i in range(len(task_mask))
+                ]
+            )
+
+            n_test = resp_correct.shape[1]
+
+            acc = np.nanmean(resp_correct, 1)
+            if onlygood:
+                acc = acc[np.isnan(resp_category).sum(1) < (n_test / 4)]
                 print(
                     "only good subjects (n={}): {}, {}: {:.2f}".format(
                         len(acc), dom, cur, np.nanmean(acc)
@@ -40,22 +73,76 @@ def print_ttest_acc(
     alldata: dict,
     onlygood: bool = False,
     domains: list = ["animals", "vehicles"],
-    curricula: list = ["blocked", "interleaved"],
+    whichtask: bool = "base",
 ):
+    """performs t-test on test accuracy
+
+    Args:
+        alldata (Dict): nested dict with participant data
+        onlygood (bool, optional): only participants who missed less than 25% of test trials. Defaults to False.
+        domains (list, optional): task domains. Defaults to ["animals", "vehicles"].
+        whichtask (bool, optional): which test task (base vs transfer). Defaults to "base".
+    """
+    print(f"** T-tests on {whichtask} task **")
     for dom in domains:
-        acc_blocked = np.nanmean(alldata[dom]["blocked"]["resp_correct"][:, 400:], 1)
-        acc_interleaved = np.nanmean(
-            alldata[dom]["interleaved"]["resp_correct"][:, 400:], 1
+        n_test = alldata[dom]["blocked"]["resp_correct"][:, 400:].shape[1]
+
+        resp_correct = alldata[dom]["blocked"]["resp_correct"][:, 400:]
+        resp_category = alldata[dom]["blocked"]["resp_category"][:, 400:]
+        expt_domain_test = alldata[dom]["blocked"]["expt_domain"][:, 400:]
+        expt_domain_base = alldata[dom]["blocked"]["expt_domain"][:, 0]
+        task_mask = np.asarray(
+            [
+                expt_domain_test[i, :] == expt_domain_base[i]
+                for i in range(len(expt_domain_base))
+            ]
         )
+        resp_correct_blocked = np.array(
+            [
+                resp_correct[i, task_mask[i, :] == (whichtask == "base")]
+                for i in range(len(task_mask))
+            ]
+        )
+        resp_category_blocked = np.array(
+            [
+                resp_category[i, task_mask[i, :] == (whichtask == "base")]
+                for i in range(len(task_mask))
+            ]
+        )
+
+        resp_correct = alldata[dom]["interleaved"]["resp_correct"][:, 400:]
+        resp_category = alldata[dom]["interleaved"]["resp_category"][:, 400:]
+        expt_domain_test = alldata[dom]["interleaved"]["expt_domain"][:, 400:]
+        expt_domain_base = alldata[dom]["interleaved"]["expt_domain"][:, 0]
+        task_mask = np.asarray(
+            [
+                expt_domain_test[i, :] == expt_domain_base[i]
+                for i in range(len(expt_domain_base))
+            ]
+        )
+        resp_correct_interleaved = np.array(
+            [
+                resp_correct[i, task_mask[i, :] == (whichtask == "base")]
+                for i in range(len(task_mask))
+            ]
+        )
+        resp_category_interleaved = np.array(
+            [
+                resp_category[i, task_mask[i, :] == (whichtask == "base")]
+                for i in range(len(task_mask))
+            ]
+        )
+
+        acc_blocked = np.nanmean(resp_correct_blocked, 1)
+        acc_interleaved = np.nanmean(resp_correct_interleaved, 1)
         if onlygood:
-            # acc_blocked = acc_blocked[acc_blocked>0.50]
-            # acc_interleaved = acc_interleaved[acc_interleaved>0.50]
             acc_blocked = acc_blocked[
-                np.isnan(alldata[dom]["blocked"]["resp_category"][:, 400:]).sum(1) < 50
+                np.isnan(resp_category_blocked).sum(1)
+                < (n_test / 4)
             ]
             acc_interleaved = acc_interleaved[
-                np.isnan(alldata[dom]["interleaved"]["resp_category"][:, 400:]).sum(1)
-                < 50
+                np.isnan(resp_category_interleaved).sum(1)
+                < (n_test / 4)
             ]
             s, p = stats.ttest_ind(acc_blocked, acc_interleaved)
             print(

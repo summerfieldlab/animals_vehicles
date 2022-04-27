@@ -19,7 +19,7 @@ def sem(x: np.array, ddof: int = 1, ax: int = 0) -> float:
     return np.std(x, ddof=1, axis=ax) / np.sqrt(np.shape(x)[ax])
 
 
-def disp_accuracy(alldata, domain):
+def disp_accuracy(alldata, domain, whichtask="base"):
 
     # set boundary trials to nan
     alldata[domain]["blocked"]["resp_correct"][
@@ -28,12 +28,59 @@ def disp_accuracy(alldata, domain):
     alldata[domain]["interleaved"]["resp_correct"][
         alldata[domain]["interleaved"]["expt_category"] == 0
     ] = np.nan
+
     # compute accuracies
-    acc_blocked = np.nanmean(alldata[domain]["blocked"]["resp_correct"][:, 400:], 1)
-    acc_interleaved = np.nanmean(
-        alldata[domain]["interleaved"]["resp_correct"][:, 400:], 1
+    n_test = alldata[domain]["blocked"]["resp_correct"][:, 400:].shape[1]
+
+    resp_correct = alldata[domain]["blocked"]["resp_correct"][:, 400:]
+    resp_category = alldata[domain]["blocked"]["resp_category"][:, 400:]
+    expt_domain_test = alldata[domain]["blocked"]["expt_domain"][:, 400:]
+    expt_domain_base = alldata[domain]["blocked"]["expt_domain"][:, 0]
+    task_mask = np.asarray(
+        [
+            expt_domain_test[i, :] == expt_domain_base[i]
+            for i in range(len(expt_domain_base))
+        ]
     )
-    f, ax = plt.subplots(1, 3, figsize=(10, 5))
+    resp_correct_blocked = np.array(
+        [
+            resp_correct[i, task_mask[i, :] == (whichtask == "base")]
+            for i in range(len(task_mask))
+        ]
+    )
+    resp_category_blocked = np.array(
+        [
+            resp_category[i, task_mask[i, :] == (whichtask == "base")]
+            for i in range(len(task_mask))
+        ]
+    )
+
+    resp_correct = alldata[domain]["interleaved"]["resp_correct"][:, 400:]
+    resp_category = alldata[domain]["interleaved"]["resp_category"][:, 400:]
+    expt_domain_test = alldata[domain]["interleaved"]["expt_domain"][:, 400:]
+    expt_domain_base = alldata[domain]["interleaved"]["expt_domain"][:, 0]
+    task_mask = np.asarray(
+        [
+            expt_domain_test[i, :] == expt_domain_base[i]
+            for i in range(len(expt_domain_base))
+        ]
+    )
+    resp_correct_interleaved = np.array(
+        [
+            resp_correct[i, task_mask[i, :] == (whichtask == "base")]
+            for i in range(len(task_mask))
+        ]
+    )
+    resp_category_interleaved = np.array(
+        [
+            resp_category[i, task_mask[i, :] == (whichtask == "base")]
+            for i in range(len(task_mask))
+        ]
+    )
+
+    acc_blocked = np.nanmean(resp_correct_blocked, 1)
+    acc_interleaved = np.nanmean(resp_correct_interleaved, 1)
+    f, ax = plt.subplots(1, 2, figsize=(10, 5))
     ax = ax.ravel()
     # all participants
     ax[0].bar(
@@ -43,10 +90,10 @@ def disp_accuracy(alldata, domain):
         zorder=1,
         color=[[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]],
     )
-    ax[0].scatter(np.zeros(len(acc_blocked)) - 0.1, acc_blocked, zorder=3, color="k")
-    ax[0].scatter(
-        np.ones(len(acc_interleaved)) - 0.1, acc_interleaved, zorder=3, color="k"
-    )
+    # ax[0].scatter(np.zeros(len(acc_blocked)) - 0.1, acc_blocked, zorder=3, color="k")
+    # ax[0].scatter(
+    #     np.ones(len(acc_interleaved)) - 0.1, acc_interleaved, zorder=3, color="k"
+    # )
     ax[0].spines["top"].set_visible(False)
     ax[0].spines["right"].set_visible(False)
     ax[0].set_xticks([0, 1])
@@ -60,10 +107,10 @@ def disp_accuracy(alldata, domain):
 
     # only if meets inclusion criterion (less than 1/4 of trials missed)
     acc_blocked_good = acc_blocked[
-        np.isnan(alldata[domain]["blocked"]["resp_category"][:, 400:]).sum(1) < 50
+        np.isnan(resp_category_blocked).sum(1) < (n_test / 4)
     ]
     acc_interleaved_good = acc_interleaved[
-        np.isnan(alldata[domain]["interleaved"]["resp_category"][:, 400:]).sum(1) < 50
+        np.isnan(resp_category_interleaved).sum(1) < (n_test / 4)
     ]
     ax[1].bar(
         [0, 1],
@@ -86,189 +133,263 @@ def disp_accuracy(alldata, domain):
     ax[1].set_title("only < 1/4 of trials missed")
     plt.suptitle("test accuracy - " + domain)
 
-    # sep by task
-
-    mask_blocked = (
-        np.isnan(alldata[domain]["blocked"]["resp_category"][:, 400:]).sum(1) < 50
-    )
-    mask_interleaved = (
-        np.isnan(alldata[domain]["interleaved"]["resp_category"][:, 400:]).sum(1) < 50
-    )
-    print(len(mask_blocked))
-    print(len(mask_interleaved))
-    testtrials = alldata[domain]["blocked"]["expt_session"] == 2
-    task_a_trials = alldata[domain]["blocked"]["expt_context"] == 1
-    task_b_trials = alldata[domain]["blocked"]["expt_context"] == 2
-    acc_a = []
-    acc_b = []
-    print(testtrials.shape)
-    for ii in range(testtrials.shape[0]):
-        acc_a.append(
-            np.nanmean(
-                alldata[domain]["blocked"]["resp_correct"][
-                    ii, testtrials[ii, :] & task_a_trials[ii, :]
-                ]
-            )
-        )
-        acc_b.append(
-            np.nanmean(
-                alldata[domain]["blocked"]["resp_correct"][
-                    ii, testtrials[ii, :] & task_b_trials[ii, :]
-                ]
-            )
-        )
-    acc_a = np.asarray(acc_a)[mask_blocked is True]
-    acc_b = np.asarray(acc_b)[mask_blocked]
-    ax[2].bar(
-        0 - 0.1,
-        acc_a.mean(),
-        yerr=sem(acc_a),
-        color=[75 / 255, 121 / 255, 191 / 255],
-        width=0.18,
-    )
-    ax[2].bar(
-        0 + 0.1,
-        acc_b.mean(),
-        yerr=sem(acc_b),
-        color=[230 / 255, 152 / 255, 28 / 255],
-        width=0.18,
-    )
-
-    testtrials = alldata[domain]["interleaved"]["expt_session"] == 2
-    task_a_trials = alldata[domain]["interleaved"]["expt_context"] == 1
-    task_b_trials = alldata[domain]["interleaved"]["expt_context"] == 2
-    acc_a = []
-    acc_b = []
-    for ii in range(testtrials.shape[0]):
-        acc_a.append(
-            np.nanmean(
-                alldata[domain]["interleaved"]["resp_correct"][
-                    ii, testtrials[ii, :] & task_a_trials[ii, :]
-                ]
-            )
-        )
-        acc_b.append(
-            np.nanmean(
-                alldata[domain]["interleaved"]["resp_correct"][
-                    ii, testtrials[ii, :] & task_b_trials[ii, :]
-                ]
-            )
-        )
-    acc_a = np.asarray(acc_a)[mask_interleaved is True]
-    acc_b = np.asarray(acc_b)[mask_interleaved]
-    ax[2].bar(
-        1 - 0.1,
-        acc_a.mean(),
-        yerr=sem(acc_a),
-        color=[75 / 255, 121 / 255, 191 / 255],
-        width=0.18,
-    )
-    ax[2].bar(
-        1 + 0.1,
-        acc_b.mean(),
-        yerr=sem(acc_b),
-        color=[230 / 255, 152 / 255, 28 / 255],
-        width=0.18,
-    )
-    ax[2].spines["top"].set_visible(False)
-    ax[2].spines["right"].set_visible(False)
-    ax[2].set_xticks([0, 1])
-    ax[2].set_xticklabels(["blocked", "interleaved"])
-    ax[2].set_ylim([-0.05, 1])
-    ax[2].set_title("only <1/4 of trials missed, acc per task")
     plt.tight_layout()
 
 
-def disp_lcurves(
-    alldata, domains=["animals", "vehicles"], curricula=["blocked", "interleaved"]
+def disp_lcurves_training(
+    alldata,
+    domains=["animals", "vehicles"],
+    curricula=["blocked", "interleaved"],
+    onlygood=True,
 ):
 
     w = 50
 
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
-    # all participants
-    plt.figure(figsize=(15, 5))
-    for i, dom in enumerate(domains):
-        plt.subplot(1, 2, i + 1)
-        for j, cur in enumerate(curricula):
-            data_binned = np.array([])
-            responses = alldata[dom][cur]["resp_correct"]
-            idces = np.arange(0, 600, w)
-            data_binned = np.empty((responses.shape[0], len(idces)))
-            for ii, idx in enumerate(idces):
-                data_binned[:, ii] = np.nanmean(responses[:, idx : idx + w - 1], 1)
-            plt.errorbar(
-                np.arange(len(idces)),
-                data_binned.mean(0),
-                yerr=sem(data_binned, 0),
-                color=cols[j],
-                linewidth=2,
-                fmt="o-",
+    if onlygood is False:
+        # all participants
+        plt.figure(figsize=(15, 5))
+        for i, dom in enumerate(domains):
+            plt.subplot(1, 2, i + 1)
+            for j, cur in enumerate(curricula):
+                data_binned = np.array([])
+                responses = alldata[dom][cur]["resp_correct"][:, :400]
+                idces = np.arange(0, 400, w)
+                data_binned = np.empty((responses.shape[0], len(idces)))
+                for ii, idx in enumerate(idces):
+                    data_binned[:, ii] = np.nanmean(responses[:, idx : idx + w - 1], 1)
+                plt.errorbar(
+                    np.arange(len(idces)),
+                    data_binned.mean(0),
+                    yerr=sem(data_binned, 0),
+                    color=cols[j],
+                    linewidth=2,
+                    fmt="o-",
+                )
+            plt.ylim((0, 1))
+            ax = plt.gca()
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            plt.title("learning curve - " + dom)
+            plt.plot([4, 4], [0, 1], "k--")
+            # plt.plot([8, 8], [0, 1], "k-")
+            ticks = plt.xticks()
+            plt.xticks(
+                ticks=ticks[0], labels=[""] + [str(i) for i in np.arange(0, 401, 50)]
             )
-        plt.ylim((0, 1))
-        ax = plt.gca()
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        plt.title("learning curve - " + dom)
-        plt.plot([4, 4], [0, 1], "k--")
-        plt.plot([8, 8], [0, 1], "k-")
-        ticks = plt.xticks()
-        plt.xticks(ticks=ticks[0], labels=np.arange(-100, 601, 100))
-        plt.xlim((-1, 12))
-        plt.xlabel("trial")
-        plt.ylabel("Accuracy (%)")
-        ax = plt.gca()
-        ax.set_ylim([-0.05, 1])
-        ax.set_yticks(np.arange(0, 1.1, 0.25))
-        ax.set_yticklabels(np.arange(0, 101, 25))
-    plt.suptitle("All participants")
+            plt.xlim((-1, 8))
+            plt.xlabel("trial")
+            plt.ylabel("Accuracy (%)")
+            ax = plt.gca()
+            ax.set_ylim([-0.05, 1])
+            ax.set_yticks(np.arange(0, 1.1, 0.25))
+            ax.set_yticklabels(np.arange(0, 101, 25))
+        plt.suptitle("All participants, training")
+    else:
+        # learning curve, good ones
+        plt.figure(figsize=(15, 5))
+        for i, dom in enumerate(domains):
 
-    # learning curve, good ones
-    plt.figure(figsize=(15, 5))
-    for i, dom in enumerate(domains):
-
-        mask_blocked = (
-            np.isnan(alldata[dom]["blocked"]["resp_category"][:, 400:]).sum(1) < 50
-        )
-        mask_interleaved = (
-            np.isnan(alldata[dom]["interleaved"]["resp_category"][:, 400:]).sum(1) < 50
-        )
-
-        masks = [mask_blocked, mask_interleaved]
-        plt.subplot(1, 2, i + 1)
-        for j, cur in enumerate(curricula):
-            data_binned = np.array([])
-            responses = alldata[dom][cur]["resp_correct"]
-            idces = np.arange(0, 600, w)
-            data_binned = np.empty((responses.shape[0], len(idces)))
-            for ii, idx in enumerate(idces):
-                data_binned[:, ii] = np.nanmean(responses[:, idx : idx + w - 1], 1)
-            data_binned = data_binned[masks[j], :]
-            plt.errorbar(
-                np.arange(len(idces)),
-                data_binned.mean(0),
-                yerr=sem(data_binned, 0),
-                color=cols[j],
-                linewidth=2,
-                fmt="o-",
+            mask_blocked = (
+                np.isnan(alldata[dom]["blocked"]["resp_category"][:, 400:]).sum(1) < 75
             )
-        plt.ylim((0, 1))
-        ax = plt.gca()
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        plt.title("learning curve - " + dom)
-        plt.plot([4, 4], [0, 1], "k--")
-        plt.plot([8, 8], [0, 1], "k-")
-        ticks = plt.xticks()
-        plt.xticks(ticks=ticks[0], labels=np.arange(-100, 601, 100))
-        plt.xlim((-1, 12))
-        plt.xlabel("trial")
-        plt.ylabel("Accuracy (%)")
-        ax = plt.gca()
-        ax.set_ylim([-0.05, 1])
-        ax.set_yticks(np.arange(0, 1.1, 0.25))
-        ax.set_yticklabels(np.arange(0, 101, 25))
-    plt.suptitle("only good participants")
+            mask_interleaved = (
+                np.isnan(alldata[dom]["interleaved"]["resp_category"][:, 400:]).sum(1)
+                < 75
+            )
+
+            masks = [mask_blocked, mask_interleaved]
+            plt.subplot(1, 2, i + 1)
+            for j, cur in enumerate(curricula):
+                data_binned = np.array([])
+                responses = alldata[dom][cur]["resp_correct"][:, :400]
+                idces = np.arange(0, 400, w)
+                data_binned = np.empty((responses.shape[0], len(idces)))
+                for ii, idx in enumerate(idces):
+                    data_binned[:, ii] = np.nanmean(responses[:, idx : idx + w - 1], 1)
+                data_binned = data_binned[masks[j], :]
+                plt.errorbar(
+                    np.arange(len(idces)),
+                    data_binned.mean(0),
+                    yerr=sem(data_binned, 0),
+                    color=cols[j],
+                    linewidth=2,
+                    fmt="o-",
+                )
+            plt.ylim((0, 1))
+            ax = plt.gca()
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            plt.title("learning curve - " + dom)
+            plt.plot([4, 4], [0, 1], "k--")
+            # plt.plot([8, 8], [0, 1], "k-")
+            ticks = plt.xticks()
+            plt.xticks(
+                ticks=ticks[0], labels=[""] + [str(i) for i in np.arange(0, 401, 50)]
+            )
+            plt.xlim((-1, 8))
+            plt.xlabel("trial")
+            plt.ylabel("Accuracy (%)")
+            ax = plt.gca()
+            ax.set_ylim([-0.05, 1])
+            ax.set_yticks(np.arange(0, 1.1, 0.25))
+            ax.set_yticklabels(np.arange(0, 101, 25))
+            plt.ylim((0.5, 1))
+        plt.suptitle("only good participants, training")
+
+
+def disp_lcurves_test(
+    alldata,
+    domains=["animals", "vehicles"],
+    curricula=["blocked", "interleaved"],
+    onlygood=True,
+    whichtask="base",
+):
+
+    w = 25
+
+    cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
+    if onlygood is False:
+        # all participants
+        plt.figure(figsize=(15, 5))
+        for i, dom in enumerate(domains):
+            plt.subplot(1, 2, i + 1)
+            for j, cur in enumerate(curricula):
+                data_binned = np.array([])
+                resp_correct = alldata[dom][cur]["resp_correct"][:, 400:]
+                resp_category = alldata[dom][cur]["resp_category"][:, 400:]
+                expt_domain_test = alldata[dom][cur]["expt_domain"][:, 400:]
+                expt_domain_base = alldata[dom][cur]["expt_domain"][:, 0]
+                task_mask = np.asarray(
+                    [
+                        expt_domain_test[i, :] == expt_domain_base[i]
+                        for i in range(len(expt_domain_base))
+                    ]
+                )
+                resp_correct = np.array(
+                    [
+                        resp_correct[i, task_mask[i, :] == (whichtask == "base")]
+                        for i in range(len(task_mask))
+                    ]
+                )
+                resp_category = np.array(
+                    [
+                        resp_category[i, task_mask[i, :] == (whichtask == "base")]
+                        for i in range(len(task_mask))
+                    ]
+                )
+                idces = np.arange(0, 75, w)
+                data_binned = np.empty((resp_correct.shape[0], len(idces)))
+                for ii, idx in enumerate(idces):
+                    data_binned[:, ii] = np.nanmean(
+                        resp_correct[:, idx : idx + w - 1], 1
+                    )
+                plt.errorbar(
+                    np.arange(len(idces)),
+                    data_binned.mean(0),
+                    yerr=sem(data_binned, 0),
+                    color=cols[j],
+                    linewidth=2,
+                    fmt="o-",
+                )
+            plt.ylim((0, 1))
+            ax = plt.gca()
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            plt.title("learning curve - " + dom)
+            ticks = plt.xticks()
+            plt.xticks(
+                ticks=np.arange(4), labels=[str(i) for i in np.arange(0, 76, 25)]
+            )
+            # plt.xlim((-1, 8))
+            plt.xlabel("trial")
+            plt.ylabel("Accuracy (%)")
+            ax = plt.gca()
+            ax.set_ylim([-0.05, 1])
+            ax.set_yticks(np.arange(0, 1.1, 0.25))
+            ax.set_yticklabels(np.arange(0, 101, 25))
+        plt.suptitle(f"All participants, test, {whichtask} task")
+    else:
+        # learning curve, good ones
+        plt.figure(figsize=(15, 5))
+        for i, dom in enumerate(domains):
+
+            plt.subplot(1, 2, i + 1)
+            for j, cur in enumerate(curricula):
+                data_binned = np.array([])
+                resp_correct = alldata[dom][cur]["resp_correct"][:, 400:]
+                resp_category = alldata[dom][cur]["resp_category"][:, 400:]
+                expt_domain_test = alldata[dom][cur]["expt_domain"][:, 400:]
+                expt_domain_base = alldata[dom][cur]["expt_domain"][:, 0]
+                task_mask = np.asarray(
+                    [
+                        expt_domain_test[i, :] == expt_domain_base[i]
+                        for i in range(len(expt_domain_base))
+                    ]
+                )
+                resp_correct = np.array(
+                    [
+                        resp_correct[i, task_mask[i, :] == (whichtask == "base")]
+                        for i in range(len(task_mask))
+                    ]
+                )
+                resp_category = np.array(
+                    [
+                        resp_category[i, task_mask[i, :] == (whichtask == "base")]
+                        for i in range(len(task_mask))
+                    ]
+                )
+                n_test = resp_correct.shape[1]
+                mask = np.isnan(resp_category).sum(1) < (n_test / 4)
+                idces = np.arange(0, 75, w)
+                data_binned = np.empty((resp_correct.shape[0], len(idces)))
+                for ii, idx in enumerate(idces):
+                    data_binned[:, ii] = np.nanmean(
+                        resp_correct[:, idx : idx + w - 1], 1
+                    )
+                data_binned = data_binned[mask, :]
+                plt.errorbar(
+                    np.arange(len(idces)),
+                    data_binned.mean(0),
+                    yerr=sem(data_binned, 0),
+                    color=cols[j],
+                    linewidth=2,
+                    fmt="o-",
+                )
+            plt.ylim((0, 1))
+            ax = plt.gca()
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            plt.title("learning curve - " + dom)
+
+            # ticks = plt.xticks()
+            plt.xticks(
+                ticks=np.arange(4), labels=[str(i) for i in np.arange(0, 76, 25)]
+            )
+            # plt.xlim((-1, 8))
+            plt.xlabel("trial")
+            plt.ylabel("Accuracy (%)")
+            ax = plt.gca()
+            ax.set_ylim([-0.05, 1])
+            ax.set_yticks(np.arange(0, 1.1, 0.25))
+            ax.set_yticklabels(np.arange(0, 101, 25))
+            plt.ylim((0.5, 1))
+        plt.suptitle(f"only good participants, test, {whichtask} task")
+
+
+def disp_lcurves(
+    alldata,
+    domains=["animals", "vehicles"],
+    curricula=["blocked", "interleaved"],
+    onlygood=True,
+):
+
+    disp_lcurves_training(
+        alldata,
+        domains=domains,
+        curricula=curricula,
+        onlygood=onlygood,
+    )
 
 
 def disp_sigmoid_fits(
