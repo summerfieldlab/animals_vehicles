@@ -13,7 +13,7 @@ def print_testacc(
     onlygood: bool = False,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
-    whichtask: bool = "base",
+    whichtask: str = "base",
 ):
     """prints test accuracy
 
@@ -73,7 +73,7 @@ def print_ttest_acc(
     alldata: dict,
     onlygood: bool = False,
     domains: list = ["animals", "vehicles"],
-    whichtask: bool = "base",
+    whichtask: str = "base",
 ):
     """performs t-test on test accuracy
 
@@ -137,12 +137,10 @@ def print_ttest_acc(
         acc_interleaved = np.nanmean(resp_correct_interleaved, 1)
         if onlygood:
             acc_blocked = acc_blocked[
-                np.isnan(resp_category_blocked).sum(1)
-                < (n_test / 4)
+                np.isnan(resp_category_blocked).sum(1) < (n_test / 4)
             ]
             acc_interleaved = acc_interleaved[
-                np.isnan(resp_category_interleaved).sum(1)
-                < (n_test / 4)
+                np.isnan(resp_category_interleaved).sum(1) < (n_test / 4)
             ]
             s, p = stats.ttest_ind(acc_blocked, acc_interleaved)
             print(
@@ -159,11 +157,20 @@ def compute_choicemats(
     alldata: dict,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
+    whichtask: str = "base",
 ) -> dict:
-    """
-    calculates choice matrices (proportions of 'accept' choices for each stimulus type)
+    """calculates choice matrices (proportions of 'accept' choices for each stimulus type)
     for all domains and curricula.
     creates separate set of choice matrix, only including above chance performing participants
+
+    Args:
+        alldata (dict): participant data
+        domains (list, optional): base task domains. Defaults to ["animals", "vehicles"].
+        curricula (list, optional): training curricula. Defaults to ["blocked", "interleaved"].
+        whichtask (str, optional): base vs tranfer task of test phase. Defaults to "base".
+
+    Returns:
+        dict: choice matrices per domain&curriculum
     """
     choicemats = {}
     for dom in domains:
@@ -173,11 +180,11 @@ def compute_choicemats(
             alldata[dom][cur]["resp_correct"][
                 alldata[dom][cur]["expt_category"] == 0
             ] = np.nan
-            # create mask to include only subjects with acc > 50%
-            # acc = np.nanmean(alldata[dom][cur]['resp_correct'][:,400:],1)
-            #             mask = acc>0.50
+
             # mask: exlude participants who missed more than 1/4 of trials:
-            mask = np.isnan(alldata[dom][cur]["resp_category"][:, 400:]).sum(1) < 50
+            n_test = alldata[dom][cur]["resp_correct"][:, 400:].shape[1]
+            resp_category = alldata[dom][cur]["resp_category"][:, 400:]
+            mask = np.isnan(resp_category).sum(1) < (n_test / 4)
 
             # populate choice matrix
             choicemats[dom][cur] = {}
@@ -188,6 +195,42 @@ def compute_choicemats(
             speed = data["expt_speed"][:, 400:]
             task = data["expt_context"][:, 400:]
             responses = data["resp_category"][:, 400:]
+            # pull out base or transfer task trials
+            expt_domain_test = alldata[dom][cur]["expt_domain"][:, 400:]
+            expt_domain_base = alldata[dom][cur]["expt_domain"][:, 0]
+            task_mask = np.asarray(
+                [
+                    expt_domain_test[i, :] == expt_domain_base[i]
+                    for i in range(len(expt_domain_base))
+                ]
+            )
+            responses = np.array(
+                [
+                    resp_category[i, task_mask[i, :] == (whichtask == "base")]
+                    for i in range(len(task_mask))
+                ]
+            )
+
+            size = np.array(
+                [
+                    size[i, task_mask[i, :] == (whichtask == "base")]
+                    for i in range(len(task_mask))
+                ]
+            )
+
+            speed = np.array(
+                [
+                    speed[i, task_mask[i, :] == (whichtask == "base")]
+                    for i in range(len(task_mask))
+                ]
+            )
+
+            task = np.array(
+                [
+                    task[i, task_mask[i, :] == (whichtask == "base")]
+                    for i in range(len(task_mask))
+                ]
+            )
 
             cmat_a = np.empty((len(responses), len(size_levels), len(speed_levels)))
             cmat_b = np.empty((len(responses), len(size_levels), len(speed_levels)))
@@ -362,11 +405,17 @@ def stats_fit_choicerdms(
                         )[:, np.newaxis]
                     )
                 )
-                y = stats.zscore(sub_rdm[np.tril_indices(50, k=-1)].flatten())
+                y = sub_rdm[np.tril_indices(50, k=-1)].flatten()
+                y = stats.zscore(y)
                 # instantiate linear model
                 lr = LinearRegression()
-                lr.fit(dmat, y)
-                betas[dom][cur].append(np.asarray(lr.coef_))
+                try:
+                    lr.fit(dmat, y)
+                    betas[dom][cur].append(np.asarray(lr.coef_))
+                except ValueError:
+                    print(f"{dom} {cur} {sub}")
+                    # print(y)
+
             betas[dom][cur] = np.asarray(betas[dom][cur])
     return betas
 

@@ -278,7 +278,7 @@ def disp_lcurves_test(
                         for i in range(len(task_mask))
                     ]
                 )
-                idces = np.arange(0, 75, w)
+                idces = np.arange(0, 150, w)
                 data_binned = np.empty((resp_correct.shape[0], len(idces)))
                 for ii, idx in enumerate(idces):
                     data_binned[:, ii] = np.nanmean(
@@ -297,9 +297,9 @@ def disp_lcurves_test(
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
             plt.title("learning curve - " + dom)
-            ticks = plt.xticks()
+            # ticks = plt.xticks()
             plt.xticks(
-                ticks=np.arange(4), labels=[str(i) for i in np.arange(0, 76, 25)]
+                ticks=np.arange(7), labels=[str(i) for i in np.arange(0, 151, 25)]
             )
             # plt.xlim((-1, 8))
             plt.xlabel("trial")
@@ -341,7 +341,7 @@ def disp_lcurves_test(
                 )
                 n_test = resp_correct.shape[1]
                 mask = np.isnan(resp_category).sum(1) < (n_test / 4)
-                idces = np.arange(0, 75, w)
+                idces = np.arange(0, 150, w)
                 data_binned = np.empty((resp_correct.shape[0], len(idces)))
                 for ii, idx in enumerate(idces):
                     data_binned[:, ii] = np.nanmean(
@@ -364,7 +364,7 @@ def disp_lcurves_test(
 
             # ticks = plt.xticks()
             plt.xticks(
-                ticks=np.arange(4), labels=[str(i) for i in np.arange(0, 76, 25)]
+                ticks=np.arange(7), labels=[str(i) for i in np.arange(0, 151, 25)]
             )
             # plt.xlim((-1, 8))
             plt.xlabel("trial")
@@ -570,6 +570,7 @@ def disp_choicemats(
     onlygood: bool = True,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
+    whichtask: str = "base"
 ):
     """
     displays choice probability matrices for each task
@@ -578,7 +579,7 @@ def disp_choicemats(
     tasks = ["task_a", "task_b"]
     if onlygood is True:
         tasks = [t + "_good" for t in tasks]
-    task_labels = ["blue store (speed)", "orange store (size)"]
+    task_labels = ["blue store (size)", "orange store (speed)"]
     # parameters = ["lapse rate", "slope", "offset"]
 
     for dom in domains:
@@ -603,9 +604,9 @@ def disp_choicemats(
         disp_choicemat(cmat)
         plt.title(task_labels[1] + " - interleaved")
         if not onlygood:
-            plt.suptitle(dom.capitalize() + " - all subjects", fontweight="bold")
+            plt.suptitle(dom.capitalize() + " - all subjects, " + whichtask + " task", fontweight="bold")
         else:
-            plt.suptitle(dom.capitalize() + " - only good", fontweight="bold")
+            plt.suptitle(dom.capitalize() + " - only good, " + whichtask + " task", fontweight="bold")
         plt.tight_layout()
 
 
@@ -645,15 +646,15 @@ def disp_rsa_param_estimates(
                 zorder=1,
             )
 
-            ax.scatter(
-                np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
-            )
-            ax.scatter(
-                np.ones((len(p_interleaved), 1)) - 0.1,
-                p_interleaved,
-                color="k",
-                zorder=3,
-            )
+            # ax.scatter(
+            #     np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
+            # )
+            # ax.scatter(
+            #     np.ones((len(p_interleaved), 1)) - 0.1,
+            #     p_interleaved,
+            #     color="k",
+            #     zorder=3,
+            # )
             _, pval = stats.mannwhitneyu(p_blocked, p_interleaved)
             ax.set(
                 xticks=[0, 1],
@@ -702,15 +703,15 @@ def disp_model_estimates(
                 zorder=1,
             )
 
-            ax.scatter(
-                np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
-            )
-            ax.scatter(
-                np.ones((len(p_interleaved), 1)) - 0.1,
-                p_interleaved,
-                color="k",
-                zorder=3,
-            )
+            # ax.scatter(
+            #     np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
+            # )
+            # ax.scatter(
+            #     np.ones((len(p_interleaved), 1)) - 0.1,
+            #     p_interleaved,
+            #     color="k",
+            #     zorder=3,
+            # )
             _, pval = stats.mannwhitneyu(p_blocked, p_interleaved)
             ax.set(
                 xticks=[0, 1],
