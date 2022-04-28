@@ -65,7 +65,7 @@ def parse_alldata(
             "expt_exemplar",
         ]
         keys_rules_in = ["rule_taskOrange", "rule_taskBlue"]
-        keys_rules_out = ["resp_ruleSpeed", "resp_ruleSize"]
+        keys_rules_out = ["resp_ruleSize", "resp_ruleSpeed"]
 
     else:
         keys_expt_in = [
