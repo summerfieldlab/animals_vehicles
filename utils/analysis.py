@@ -75,7 +75,7 @@ def print_ttest_acc(
     domains: list = ["animals", "vehicles"],
     whichtask: str = "base",
 ):
-    """performs t-test on test accuracy
+    """performs ranksum test on test accuracy
 
     Args:
         alldata (Dict): nested dict with participant data
@@ -83,7 +83,7 @@ def print_ttest_acc(
         domains (list, optional): task domains. Defaults to ["animals", "vehicles"].
         whichtask (bool, optional): which test task (base vs transfer). Defaults to "base".
     """
-    print(f"** T-tests on {whichtask} task **")
+    print(f"** mann whitney u on {whichtask} task **")
     for dom in domains:
         n_test = alldata[dom]["blocked"]["resp_correct"][:, 400:].shape[1]
 
@@ -260,22 +260,62 @@ def compute_choicemats(
     return choicemats
 
 
-def fit_sigmoid(x, y):
+def nolapse(func):
+    """decorator for sigmoid_fourparmas to avoid fitting lapse rate"""
+
+    def inner(x, L, k, x0):
+        return func(x, L, k, x0, fitlapse=False)
+
+    return inner
+
+
+def sigmoid_fourparams(
+    x: np.array, L: float, k: float, x0: float, fitlapse=True
+) -> np.array:
+    """sigmoidal non-linearity with four free params
+    Args:
+        x (np.array): inputs
+        L (float): lapse rate
+        k (float): slope
+        x0 (float): offset
+        fitlapse (bool, optional): fit lapse rate. Defaults to True.
+    Returns:
+        np.array: outputs of sigmoid
+    """
+    if fitlapse is False:
+        L = 0
+    y = L + (1 - L * 2) / (1.0 + np.exp(-k * (x - x0)))
+    return y
+
+
+def fit_sigmoid(x: np.array, y, fitlapse=True):
     """
     fits sigmoidal nonlinearity to some data
     returns best-fitting parameter estimates
     """
     # initial guesses for max, slope and inflection point
     theta0 = [0.0, 0.0, 0.0]
-    popt, _ = curve_fit(
-        sigmoid,
-        x,
-        y,
-        theta0,
-        method="dogbox",
-        maxfev=1000,
-        bounds=([0, -10, -10], [0.5, 10, 10]),
-    )
+    if fitlapse is False:
+        popt, _ = curve_fit(
+            nolapse(sigmoid_fourparams),
+            x,
+            y,
+            theta0,
+            method="dogbox",
+            maxfev=1000,
+            bounds=([0, -10, -10], [0.5, 10, 10]),
+        )
+    else:
+        popt, _ = curve_fit(
+            sigmoid_fourparams,
+            x,
+            y,
+            theta0,
+            method="dogbox",
+            maxfev=1000,
+            bounds=([0, -10, -10], [0.5, 10, 10]),
+        )
+
     return popt
 
 
@@ -284,11 +324,13 @@ def fit_sigmoids_to_choices(
     onlygood: bool = False,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
+    fitlapse: bool = False,
 ):
     """
     wrapper that loops over domains and curricula to fit sigmoids at single sub level
     returns dictionary with best-fitting parameters
     onlygood: fit only to participants who performed above chance (yes/no)
+    fitlapse: whether or not to fit lapse rate
     """
     tasks = ["task_a", "task_b"]
     reldims = [0, 1]
@@ -313,14 +355,20 @@ def fit_sigmoids_to_choices(
                     ):
                         try:
                             betas[dom][cur][task]["rel"].append(
-                                fit_sigmoid(stats.zscore(np.arange(-2, 3)), choice_rel)
+                                fit_sigmoid(
+                                    stats.zscore(np.arange(-2, 3)),
+                                    choice_rel,
+                                    fitlapse=fitlapse,
+                                )
                             )
                         except Exception:
                             print(choice_rel)
                         try:
                             betas[dom][cur][task]["irrel"].append(
                                 fit_sigmoid(
-                                    stats.zscore(np.arange(-2, 3)), choice_irrel
+                                    stats.zscore(np.arange(-2, 3)),
+                                    choice_irrel,
+                                    fitlapse=fitlapse,
                                 )
                             )
                         except Exception:
