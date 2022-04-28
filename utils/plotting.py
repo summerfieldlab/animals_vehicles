@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
-from utils.analysis import fit_sigmoid, sigmoid
+
+# from utils.analysis import fit_sigmoid, sigmoid
 
 
 def sem(x: np.array, ddof: int = 1, ax: int = 0) -> float:
@@ -420,13 +421,15 @@ def disp_sigmoid_fits(
                 ax = axs[itask]
                 choice_rel = choicemats[dom][cur][task].mean(reldims[itask] + 1)
                 # params_rel = np.nanmean(betas[dom][cur][task]['rel'],0)
-
-                params_rel = fit_sigmoid(np.arange(-2, 3), np.nanmean(choice_rel, 0))
+                # params_rel = np.nanmean(thetas[dom][cur][task]["rel"],0)
+                # params_rel = fit_sigmoid(
+                #     np.arange(-2, 3), np.nanmean(choice_rel, 0), fitlapse=False
+                # )
                 ax.errorbar(
                     np.arange(-2, 3),
                     np.nanmean(choice_rel, 0),
                     yerr=sem(choice_rel, 0),
-                    fmt="o",
+                    fmt="o-",
                     color=cols[icol],
                 )
                 ax.scatter(
@@ -436,26 +439,27 @@ def disp_sigmoid_fits(
                     marker="o",
                     color=cols[icol],
                 )
-                ax.plot(
-                    np.linspace(-2, 2, 100),
-                    sigmoid(
-                        np.linspace(-2, 3, 100),
-                        params_rel[0],
-                        params_rel[1],
-                        params_rel[2],
-                    ),
-                    color=cols[icol],
-                )
+                # ax.plot(
+                #     np.linspace(-2, 2, 100),
+                #     sigmoid(
+                #         np.linspace(-2, 3, 100),
+                #         params_rel[0],
+                #         params_rel[1],
+                #         params_rel[2],
+                #     ),
+                #     color=cols[icol],
+                # )
 
                 choice_irrel = choicemats[dom][cur][task].mean(irreldims[itask] + 1)
-                params_irrel = fit_sigmoid(
-                    np.arange(-2, 3), np.nanmean(choice_irrel, 0)
-                )
+                # params_irrel = np.nanmean(thetas[dom][cur][task]["irrel"], 0)
+                # params_irrel = fit_sigmoid(
+                #     np.arange(-2, 3), np.nanmean(choice_irrel, 0), fitlapse=False
+                # )
                 ax.errorbar(
                     np.arange(-2, 3),
                     np.nanmean(choice_irrel, 0),
                     yerr=sem(choice_irrel, 0),
-                    fmt="x",
+                    fmt="x--",
                     color=cols[icol],
                 )
                 ax.scatter(
@@ -465,17 +469,17 @@ def disp_sigmoid_fits(
                     marker="x",
                     color=cols[icol],
                 )
-                ax.plot(
-                    np.linspace(-2, 2, 100),
-                    sigmoid(
-                        np.linspace(-2, 3, 100),
-                        params_irrel[0],
-                        params_irrel[1],
-                        params_irrel[2],
-                    ),
-                    color=cols[icol],
-                    linestyle="--",
-                )
+                # ax.plot(
+                #     np.linspace(-2, 2, 100),
+                #     sigmoid(
+                #         np.linspace(-2, 3, 100),
+                #         params_irrel[0],
+                #         params_irrel[1],
+                #         params_irrel[2],
+                #     ),
+                #     color=cols[icol],
+                #     linestyle="--",
+                # )
                 ax.set(ylim=[0, 1], xlim=[-2.2, 2.2])
                 ax.set_title(
                     "".join([dom + " - " + task_labels[itask]]),
@@ -525,6 +529,7 @@ def disp_param_estimates(
                 # bar plots with errorbars
                 plt.subplot(1, 3, ii + 1)
                 ax = plt.gca()
+
                 ax.bar(
                     0, p_blocked.mean(), yerr=sem(p_blocked, 0), color=cols[0], zorder=1
                 )
@@ -536,16 +541,16 @@ def disp_param_estimates(
                     zorder=1,
                 )
 
-                ax.scatter(
-                    np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
-                )
-                ax.scatter(
-                    np.ones((len(p_interleaved), 1)) - 0.1,
-                    p_interleaved,
-                    color="k",
-                    zorder=3,
-                )
-                _, pval = stats.mannwhitneyu(p_blocked, p_interleaved)
+                # ax.scatter(
+                #     np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
+                # )
+                # ax.scatter(
+                #     np.ones((len(p_interleaved), 1)) - 0.1,
+                #     p_interleaved,
+                #     color="k",
+                #     zorder=3,
+                # )
+                _, pval = stats.ttest_ind(p_blocked.squeeze(), p_interleaved.squeeze())
                 ax.set(
                     xticks=[0, 1],
                     xticklabels=("blocked", "interleaved"),
@@ -570,7 +575,7 @@ def disp_choicemats(
     onlygood: bool = True,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
-    whichtask: str = "base"
+    whichtask: str = "base",
 ):
     """
     displays choice probability matrices for each task
@@ -579,7 +584,7 @@ def disp_choicemats(
     tasks = ["task_a", "task_b"]
     if onlygood is True:
         tasks = [t + "_good" for t in tasks]
-    task_labels = ["blue store (size)", "orange store (speed)"]
+    task_labels = ["orange store (speed)", "blue store (size)"]
     # parameters = ["lapse rate", "slope", "offset"]
 
     for dom in domains:
@@ -604,9 +609,15 @@ def disp_choicemats(
         disp_choicemat(cmat)
         plt.title(task_labels[1] + " - interleaved")
         if not onlygood:
-            plt.suptitle(dom.capitalize() + " - all subjects, " + whichtask + " task", fontweight="bold")
+            plt.suptitle(
+                dom.capitalize() + " - all subjects, " + whichtask + " task",
+                fontweight="bold",
+            )
         else:
-            plt.suptitle(dom.capitalize() + " - only good, " + whichtask + " task", fontweight="bold")
+            plt.suptitle(
+                dom.capitalize() + " - only good, " + whichtask + " task",
+                fontweight="bold",
+            )
         plt.tight_layout()
 
 
@@ -655,7 +666,7 @@ def disp_rsa_param_estimates(
             #     color="k",
             #     zorder=3,
             # )
-            _, pval = stats.mannwhitneyu(p_blocked, p_interleaved)
+            _, pval = stats.ttest_ind(p_blocked, p_interleaved)
             ax.set(
                 xticks=[0, 1],
                 xticklabels=("blocked", "interleaved"),
@@ -712,7 +723,7 @@ def disp_model_estimates(
             #     color="k",
             #     zorder=3,
             # )
-            _, pval = stats.mannwhitneyu(p_blocked, p_interleaved)
+            _, pval = stats.ttest_ind(p_blocked, p_interleaved)
             ax.set(
                 xticks=[0, 1],
                 xticklabels=("blocked", "interleaved"),
