@@ -77,7 +77,7 @@ function setInstructions(task_id) {
 
         // trial - feedback 2
         inStruct.txt[10] =
-          "After a short delay, you'll receive your reward/penalty. <br>This indicates if your choice was good or bad.<br> If you've bought/accepted an animal that is not liked by your customers, you'll receive a penalty.<br>In contrast, if customers like your chosen animal, you'll receive a reward.";
+          "<b> On some trials, after a short delay, you'll receive your reward/penalty. </b> <br>This indicates if your choice was good or bad.<br> If you've bought/accepted an animal that is not liked by your customers, you'll receive a penalty.<br>In contrast, if customers like your chosen animal, you'll receive a reward.";
         inStruct.img[10] = "instr/instr_an_store_blue_feedback.png";
 
         // trial - feedback 3
@@ -97,19 +97,19 @@ function setInstructions(task_id) {
 
         // reminder
         inStruct.txt[14] =
-          "The reward/penalty depends on a feature that varies systematically across animals. <br> The relevant feature differs between the orange and blue store. <br> Your task is to figure our what these features might be. <br> Only accept those animals that give you a reward (= sell well). <br> Avoid the other animals that give you a penalty (don't sell well)!";
+          "The reward/penalty depends on a feature that varies systematically across animals. <br> The relevant feature differs between the orange and blue store. <br> Your task is to figure our what these features might be. <br> <b> We won't give you feedback on all trials, but your responses still matter. Apply what you've learned from the trials with feedback to those without feedback! </b> <br>Only accept those animals that you think will be liked by your customers. <br> Avoid the other animals.";
         inStruct.img[14] = "";
 
         // structure
         inStruct.txt[15] =
-          "Now here is the catch! There will be a <b>training phase</b> and a <b>test phase</b>. <br> <b>In the test phase, we'll give you two new stores that sell vehicles instead of animals. </b> <br> Importantly, these vehicle stores are frequented by customers with similar preferences as those who go to the animal stores. <br> This means that you will be able to apply your knowledge about the animal stores to the vehicle stores. <br> You should only accept those vehicles that you think will be liked by your customers, and reject the others. <br> We will test your knowledge both on the animal and the vehicle stores.";
+          "Now here is the catch! There will be a <b>training phase with partial feedback</b> and a <b>test phase without any feedback</b>. <br> <b>In the test phase, we'll give you two new stores that sell vehicles instead of animals. </b> <br> Importantly, these vehicle stores are frequented by customers with similar preferences as those who go to the animal stores. <br> This means that you will be able to apply your knowledge about the animal stores to the vehicle stores. <br> You should only accept those vehicles that you think will be liked by your customers, and reject the others. <br> We will test your knowledge both on the animal and the vehicle stores.";
         inStruct.img[15] = "instr/instr_ve_both_stores.png";
         // rating task 
         inStruct.txt[16] ="Just to remind you: After the main experiment, we will give you a rating task in which you will have to arrange stimuli on the screen. We will give you instructions for this later."
         inStruct.img[16] = "instr/taskstructure_arena.png"
         // summary
         inStruct.txt[17] =
-          "<p><b> SUMMARY </b> <br>1. There are two animal stores during training, and additionally two vehicle stores during the test phase. <br>2. Different types of animals sell best in each store. <br>3. Figure out which animals to accept and which to reject in each store.<br> 4. Transfer this knowledge to two vehicle stores in the test phase! <br> 5. Maximize your reward!<br></p>";
+          "<p><b> SUMMARY </b> <br>1. There are two animal stores during training, and additionally two vehicle stores during the test phase. <br>2. Animals vary systematically along various features <br> 3. In each shop, a single feature determines whether or not animals are preferred by customers (i.e. give you a reward). <br> 4. Figure out what these features might be and only accept those animals that you think are liked by your customers. <br> 5. Sometimes, you may not receive feedback for your choice. Use your knowledge from those trials with feedback. <br> 6. Transfer this knowledge to two vehicle stores in the test phase! <br> 7. Maximize your reward!<br></p>";
         inStruct.img[17] = "";
         break;
 
@@ -160,7 +160,7 @@ function setInstructions(task_id) {
 
         // trial - feedback 2
         inStruct.txt[10] =
-          "After a short delay, you'll receive your reward/penalty. <br>This indicates if your choice was good or bad.<br> If you've bought/accepted an vehicle that is not liked by your customers, you'll receive a penalty.<br>In contrast, if customers like your chosen vehicle, you'll receive a reward.";
+        "<b> On some trials, after a short delay, you'll receive your reward/penalty. </b> <br>This indicates if your choice was good or bad.<br> If you've bought/accepted a vehicle that is not liked by your customers, you'll receive a penalty.<br>In contrast, if customers like your chosen vehicle, you'll receive a reward.";
         inStruct.img[10] = "instr/instr_ve_store_blue_feedback.png";
 
         // trial - feedback 3
@@ -180,19 +180,19 @@ function setInstructions(task_id) {
 
         // reminder
         inStruct.txt[14] =
-          "The reward/penalty depends on a feature that varies systematically across vehicles. <br> The relevant feature differs between the orange and blue store. <br> Your task is to figure our what these features might be. <br> Only accept those vehicles that give you a reward (= sell well). <br> Avoid the other vehicles that give you a penalty (don't sell well)!";
+        "The reward/penalty depends on a feature that varies systematically across vehicles. <br> The relevant feature differs between the orange and blue store. <br> Your task is to figure our what these features might be. <br> <b> We won't give you feedback on all trials, but your responses still matter. Apply what you've learned from the trials with feedback to those without feedback! </b> <br>Only accept those vehicles that you think will be liked by your customers. <br> Avoid the other vehicles.";
         inStruct.img[14] = "";
 
         // structure
         inStruct.txt[15] =
-          "Now here is the catch! There will be a <b>training phase</b> and a <b>test phase</b>. <br> <b>In the test phase, we'll give you two new stores that sell animals instead of vehicles. </b> <br> Importantly, these animal stores are frequented by customers with similar preferences as those who go to the vehicle stores. <br> This means that you will be able to apply your knowledge about the vehicle stores to the animal stores. <br> You should only accept those animals that you think will be liked by your customers, and reject the others. <br> We will test your knowledge both on the animal and the vehicle stores.";
+        "Now here is the catch! There will be a <b>training phase with partial feedback</b> and a <b>test phase without any feedback</b>. <br> <b>In the test phase, we'll give you two new stores that sell animals instead of vehicles. </b> <br> Importantly, these animal stores are frequented by customers with similar preferences as those who go to the vehicle stores. <br> This means that you will be able to apply your knowledge about the vehicle stores to the animal stores. <br> You should only accept those animals that you think will be liked by your customers, and reject the others. <br> We will test your knowledge both on the animal and the vehicle stores.";
         inStruct.img[15] = "instr/instr_an_both_stores.png";
         // rating task 
         inStruct.txt[16] ="Just to remind you: After the main experiment, we will give you a rating task in which you will have to arrange stimuli on the screen. We will give you instructions for this later."
         inStruct.img[16] = "instr/taskstructure_arena.png"
         // summary
         inStruct.txt[17] =
-          "<p><b> SUMMARY </b> <br>1. There are two vehicle stores during training, and additionally two animal stores during the test phase. <br>2. Different types of vehicles sell best in each store. <br>3. Figure out which vehicles to accept and which to reject in each store.<br> 4. Transfer this knowledge to two animals stores in the test phase! <br> 5. Maximize your reward!<br></p>";
+        "<p><b> SUMMARY </b> <br>1. There are two vehicle stores during training, and additionally two animal stores during the test phase. <br>2. vehicles vary systematically along various features <br> 3. In each shop, a single feature determines whether or not vehicles are preferred by customers (i.e. give you a reward). <br> 4. Figure out what these features might be and only accept those vehicles that you think are liked by your customers. <br> 5. Sometimes, you may not receive feedback for your choice. Use your knowledge from those trials with feedback. <br> 6. Transfer this knowledge to two animal stores in the test phase! <br> 7. Maximize your reward!<br></p>";
         inStruct.img[17] = "";
         break;
     }
