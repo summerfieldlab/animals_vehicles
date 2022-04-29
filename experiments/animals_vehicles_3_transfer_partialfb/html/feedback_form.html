@@ -1,0 +1,63 @@
+<!--Feedback Form, (c) Timo Flesch, 2015 -->
+<div class="screenBox">
+  <!-- TITLE -->
+  <div class="titleBox">
+    <span class="titleSpan"> FEEDBACK FORM </span>
+  </div>
+
+  <!-- FORM -->
+  <form action="javascript:getHumanFeedback()">
+    <!-- BODY -->
+    <div class="bodyBox">
+      <p>Congratulations! You're almost done with the study.</p>
+      <p>
+        Before we proceed with the rating task, we'd like to ask you for some
+        feedback!
+      </p>
+      <p>
+        Probably, you came up with a pretty good strategy to perform well on the
+        task.
+      </p>
+      <p>
+        As we had mentioned at the beginning of the experiment, your task was to
+        figure out the rules that determine which button you'd have to press in
+        each store.
+      </p>
+      <p>
+        Could you please write down the rules that you used to solve the task in
+        each of the two boxes below?
+      </p>
+      <p>
+        Please describe in the first box which feature of the animals/vehicles
+        determined the reward in the BLUE stores.
+      </p>
+      <p>
+        Please describe in the second box which feature of the animals/vehicles
+        determined the reward in the ORANGE stores.
+      </p>
+
+      <textarea
+        rows="8"
+        cols="40"
+        id="userBlueShop"
+        placeholder="which feature determined whether or not you received a reward in the BLUE stores?"
+      ></textarea>
+      <p></p>
+
+      <textarea
+        rows="8"
+        cols="40"
+        id="userOrangeShop"
+        placeholder="which feature determined whether or not you received a reward in the ORANGE stores?"
+      ></textarea>
+
+      <p>
+        Once you have done this, hit the "Submit Answer" button and we'll
+        proceed with the short rating task.
+      </p>
+    </div>
+
+    <!-- BUTTON -->
+    <button class="buttonBox" type="submit">Submit Answer</button>
+  </form>
+</div>
