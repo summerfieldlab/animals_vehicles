@@ -5,6 +5,7 @@ from scipy import stats
 from scipy.optimize import curve_fit, minimize
 from scipy.spatial.distance import squareform, pdist
 from sklearn.linear_model import LinearRegression
+from scipy.stats import rankdata
 from utils.parser import boundary_to_nan
 
 
@@ -585,3 +586,60 @@ def fit_model_to_subjects(
             for k in thetas[dom][cur].keys():
                 thetas[dom][cur][k] = np.asarray(thetas[dom][cur][k])
     return thetas
+
+
+def arena_compute_rdms(
+    alldata: dict,
+    onlygood: bool = False,
+    domains: list = ["animals", "vehicles"],
+    curricula: list = ["blocked", "interleaved"],
+) -> dict:
+    """computes rdms based on rating task data
+
+    Args:
+        alldata (dict): nested dict with participant data
+        onlygood (bool, optional): only participants who missed less than 25% of test trials. Defaults to False.
+        domains (list, optional): task domains. Defaults to ["animals", "vehicles"].
+        curricula (list, optional): training curricula. Defaults to ["blocked", "interleaved"].
+
+    Returns:
+        dict: nested dict with arena results per domain/curriculum. one rdm per participant per trial
+
+    """
+    rdms = {}
+    for dom in domains:
+        rdms[dom] = {}
+        for cur in curricula:
+            # set boundary trials in acc vector to nan
+            alldata[dom][cur]["resp_correct"][
+                alldata[dom][cur]["expt_category"] == 0
+            ] = np.nan
+
+            # mask: exlude participants who missed more than 1/4 of trials:
+            n_test = alldata[dom][cur]["resp_correct"][:, 400:].shape[1]
+            resp_category = alldata[dom][cur]["resp_category"][:, 400:]
+            mask = np.isnan(resp_category).sum(1) < (n_test / 4)
+
+            # populate choice matrix
+            rdms[dom][cur] = {}
+            data = alldata[dom][cur]
+
+            # loop over subjects and trials
+            n_participants = data["arena_trial"].shape[0]
+            n_trials = np.max(data["arena_trial"][0, :])
+            rdm_set = np.empty((n_participants, n_trials, 25, 25))
+            for participant in range(n_participants):
+                for trial in range(1, n_trials + 1):
+                    coords = data["arena_coords"][
+                        participant, data["arena_trial"][participant, :] == trial
+                    ]
+                    assert len(coords) == 25
+                    assert len(coords.T) == 2
+                    dists = pdist(coords)
+                    rdm = squareform(dists)
+                    # perhaps normalise by max distance
+                    rdm = rankdata(rdm).reshape((25, 25))
+                    rdm_set[participant, trial - 1, :, :] = rdm
+            rdms[dom][cur] = rdm_set[mask, :, :, :]
+
+    return rdms
