@@ -68,7 +68,10 @@ function showAccept() {
   showChoiceRect(1);
   // if training, provide feedback
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
-    setTimeout(showFeedbackPos, parameters.feedback_timein);
+    // only if it's a feedback trial!
+    if (sdata.expt_givefeedbackIDX[coding.index] == 1) {
+      setTimeout(showFeedbackPos, parameters.feedback_timein);
+    }
   }
 }
 
@@ -79,7 +82,10 @@ function showReject() {
   showChoiceRect(0);
   // if training, provide feedback (same holds as earlier)
   if (sdata.expt_sessIDX[coding.index] == 1 && coding.task == 0) {
-    setTimeout(showFeedbackNeg, parameters.feedback_timein);
+    // only if it's a feedback trial
+    if (sdata.expt_givefeedbackIDX[coding.index] == 1) {
+      setTimeout(showFeedbackNeg, parameters.feedback_timein);
+    }
   }
 }
 

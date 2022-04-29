@@ -66,6 +66,7 @@ function setExperiment() {
   parameters.stimURL = "stims/"; // folder that contains image files of stimuli
   parameters.keyURL = "lib/png/"; // location of image files for key mapping
 
+  parameters.nb_nofeedback = 9; // how many training trial types (max 25) without feedback?
   parameters.nb_test_domains = 2; // how many test domains (two: vehicles/animals)
   parameters.nb_size = 5; // how many levels?
   parameters.nb_speed = 5; // how many levels?

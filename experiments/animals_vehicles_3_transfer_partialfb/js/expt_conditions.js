@@ -32,9 +32,6 @@ function createSdata() {
   // generate domain indices
   sdata.expt_domainIDX = gen_domVect();
 
-  // generate block indices (unused)
-  // sdata.expt_block = gen_blockVect();
-
   // generate context indices (to distinguish between task A and task B)
   sdata.expt_contextIDX = gen_contextVect();
 
@@ -63,6 +60,8 @@ function createSdata() {
   sdata.expt_keyassignment = gen_keyAssignments();
   // generate vector of key mapping descriptors ('left','right' vs 'right','left')
   // sdata.expt_keyStr       = gen_keyStrings();
+  // generate feedback indices (whether or not to give feedback on a given (training) trial)
+  sdata.expt_givefeedbackIDX = gen_givefeedbackVect();
 
   // generate vector with "optimal" return up to each trial n (for performance assessment)
   sdata.expt_returnOPT = []; //done on the fly
@@ -295,6 +294,66 @@ function gen_congruencyVect() {
   return congruencyVect;
 }
 
+function gen_givefeedbackVect() {
+  /*
+  creates vector that determines whether or not feedback is provided
+  on any given training trial
+  */
+
+  // determine for which indices not to give feedback
+  feedbackVect = [];
+  feature_ids = [];
+  for (let i = 1; i <= parameters.nb_size; i++) {
+    for (let j = 1; j <= parameters.nb_speed; j++) {
+      feature_ids.push([i, j]);
+    }
+  }
+  //
+  feature_ids = shuffle(feature_ids);
+  no_fb_taska = feature_ids.slice(0, parameters.nb_nofeedback);
+  feature_ids = shuffle(feature_ids);
+  no_fb_taskb = feature_ids.slice(0, parameters.nb_nofeedback);
+
+  // loop over trials
+  for (let i = 0; i < sdata.expt_trial.length; i++) {
+    if (sdata.expt_sessIDX[i] == 1) {
+      // if training ...
+      if (sdata.expt_contextIDX[i] == 1) {
+        // if first task ...
+        give_feedback = 1;
+        for (let j = 0; j < no_fb_taska.length; j++) {
+          if (
+            sdata.expt_sizeIDX[i] == no_fb_taska[j][0] &&
+            sdata.expt_speedIDX[i] == no_fb_taska[j][1]
+          ) {
+            // if it's a no feedback trial...
+            give_feedback = 0;
+            break;
+          }
+        }
+      } else {
+        // or second task ...
+        give_feedback = 1;
+        for (let j = 0; j < no_fb_taskb.length; j++) {
+          if (
+            sdata.expt_sizeIDX[i] == no_fb_taskb[j][0] &&
+            sdata.expt_speedIDX[i] == no_fb_taskb[j][1]
+          ) {
+            // if it's a no feedback trial...
+            give_feedback = 0;
+            break;
+          }
+        }
+      }
+      // assign feedback value (yes/no)
+      feedbackVect[i] = give_feedback;
+    } else {
+      feedbackVect[i] = 0;
+    }
+  }
+  return feedbackVect;
+}
+
 function gen_rewardVect() {
   /*
    * simplified rewvect generation to avoid redundancy
@@ -416,6 +475,10 @@ function shuffle_trials() {
   sdata.expt_domainIDX = shuffle_vect(shuffIDX, sdata.expt_domainIDX);
   sdata.expt_rewardIDX = shuffle_vect(shuffIDX, sdata.expt_rewardIDX);
   sdata.expt_congruencyIDX = shuffle_vect(shuffIDX, sdata.expt_congruencyIDX);
+  sdata.expt_givefeedbackIDX = shuffle_vect(
+    shuffIDX,
+    sdata.expt_givefeedbackIDX
+  );
   shuffSwitch = 1;
 }
 
