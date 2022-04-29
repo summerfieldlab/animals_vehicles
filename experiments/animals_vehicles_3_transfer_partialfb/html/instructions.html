@@ -1,0 +1,65 @@
+
+
+
+
+<div class="screenBox">
+
+  <!-- TITLE -->
+  <div class="titleBox">
+    <span class="titleSpan"> INSTRUCTIONS </span>
+  </div>
+
+  <!-- BODY -->
+  <div class="bodyBox">
+    <h1 style="text-align: center">
+
+    </h1>
+    <h2>PLEASE BE PATIENT!</h2>
+    <p>
+      <b>The task will take a few seconds to load (around 40 MB)</b>. Unless you have a slow connection, it should take less than five minutes in total. If it takes more than 10 minutes, abort the experiment and contact us via hiplab@psy.ox.ac.uk.
+    </p>
+    <h2>Description</h2>
+    <p>
+      Thank you for participating in our study. In this experiment you'll see images of various objects and learn in which of two stores they sell best. Detailed instructions will be provided once you go into full screen and click on the "start" button.
+    </p>
+    <h2> Keyboard requirement </h2>
+    <p>
+      Note that the task requires a physical keyboard. If you are on a phone/tablet, this task will unfortunately not work. This task also does not work on Safari Browser. Please use alternatives such as Firefox or Chrome. Thanks for your understanding!
+    </p>
+    <h2>Full-screen requirement</h2>
+    <p>
+      We ask you to keep the window on fullscreen mode for the whole length of the experiment. This is because it is a psychological experiment and we need you to complete the experiment without distraction or doing other things at the same time. <b>If you leave the fullscreen mode the experiment will be cancelled</b>.
+    </p>
+    <h2>Duration and payment</h2>
+    <p>
+      During this experiment, you will need to give a fixed number of responses. The task is self-paced. The total duration of the experiment is estimated to be <b>70-90 min</b>. However, even though the duration of the whole experiment depends on how quickly you respond, we ask you to try your best, rather than just giving quick but careless responses!<br>
+      Once you finish with the task, you will receive a code that you can copy and submit to Prolific in order for us to accept your HIT.
+    </p>
+    <h2>Get ready!</h2>
+    <p>
+
+      When you have read this, you can move forward with the instructions. Good luck!
+    </p>
+  </div>
+
+  <!-- START BUTTON -->
+  <button class="buttonBox"
+          type="button"
+          onClick="if(isFullscreen()) {goWebsite(html_loading);startLoading();} "
+          id="startButton"
+          disabled>
+         Start
+  </button>
+
+  <!-- FULLSCREEN BUTTON -->
+  <button class="buttonBox fullscreenBox"
+          type="button"
+          onClick="
+            onFullscreen();setExperiment();
+            document.getElementById('startButton').disabled = false;
+            "
+          id="fullButton">
+         Go fullscreen
+  </button>
+
+</div>
