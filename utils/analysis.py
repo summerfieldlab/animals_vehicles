@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
@@ -143,15 +143,19 @@ def print_ttest_acc(
             acc_interleaved = acc_interleaved[
                 np.isnan(resp_category_interleaved).sum(1) < (n_test / 4)
             ]
-            s, p = stats.ttest_ind(acc_blocked, acc_interleaved)
+            tval, p = stats.ttest_ind(acc_blocked, acc_interleaved)
             print(
-                "only good subjects: {}, blocked vs interleaved: p= {:.3f}".format(
-                    dom, p
+                "only good subjects: {}, blocked vs interleaved: t({})= {:.3f}  p= {:.3f}".format(
+                    dom, (len(acc_blocked) + len(acc_interleaved)), tval, p
                 )
             )
         else:
-            s, p = stats.ttest_ind(acc_blocked, acc_interleaved)
-            print("all subjects: {}, blocked vs interleaved: p= {:.3f}".format(dom, p))
+            tval, p = stats.ttest_ind(acc_blocked, acc_interleaved)
+            print(
+                "all subjects: {}, blocked vs interleaved: t({})= {:.3f}  p= {:.3f}".format(
+                    dom, (len(acc_blocked) + len(acc_interleaved)), tval, p
+                )
+            )
 
 
 def compute_choicemats(
@@ -395,7 +399,7 @@ def gen_choicemodelrdms(monitor=False):
     task_d = x.reshape((5, 5))
 
     if monitor:
-        f, axs = plt.subplots(1, 2, figsize=(10, 5))
+        f, axs = plt.subplots(1, 2, figsize=(5, 2.5))
         axs = axs.flatten()
         axs[0].imshow(task_a)
         axs[0].set(xlabel="speed", ylabel="size", title="task a")
@@ -404,7 +408,7 @@ def gen_choicemodelrdms(monitor=False):
         plt.suptitle("factorised model:", fontweight="bold")
         plt.tight_layout()
 
-        f, axs = plt.subplots(1, 2, figsize=(10, 5))
+        f, axs = plt.subplots(1, 2, figsize=(5, 2.5))
         axs = axs.flatten()
         axs[0].imshow(task_d)
         axs[0].set(xlabel="speed", ylabel="size", title="task a")
@@ -530,24 +534,47 @@ def choice_model(X, theta):
     return y_hat
 
 
-def fit_choice_model(y_true):
+def fit_choice_model(y_true: np.array, n_runs=1) -> List:
+    """fits choice model to data, using Nelder-Mead or L-BFGS-B algorithm
+    Args:
+        y_true (np.array): labels
+        n_runs (int, optional): number of runs. Defaults to 1.
+    Returns:
+        List: estimated parameters
     """
-    fits choice model to data, using Nelder-Mead or L-BFGS-B algorithm
-    """
+
+    assert n_runs > 0
+
     a, b = np.meshgrid(np.arange(-2, 3), np.arange(-2, 3))
     a = a.flatten()
     b = b.flatten()
     X = np.stack((a, b)).T
-    theta_init = [90, 180, 0, 10, 0]
     theta_bounds = ((0, 360), (0, 360), (0, 0.5), (0, 20), (-1, 1))
-    results = minimize(
-        objective_function(X, y_true),
-        theta_init,
-        bounds=theta_bounds,
-        method="L-BFGS-B",
-    )
+    if n_runs == 1:
+        theta_init = [90, 180, 0, 2, 0]
+        results = minimize(
+            objective_function(X, y_true),
+            theta_init,
+            bounds=theta_bounds,
+            method="L-BFGS-B",
+        )
+        return results.x
+    elif n_runs > 1:
+        theta_initbounds = ((80, 100), (170, 190), (0, 0.1), (14, 16), (-0.02, 0.02))
+        thetas = []
+        for i in range(10):
+            theta_init = [
+                np.round(np.random.uniform(a[0], a[1]), 2) for a in theta_initbounds
+            ]
+            results = minimize(
+                objective_function(X, y_true),
+                theta_init,
+                bounds=theta_bounds,
+                method="L-BFGS-B",
+            )
+            thetas.append(results.x)
 
-    return results.x
+        return np.mean(np.array(thetas), 0)
 
 
 def fit_model_to_subjects(
@@ -555,6 +582,7 @@ def fit_model_to_subjects(
     onlygood: bool = False,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
+    n_runs: int = 1,
 ):
     """
     wrapper for fit_choice_model
@@ -578,7 +606,7 @@ def fit_model_to_subjects(
                 cmat_a = choicemats[dom][cur][tasks[0]][sub, :, :]
                 cmat_b = choicemats[dom][cur][tasks[1]][sub, :, :]
                 cmats = np.concatenate((cmat_a.flatten(), cmat_b.flatten()))
-                theta_hat = fit_choice_model(cmats)
+                theta_hat = fit_choice_model(cmats, n_runs)
                 theta_hat[0] = angular_bias(theta_hat[0], 90, task="a")
                 theta_hat[1] = angular_bias(theta_hat[1], 180, task="b")
                 for idx, k in enumerate(thetas[dom][cur].keys()):
