@@ -81,30 +81,8 @@ def disp_accuracy(alldata, domain, whichtask="base"):
 
     acc_blocked = np.nanmean(resp_correct_blocked, 1)
     acc_interleaved = np.nanmean(resp_correct_interleaved, 1)
-    f, ax = plt.subplots(1, 2, figsize=(10, 5))
-    ax = ax.ravel()
-    # all participants
-    ax[0].bar(
-        [0, 1],
-        [acc_blocked.mean(), acc_interleaved.mean()],
-        yerr=[sem(acc_blocked), sem(acc_interleaved)],
-        zorder=1,
-        color=[[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]],
-    )
-    # ax[0].scatter(np.zeros(len(acc_blocked)) - 0.1, acc_blocked, zorder=3, color="k")
-    # ax[0].scatter(
-    #     np.ones(len(acc_interleaved)) - 0.1, acc_interleaved, zorder=3, color="k"
-    # )
-    ax[0].spines["top"].set_visible(False)
-    ax[0].spines["right"].set_visible(False)
-    ax[0].set_xticks([0, 1])
-    ax[0].set_xticklabels(["blocked", "interleaved"])
-    ax[0].set_ylim([0.5, 1])
-    ax[0].set_yticks(np.arange(0, 1.1, 0.25))
-    ax[0].set_yticklabels(np.arange(0, 101, 25))
-    ax[0].set_ylim([0.5, 1])
-    ax[0].set_ylabel("Accuracy (%)")
-    ax[0].set_title("all participants")
+    f, ax = plt.subplots(1, 1, figsize=(2.59, 3.47))
+    # ax = ax.ravel()
 
     # only if meets inclusion criterion (less than 1/4 of trials missed)
     acc_blocked_good = acc_blocked[
@@ -113,26 +91,41 @@ def disp_accuracy(alldata, domain, whichtask="base"):
     acc_interleaved_good = acc_interleaved[
         np.isnan(resp_category_interleaved).sum(1) < (n_test / 4)
     ]
-    ax[1].bar(
+    ax.bar(
         [0, 1],
         [acc_blocked_good.mean(), acc_interleaved_good.mean()],
         yerr=[sem(acc_blocked_good), sem(acc_interleaved_good)],
         zorder=1,
         color=[[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]],
     )
-    # ax[1].scatter(np.zeros(len(acc_blocked_good))-0.1,acc_blocked_good,zorder=3,color='k')
-    # ax[1].scatter(np.ones(len(acc_interleaved_good))-0.1,acc_interleaved_good,zorder=3,color='k')
-    ax[1].spines["top"].set_visible(False)
-    ax[1].spines["right"].set_visible(False)
-    ax[1].set_xticks([0, 1])
-    ax[1].set_xticklabels(["blocked", "interleaved"])
-    ax[1].set_ylim([0.5, 1])
-    ax[1].set_yticks(np.arange(0, 1.1, 0.25))
-    ax[1].set_yticklabels(np.arange(0, 101, 25))
-    ax[1].set_ylim([0.5, 1])
-    ax[1].set_ylabel("Accuracy (%)")
-    ax[1].set_title("only < 1/4 of trials missed")
-    plt.suptitle("test accuracy - " + domain)
+    ax.scatter(
+        np.zeros(len(acc_blocked_good))
+        - 0.1
+        + 0.05 * np.random.randn(len(acc_blocked_good)),
+        acc_blocked_good,
+        s=3,
+        zorder=3,
+        color="k",
+    )
+    ax.scatter(
+        np.ones(len(acc_interleaved_good))
+        - 0.1
+        + 0.05 * np.random.randn(len(acc_interleaved_good)),
+        acc_interleaved_good,
+        s=3,
+        zorder=3,
+        color="k",
+    )
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.set_xticks([0, 1])
+    ax.set_xticklabels(["blocked", "interleaved"])
+    ax.set_ylim([0.5, 1])
+    ax.set_yticks(np.arange(0, 1.1, 0.25))
+    ax.set_yticklabels(np.arange(0, 101, 25))
+    ax.set_ylim([0.5, 1])
+    ax.set_ylabel("Accuracy (%)")
+    ax.set_title("test accuracy - " + domain)
 
     plt.tight_layout()
 
@@ -149,7 +142,7 @@ def disp_lcurves_training(
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
     if onlygood is False:
         # all participants
-        plt.figure(figsize=(15, 5))
+        plt.figure(figsize=(8.66, 3.07))
         for i, dom in enumerate(domains):
             plt.subplot(1, 2, i + 1)
             for j, cur in enumerate(curricula):
@@ -188,7 +181,7 @@ def disp_lcurves_training(
         plt.suptitle("All participants, training")
     else:
         # learning curve, good ones
-        plt.figure(figsize=(15, 5))
+        plt.figure(figsize=(8.66, 3.07))
         for i, dom in enumerate(domains):
 
             mask_blocked = (
@@ -226,7 +219,8 @@ def disp_lcurves_training(
             # plt.plot([8, 8], [0, 1], "k-")
             ticks = plt.xticks()
             plt.xticks(
-                ticks=ticks[0], labels=[""] + [str(i) for i in np.arange(0, 401, 50)]
+                ticks=np.arange(-2, 8),
+                labels=[""] + [str(i) for i in np.arange(0, 401, 50)],
             )
             plt.xlim((-1, 8))
             plt.xlabel("trial")
@@ -237,6 +231,7 @@ def disp_lcurves_training(
             ax.set_yticklabels(np.arange(0, 101, 25))
             plt.ylim((0.5, 1))
         plt.suptitle("only good participants, training")
+    plt.tight_layout()
 
 
 def disp_lcurves_test(
@@ -399,6 +394,7 @@ def disp_sigmoid_fits(
     onlygood: bool = False,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
+    bothtasks: bool = False,
 ):
     """
     displays gt data of participant choices together with best fitting sigmoids
@@ -408,87 +404,63 @@ def disp_sigmoid_fits(
     tasks = ["task_a", "task_b"]
     if onlygood is True:
         tasks = [t + "_good" for t in tasks]
-    task_labels = ["blue store (speed)", "orange store (size)"]
+    # task_labels = ["blue store", "orange store"]
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
     reldims = [0, 1]
     irreldims = [1, 0]
     # one figure per domain
     for dom in domains:
-        f, axs = plt.subplots(1, 2, figsize=(15, 7))
-        axs = axs.ravel()
-        for icol, cur in enumerate(curricula):
-            for itask, task in enumerate(tasks):
-                ax = axs[itask]
-                choice_rel = choicemats[dom][cur][task].mean(reldims[itask] + 1)
-                # params_rel = np.nanmean(betas[dom][cur][task]['rel'],0)
-                # params_rel = np.nanmean(thetas[dom][cur][task]["rel"],0)
-                # params_rel = fit_sigmoid(
-                #     np.arange(-2, 3), np.nanmean(choice_rel, 0), fitlapse=False
-                # )
-                ax.errorbar(
-                    np.arange(-2, 3),
-                    np.nanmean(choice_rel, 0),
-                    yerr=sem(choice_rel, 0),
-                    fmt="o-",
-                    color=cols[icol],
-                )
-                ax.scatter(
-                    np.arange(-2, 3),
-                    np.nanmean(choice_rel, 0),
-                    s=60,
-                    marker="o",
-                    color=cols[icol],
-                )
-                # ax.plot(
-                #     np.linspace(-2, 2, 100),
-                #     sigmoid(
-                #         np.linspace(-2, 3, 100),
-                #         params_rel[0],
-                #         params_rel[1],
-                #         params_rel[2],
-                #     ),
-                #     color=cols[icol],
-                # )
+        f, ax = plt.subplots(1, 1, figsize=(3.81, 3.81))
 
-                choice_irrel = choicemats[dom][cur][task].mean(irreldims[itask] + 1)
-                # params_irrel = np.nanmean(thetas[dom][cur][task]["irrel"], 0)
-                # params_irrel = fit_sigmoid(
-                #     np.arange(-2, 3), np.nanmean(choice_irrel, 0), fitlapse=False
-                # )
-                ax.errorbar(
-                    np.arange(-2, 3),
-                    np.nanmean(choice_irrel, 0),
-                    yerr=sem(choice_irrel, 0),
-                    fmt="x--",
-                    color=cols[icol],
+        for icol, cur in enumerate(curricula):
+            choice_rel = []
+            choice_irrel = []
+            for itask, task in enumerate(tasks):
+                choice_rel.append(choicemats[dom][cur][task].mean(reldims[itask] + 1))
+                choice_irrel.append(
+                    choicemats[dom][cur][task].mean(irreldims[itask] + 1)
                 )
-                ax.scatter(
-                    np.arange(-2, 3),
-                    np.nanmean(choice_irrel, 0),
-                    s=60,
-                    marker="x",
-                    color=cols[icol],
-                )
-                # ax.plot(
-                #     np.linspace(-2, 2, 100),
-                #     sigmoid(
-                #         np.linspace(-2, 3, 100),
-                #         params_irrel[0],
-                #         params_irrel[1],
-                #         params_irrel[2],
-                #     ),
-                #     color=cols[icol],
-                #     linestyle="--",
-                # )
-                ax.set(ylim=[0, 1], xlim=[-2.2, 2.2])
-                ax.set_title(
-                    "".join([dom + " - " + task_labels[itask]]),
-                    fontsize=12,
-                    fontweight="bold",
-                )
-                ax.spines["top"].set_visible(False)
-                ax.spines["right"].set_visible(False)
-                ax.set(xlabel="feature value", ylabel="p(accept)")
+            print(np.array(choice_rel).shape)
+            choice_rel = np.nanmean(np.array(choice_rel), 0)
+            choice_irrel = np.nanmean(np.array(choice_irrel), 0)
+            ax.errorbar(
+                np.arange(-2, 3),
+                np.nanmean(choice_rel, 0),
+                yerr=sem(choice_rel, 0),
+                fmt="o-",
+                color=cols[icol],
+            )
+            ax.scatter(
+                np.arange(-2, 3),
+                np.nanmean(choice_rel, 0),
+                s=60,
+                marker="o",
+                color=cols[icol],
+            )
+
+            ax.errorbar(
+                np.arange(-2, 3),
+                np.nanmean(choice_irrel, 0),
+                yerr=sem(choice_irrel, 0),
+                fmt="x--",
+                color=cols[icol],
+            )
+            ax.scatter(
+                np.arange(-2, 3),
+                np.nanmean(choice_irrel, 0),
+                s=60,
+                marker="x",
+                color=cols[icol],
+            )
+            ax.set(ylim=[0, 1], xlim=[-2.2, 2.2])
+            ax.set_title(
+                dom,
+                fontsize=12,
+                fontweight="bold",
+            )
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.set(xlabel="feature value", ylabel="p(accept)")
 
 
 def disp_param_estimates(
@@ -496,6 +468,7 @@ def disp_param_estimates(
     onlygood: bool = False,
     domains: list = ["animals", "vehicles"],
     curricula: list = ["blocked", "interleaved"],
+    fitlapse: bool = False,
 ):
     """
     displays average parameter estimates of sigmoid fit procedure
@@ -505,15 +478,20 @@ def disp_param_estimates(
     tasks = ["task_a", "task_b"]
     if onlygood is True:
         tasks = [t + "_good" for t in tasks]
-    # task_labels = ["blue store (speed)", "orange store (size)"]
-    parameters = ["lapse rate", "slope", "offset"]
+    # task_labels = ["blue store (speed)", "orange store"]
+    parameters = ["lapse rate", "slope", "offset"] if fitlapse else ["slope", "offset"]
     dimensions = ["rel", "irrel"]
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
     for dom in domains:
         for dim in dimensions:
-            plt.figure(figsize=(15, 5))
+            if fitlapse:
+                plt.figure(figsize=(10, 3))
+            else:
+                plt.figure(figsize=(6, 3))
             for ii, param in enumerate(parameters):
                 # average parameter estimates across tasks (orange/blue)
+                if not (fitlapse):
+                    ii += 1
                 p_blocked = np.asarray(
                     [
                         betas[dom]["blocked"][tasks[0]][dim][:, ii],
@@ -527,7 +505,10 @@ def disp_param_estimates(
                     ]
                 ).mean(0)
                 # bar plots with errorbars
-                plt.subplot(1, 3, ii + 1)
+                if fitlapse:
+                    plt.subplot(1, 3, ii + 1)
+                else:
+                    plt.subplot(1, 2, ii)
                 ax = plt.gca()
 
                 ax.bar(
@@ -540,6 +521,24 @@ def disp_param_estimates(
                     color=cols[1],
                     zorder=1,
                 )
+                ax.scatter(
+                    np.zeros(len(p_blocked))
+                    - 0.1
+                    + 0.05 * np.random.randn(len(p_blocked)),
+                    p_blocked,
+                    s=3,
+                    zorder=3,
+                    color="k",
+                )
+                ax.scatter(
+                    np.ones(len(p_interleaved))
+                    - 0.1
+                    + 0.05 * np.random.randn(len(p_interleaved)),
+                    p_interleaved,
+                    s=3,
+                    zorder=3,
+                    color="k",
+                )
 
                 # ax.scatter(
                 #     np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
@@ -550,12 +549,22 @@ def disp_param_estimates(
                 #     color="k",
                 #     zorder=3,
                 # )
-                _, pval = stats.ttest_ind(p_blocked.squeeze(), p_interleaved.squeeze())
+                tval, pval = stats.ttest_ind(
+                    p_blocked.squeeze(), p_interleaved.squeeze()
+                )
                 ax.set(
                     xticks=[0, 1],
                     xticklabels=("blocked", "interleaved"),
                     ylabel=r"$\beta$ estimate (a.u)",
-                    title=param + ", p=" + str(np.round(pval, 3)),
+                    title=param
+                    + ", t("
+                    + str(
+                        np.sum([len(p_blocked.squeeze()), len(p_interleaved.squeeze())])
+                    )
+                    + ")= "
+                    + str(np.round(tval, 3))
+                    + "p="
+                    + str(np.round(pval, 3)),
                 )
                 sns.despine()
 
@@ -584,12 +593,12 @@ def disp_choicemats(
     tasks = ["task_a", "task_b"]
     if onlygood is True:
         tasks = [t + "_good" for t in tasks]
-    task_labels = ["orange store (speed)", "blue store (size)"]
+    task_labels = ["orange store", "blue store"]
     # parameters = ["lapse rate", "slope", "offset"]
 
     for dom in domains:
 
-        plt.figure(figsize=(10, 10))
+        plt.figure(figsize=(5, 5))
         plt.subplot(2, 2, 1)
         cmat = np.nanmean(choicemats[dom]["blocked"][tasks[0]], 0)
         disp_choicemat(cmat)
@@ -639,7 +648,7 @@ def disp_rsa_param_estimates(
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
 
     for dom in domains:
-        plt.figure(figsize=(15, 5))
+        plt.figure(figsize=(6, 3))
         for ii, param in enumerate(parameters):
             # average parameter estimates across tasks (orange/blue)
             p_blocked = betas[dom]["blocked"][:, ii]
@@ -656,22 +665,43 @@ def disp_rsa_param_estimates(
                 color=cols[1],
                 zorder=1,
             )
-
-            # ax.scatter(
-            #     np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
-            # )
-            # ax.scatter(
-            #     np.ones((len(p_interleaved), 1)) - 0.1,
-            #     p_interleaved,
-            #     color="k",
-            #     zorder=3,
-            # )
-            _, pval = stats.ttest_ind(p_blocked, p_interleaved)
+            print(
+                (
+                    np.zeros((len(p_blocked), 1))
+                    - 0.1
+                    + 0.05 * np.random.randn(len(p_blocked), 1)
+                ).shape
+            )
+            ax.scatter(
+                np.zeros((len(p_blocked), 1))
+                - 0.1
+                + 0.05 * np.random.randn(len(p_blocked), 1),
+                p_blocked,
+                color="k",
+                s=3,
+                zorder=3,
+            )
+            ax.scatter(
+                np.ones((len(p_interleaved), 1))
+                - 0.1
+                + 0.05 * np.random.randn(len(p_interleaved), 1),
+                p_interleaved,
+                color="k",
+                s=3,
+                zorder=3,
+            )
+            tval, pval = stats.ttest_ind(p_blocked, p_interleaved)
             ax.set(
                 xticks=[0, 1],
                 xticklabels=("blocked", "interleaved"),
                 ylabel=r"$\beta$ estimate (a.u)",
-                title=param + ", p=" + str(np.round(pval, 3)),
+                title=param
+                + " t("
+                + str(np.sum([len(p_blocked.squeeze()), len(p_interleaved.squeeze())]))
+                + ")= "
+                + str(np.round(tval, 3))
+                + "p="
+                + str(np.round(pval, 3)),
             )
             sns.despine()
 
@@ -692,7 +722,7 @@ def disp_model_estimates(
 
     cols = [[0.2, 0.2, 0.2], [0.6, 0.6, 0.6]]
     for dom in domains:
-        plt.figure(figsize=(15, 5))
+        plt.figure(figsize=(10, 3))
         # average bias across tasks
         for cur in curricula:
             thetas[dom][cur]["bias"] = np.stack(
@@ -714,21 +744,36 @@ def disp_model_estimates(
                 zorder=1,
             )
 
-            # ax.scatter(
-            #     np.zeros((len(p_blocked), 1)) - 0.1, p_blocked, color="k", zorder=3
-            # )
-            # ax.scatter(
-            #     np.ones((len(p_interleaved), 1)) - 0.1,
-            #     p_interleaved,
-            #     color="k",
-            #     zorder=3,
-            # )
-            _, pval = stats.ttest_ind(p_blocked, p_interleaved)
+            ax.scatter(
+                np.zeros((len(p_blocked), 1))
+                - 0.1
+                + 0.05 * np.random.randn(len(p_blocked), 1),
+                p_blocked,
+                color="k",
+                s=3,
+                zorder=3,
+            )
+            ax.scatter(
+                np.ones((len(p_interleaved), 1))
+                - 0.1
+                + 0.05 * np.random.randn(len(p_interleaved), 1),
+                p_interleaved,
+                color="k",
+                s=3,
+                zorder=3,
+            )
+            tval, pval = stats.ttest_ind(p_blocked, p_interleaved)
             ax.set(
                 xticks=[0, 1],
                 xticklabels=("blocked", "interleaved"),
                 ylabel="parameter estimate (a.u)",
-                title=param + ", p=" + str(np.round(pval, 4)),
+                title=param
+                + " t("
+                + str(np.sum([len(p_blocked.squeeze()), len(p_interleaved.squeeze())]))
+                + ")= "
+                + str(np.round(tval, 3))
+                + ", p="
+                + str(np.round(pval, 4)),
             )
             sns.despine()
 
