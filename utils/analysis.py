@@ -671,3 +671,155 @@ def arena_compute_rdms(
             rdms[dom][cur] = rdm_set[mask, :, :, :]
 
     return rdms
+
+
+def arena_gen_modelrdms(
+    whichtask: str = "size", whichtrials: str = "all"
+) -> np.ndarray:
+    """creates design matrix based on rel-irrel dim and diagonal model rdms
+
+    Args:
+        whichtask (str, optional): size or speed task. Defaults to "size".
+        whichtrials (str, optional): all, odd or even. Defaults to "all".
+
+    Returns:
+        np.ndarray: design matrix
+    """
+    task_speed = np.tile((np.array([0, 0, 0.5, 1, 1])), (5, 1))
+    task_size = task_speed.T
+    x = np.fliplr(np.tril(np.ones((5, 5)))).flatten()
+    x[4:-4:4] = 0.5
+    task_diagonal = x.reshape((5, 5))
+    rdm_grid = squareform(
+        pdist(np.stack([task_speed.flatten(), task_size.flatten()], axis=0).T)
+    )
+    rdm_speed = squareform(pdist(task_speed.flatten()[:, np.newaxis]))
+    rdm_size = squareform(pdist(task_size.flatten()[:, np.newaxis]))
+    rdm_diagonal = squareform(pdist(task_diagonal.flatten()[:, np.newaxis]))
+    if whichtrials == "even":
+        # set odd trials to nan
+        rdm_grid[0::2, :] = np.nan
+        rdm_grid[:, 0::2] = np.nan
+        rdm_speed[0::2, :] = np.nan
+        rdm_speed[:, 0::2] = np.nan
+        rdm_size[0::2, :] = np.nan
+        rdm_size[:, 0::2] = np.nan
+        rdm_diagonal[0::2, :] = np.nan
+        rdm_diagonal[:, 0::2] = np.nan
+    elif whichtrials == "odd":
+        # set even trials/conditions to nan
+        rdm_grid[1::2, :] = np.nan
+        rdm_grid[:, 1::2] = np.nan
+        rdm_speed[1::2, :] = np.nan
+        rdm_speed[:, 1::2] = np.nan
+        rdm_size[1::2, :] = np.nan
+        rdm_size[:, 1::2] = np.nan
+        rdm_diagonal[1::2, :] = np.nan
+        rdm_diagonal[:, 1::2] = np.nan
+
+    dmat = np.squeeze(
+        np.array(
+            (
+                stats.zscore(
+                    rdm_grid[np.tril_indices(25, k=-1)].flatten(), nan_policy="omit"
+                ),
+                stats.zscore(
+                    rdm_size[np.tril_indices(25, k=-1)].flatten(), nan_policy="omit"
+                ),
+                stats.zscore(
+                    rdm_speed[np.tril_indices(25, k=-1)].flatten(), nan_policy="omit"
+                ),
+                stats.zscore(
+                    rdm_diagonal[np.tril_indices(25, k=-1)].flatten(), nan_policy="omit"
+                ),
+            )
+        ).T
+    )
+    if whichtask == "speed":
+        dmat = dmat[:, [0, 2, 1, 3]]  # both, speed(rel), size(irrel), diag
+    else:
+        pass  # both, size(rel), speed(irrel), diag
+    return dmat
+
+
+def arena_regress_rdms(alldata: dict, whichtrials: str = "all") -> dict:
+    """regresses arena data against various models
+        as specified in arena_gen_modelrdms()
+
+    Args:
+        alldata (dict): dictionary with all participant data
+        whichtrials (str, optional): "all", "base" or "transfer". Defaults to "all"
+
+    Returns:
+        dict: dictionary with regression coefficients
+    """
+
+    rdms = arena_compute_rdms(alldata)
+    domains = ["animals", "vehicles"]
+    curricula = ["blocked", "interleaved"]
+    idces = [0, 2]
+    coefficients = dict()
+    for dom in domains:
+        coefficients[dom] = {}
+        for cur in curricula:
+            coefficients[dom][cur] = {}
+            # speed task:
+            rdms_speed = rdms[dom][cur][:, idces[0], :, :]
+            rdms_size = rdms[dom][cur][:, idces[1], :, :]
+            coeffs = []
+            for participant in range(len(rdms_speed)):
+                rdm = rdms_speed[participant, :, :]
+                dmat_speed = arena_gen_modelrdms(whichtask="speed", whichtrials="all")
+                dmat_size = arena_gen_modelrdms(whichtask="size", whichtrials="all")
+                if (whichtrials == "base" and dom == "animals") or (
+                    whichtrials == "transfer" and dom == "vehicles"
+                ):
+                    dmat_speed = arena_gen_modelrdms(
+                        whichtask="speed", whichtrials="even"
+                    )
+                    dmat_size = arena_gen_modelrdms(
+                        whichtask="size", whichtrials="even"
+                    )
+                    # set odd trials to nan
+                    rdm[0::2, :] = np.nan
+                    rdm[:, 0::2] = np.nan
+                elif (whichtrials == "transfer" and dom == "animals") or (
+                    whichtrials == "base" and dom == "vehicles"
+                ):
+                    dmat_speed = arena_gen_modelrdms(
+                        whichtask="speed", whichtrials="odd"
+                    )
+                    dmat_size = arena_gen_modelrdms(whichtask="size", whichtrials="odd")
+                    # set even trials/conditions to nan
+                    rdm[1::2, :] = np.nan
+                    rdm[:, 1::2] = np.nan
+
+                y = rdm[np.tril_indices(25, k=-1)].flatten()
+                lr = LinearRegression()
+                dmat_speed = dmat_speed[~np.isnan(dmat_speed).any(axis=1), :]
+                y = stats.zscore(y[~np.isnan(y)])
+                lr.fit(dmat_speed, y)
+                c_speed = lr.coef_
+
+                rdm = rdms_size[participant, :, :]
+                if (whichtrials == "base" and dom == "animals") or (
+                    whichtrials == "transfer" and dom == "vehicles"
+                ):
+                    # set odd trials to nan
+                    rdm[0::2, :] = np.nan
+                    rdm[:, 0::2] = np.nan
+                elif (whichtrials == "transfer" and dom == "animals") or (
+                    whichtrials == "base" and dom == "vehicles"
+                ):
+                    # set even trials/conditions to nan
+                    rdm[1::2, :] = np.nan
+                    rdm[:, 1::2] = np.nan
+                y = rdm[np.tril_indices(25, k=-1)].flatten()
+                lr = LinearRegression()
+                dmat_size = dmat_size[~np.isnan(dmat_size).any(axis=1), :]
+                y = stats.zscore(y[~np.isnan(y)])
+                lr.fit(dmat_size, y)
+                c_size = lr.coef_
+                coeffs.append((c_speed + c_size) / 2)
+            coefficients[dom][cur] = np.array(coeffs)
+    return coefficients
